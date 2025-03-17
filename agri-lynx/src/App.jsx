@@ -1,11 +1,13 @@
-import { useState } from 'react'
-import LocalMarketOwnerRegistration from './owners/LocalMarketOwnerRegistration'
+import React from 'react';
+import FarmerRegistration from './farmers/FarmerRegistration';
+
+
 function App() {
 
 
   return (
     <>
-    <LocalMarketOwnerRegistration />
+    <FarmerRegistration />
     </>
   )
 }
