@@ -4,6 +4,8 @@ const LocalMarketOwnerRegistration = () => {
   return (
     <div>
       <h1 className='font-arial bg-(--secondary)'>Registration</h1>
+      <h1 className='font-arial bg-(--secondary)'>Registration</h1>
+
     </div>
   )
 }
