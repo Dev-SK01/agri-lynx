@@ -1,1 +1,18 @@
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+/* Tailwindcss */
 @import "tailwindcss";
+
+/* css variables  */
+:root{
+    --primary: #ffffff;
+    --secondary: #4CA14D;
+    --teritary: #ECEEED;
+    --green: #E6F3ED;
+}
+@theme {
+    /* custom fonts */
+    --font-inknut: "Inknut Antiqua", sans-serif;
+    --font-inter: "Inter", sans-serif ;
+}
