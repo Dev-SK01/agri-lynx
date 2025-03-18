@@ -1,5 +1,6 @@
 import React from "react";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 const BankDetails = () => {
   return (
@@ -75,6 +76,12 @@ const BankDetails = () => {
           id="upi"
         />
       </div>
+      <Button
+          type="submit"
+          className="text-white bg-(--secondary) font-bold text-[1.2rem] mt-5 font-inter"
+        >
+          Register 
+        </Button>
     </>
   );
 };

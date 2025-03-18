@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Select,
   SelectContent,
@@ -8,16 +8,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSeparator,
-  InputOTPSlot,
-} from "@/components/ui/input-otp";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import OneTimePassword from "./OneTimePassword";
+import FarmerContext from "../context/FarmerContext";
 
 const RegistrationHeader = () => {
+  const { email, setEmail ,isCodeSent,setCodeSent,validateEmail} = useContext(FarmerContext);
+
+  const handleEmailVerification = () => {
+    // validating email
+    if (validateEmail(email)) {
+      console.log(email);
+      setCodeSent(true);
+    }else{
+      alert('Enter Proper Email!')
+      setCodeSent(false)
+    }
+  };
+
   return (
     <>
       <header>
@@ -49,52 +58,18 @@ const RegistrationHeader = () => {
             type="email"
             placeholder="Email"
             className="font-inter font-semibold bg-(--teritary) pt-5 pb-5"
+            onChange={(e) => setEmail(e.target.value)}
           />
           <Button
             type="submit"
-            className="text-white bg-(--secondary) font-bold text-[1.2rem]"
+            className="text-white bg-(--secondary) font-bold text-[1.2rem] hover:bg-(--teritary) hover:text-black"
+            onClick={handleEmailVerification}
           >
             Verify
           </Button>
         </div>
       </div>
-      {/* OTP verification  */}
-      <div className="flex items-center flex-col mt-5">
-        <InputOTP maxLength={6}>
-          <InputOTPGroup className="font-inter font-semibold">
-            <InputOTPSlot
-              index={0}
-              className="ml-2 mr-2 bg-(--teritary) rounded-sm px-5 py-5"
-            />
-            <InputOTPSlot
-              index={1}
-              className="ml-2 mr-2 bg-(--teritary) rounded-sm px-5 py-5"
-            />
-            <InputOTPSlot
-              index={2}
-              className="ml-2 mr-2 bg-(--teritary) rounded-sm px-5 py-5"
-            />
-            <InputOTPSlot
-              index={3}
-              className="ml-2 mr-2 bg-(--teritary) rounded-sm px-5 py-5"
-            />
-            <InputOTPSlot
-              index={4}
-              className="ml-2 mr-2 bg-(--teritary) rounded-sm px-5 py-5"
-            />
-            <InputOTPSlot
-              index={5}
-              className="ml-2 mr-2 bg-(--teritary) rounded-sm px-5 py-5"
-            />
-          </InputOTPGroup>
-        </InputOTP>
-        <Button
-          type="submit"
-          className="text-white bg-(--secondary) font-bold text-[1.2rem] mt-5"
-        >
-          Continue
-        </Button>
-      </div>
+      {isCodeSent && <OneTimePassword />}
     </>
   );
 };
