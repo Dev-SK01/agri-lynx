@@ -12,18 +12,22 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import OneTimePassword from "./OneTimePassword";
 import FarmerContext from "../context/FarmerContext";
-
+import { ToastContainer, toast ,Slide} from "react-toastify";
+import Toast from "../../utils/toast";
 const RegistrationHeader = () => {
-  const { email, setEmail ,isCodeSent,setCodeSent,validateEmail} = useContext(FarmerContext);
+  const { email, setEmail, isCodeSent, setCodeSent, validateEmail,isOtpVerified} =
+    useContext(FarmerContext);
 
   const handleEmailVerification = () => {
     // validating email
     if (validateEmail(email)) {
-      console.log(email);
+      // email otp api implementation
       setCodeSent(true);
-    }else{
-      alert('Enter Proper Email!')
-      setCodeSent(false)
+      if (isCodeSent) {
+        Toast(toast.success, "OTP sent Successfully");
+      }
+    } else {
+      Toast(toast.error, "Enter Proper Email!");
     }
   };
 
@@ -57,6 +61,7 @@ const RegistrationHeader = () => {
           <Input
             type="email"
             placeholder="Email"
+            value={email}
             className="font-inter font-semibold bg-(--teritary) pt-5 pb-5"
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -64,12 +69,27 @@ const RegistrationHeader = () => {
             type="submit"
             className="text-white bg-(--secondary) font-bold text-[1.2rem] hover:bg-(--teritary) hover:text-black"
             onClick={handleEmailVerification}
+            disabled={isOtpVerified ? true : false}
           >
             Verify
           </Button>
         </div>
       </div>
-      {isCodeSent && <OneTimePassword />}
+      {/* toast container */}
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Slide}
+      />
+      {(isCodeSent || isOtpVerified) && <OneTimePassword />}
     </>
   );
 };

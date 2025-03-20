@@ -7,8 +7,10 @@ export const FarmerContextProvider = ({ children }) => {
 
     const [email, setEmail] = useState("");
     const [isCodeSent , setCodeSent] = useState(false);
-    const[isOtpVerified ,setOtpVerified] =useState(false);
+    const [isOtpVerified ,setOtpVerified] = useState(false);
     const [otp , setOtp] = useState("");
+    const [userType ,setUserType] = useState("");
+    // email validation function
     const validateEmail = (email) => {
         return email.match(
           /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -22,7 +24,8 @@ export const FarmerContextProvider = ({ children }) => {
                 isCodeSent,setCodeSent,
                 isOtpVerified,setOtpVerified,
                 validateEmail,
-                otp,setOtp
+                otp,setOtp,
+                userType,setUserType
             }}
         >
             {children}
