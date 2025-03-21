@@ -10,7 +10,7 @@ const FarmerLogin = (otp, setOtp, handleChange) => {
           <h1 className="font-inknut  text-xl">LOGIN</h1>
           <select name="user" id="user" className='bg-(--teritary) rounded-2xl h-8 border-y-4 border-b-(--secondary) border-t-0 mt-4 font-inter' >
             <option value="Select ">Select the type</option>
-            <option value="Formar">Formar</option>
+            <option value="Farmar">Farmar</option>
             <option value="Logistics Partner">Logistics Partner</option>
             <option value="Local Market Owner">Local Market Owner</option>
 
