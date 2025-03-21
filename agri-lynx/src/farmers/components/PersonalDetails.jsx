@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useReducer } from "react";
 import { Input } from "@/components/ui/input";
 import phoneSvg from "../../assets/phone.svg";
 import FarmerContext from "../context/FarmerContext";
@@ -15,18 +15,18 @@ const PersonalDetails = () => {
     setPersonalDetailsError,
   } = useContext(FarmerContext);
 
-  console.log({
-    name: name,
-    phoneNumber: phoneNumber,
-    alternatePhoneNumber: alternatePhoneNumber,
-  });
+  // console.log({
+  //   name: name,
+  //   phoneNumber: phoneNumber,
+  //   alternatePhoneNumber: alternatePhoneNumber,
+  // });
 
   const handleUserInput = (e, fieldValue, stateFunc, fieldType) => {
     stateFunc(e.target.value);
-    fieldTypeValidation(fieldType,fieldValue);
+    fieldTypeValidation(fieldType, fieldValue);
   };
 
-  const fieldTypeValidation = (fieldType,fieldValue) => {
+  const fieldTypeValidation = (fieldType, fieldValue) => {
     // checking name input
     if (fieldType == "name") {
       if (fieldValue.length >= 4) {
@@ -75,7 +75,6 @@ const PersonalDetails = () => {
       }
     }
   };
-
   return (
     <>
       <div className="w-full max-w-sm">

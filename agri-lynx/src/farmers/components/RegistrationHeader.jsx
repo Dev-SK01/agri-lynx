@@ -47,10 +47,11 @@ const RegistrationHeader = () => {
       setEmail(e.target.value);
     }
   };
+  
   return (
     <>
       <header>
-        <h1 className="font-inknut text-center text-2xl mt-5 font-bold">
+        <h1 className="font-inknut text-center text-2xl mt-1 font-bold">
           REGISTRATION
         </h1>
       </header>
