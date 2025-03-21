@@ -36,7 +36,7 @@ const FarmerLogin = (otp, setOtp, handleChange) => {
           </div>
 
           <div className='flex mt-9 '>
-            <p className='font-bold text-blue-500'>Not Registerd? </p>
+            <p className='font-bold text-blue-500'>Not Registerd?</p>
             <p className='font-bold text-(--secondary)'>Register</p></div>
 
 
