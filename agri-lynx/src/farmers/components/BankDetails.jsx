@@ -78,7 +78,7 @@ const BankDetails = () => {
       </div>
       <Button
           type="submit"
-          className="text-white bg-(--secondary) font-bold text-[1.2rem] mt-5 font-inter"
+          className="text-white bg-(--secondary) font-bold text-[1.2rem] mt-5 font-inter mb-4"
         >
           Register 
         </Button>

@@ -11,7 +11,6 @@ import Toast from "@/utils/toast";
 
 const OneTimePassword = () => {
   const { otp, setOtp, setOtpVerified ,isOtpVerified} = useContext(FarmerContext);
-  console.log(otp);
   
   const verifyOtp = () => {
     if (!otp || otp.length !== 6) {

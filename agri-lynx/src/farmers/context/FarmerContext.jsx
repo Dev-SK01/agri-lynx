@@ -6,10 +6,19 @@ const FarmerContext = createContext({});
 export const FarmerContextProvider = ({ children }) => {
 
     const [email, setEmail] = useState("");
-    const [isCodeSent , setCodeSent] = useState(false);
-    const [isOtpVerified ,setOtpVerified] = useState(false);
+    const [isCodeSent , setCodeSent] = useState(true);
+    const [isOtpVerified ,setOtpVerified] = useState(true);
     const [otp , setOtp] = useState("");
     const [userType ,setUserType] = useState("");
+    // personal details states
+    const[name,setName] = useState("");
+    const[phoneNumber,setPhoneNumber] = useState("pn");
+    const[alternatePhoneNumber,setAlternatePhoneNumber] = useState("an");
+    const[personalDetailsError ,setPersonalDetailsError] = useState({
+        nameError:false,
+        numberError:false,
+        alternateError:false
+    })
     // email validation function
     const validateEmail = (email) => {
         return email.match(
@@ -25,7 +34,11 @@ export const FarmerContextProvider = ({ children }) => {
                 isOtpVerified,setOtpVerified,
                 validateEmail,
                 otp,setOtp,
-                userType,setUserType
+                userType,setUserType,
+                name,setName,
+                phoneNumber,setPhoneNumber,
+                alternatePhoneNumber,setAlternatePhoneNumber,
+                personalDetailsError ,setPersonalDetailsError
             }}
         >
             {children}

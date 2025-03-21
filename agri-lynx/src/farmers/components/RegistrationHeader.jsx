@@ -12,11 +12,20 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import OneTimePassword from "./OneTimePassword";
 import FarmerContext from "../context/FarmerContext";
-import { ToastContainer, toast ,Slide} from "react-toastify";
+import { ToastContainer, toast, Slide } from "react-toastify";
 import Toast from "../../utils/toast";
+
 const RegistrationHeader = () => {
-  const { email, setEmail, isCodeSent, setCodeSent, validateEmail,isOtpVerified} =
-    useContext(FarmerContext);
+  const {
+    email,
+    setEmail,
+    isCodeSent,
+    setCodeSent,
+    validateEmail,
+    isOtpVerified,
+    userType,
+    setUserType,
+  } = useContext(FarmerContext);
 
   const handleEmailVerification = () => {
     // validating email
@@ -31,6 +40,13 @@ const RegistrationHeader = () => {
     }
   };
 
+  const handleUserSelect = (e) => {
+    if (!userType) {
+      Toast(toast.error, "Select User Type!");
+    } else {
+      setEmail(e.target.value);
+    }
+  };
   return (
     <>
       <header>
@@ -39,7 +55,7 @@ const RegistrationHeader = () => {
         </h1>
       </header>
       {/* select dropdown for user selection */}
-      <Select>
+      <Select onValueChange={(value) => setUserType(value)}>
         <SelectTrigger className="w-[180px] pb-3 pt-3 mt-5 bg-(--teritary) font-inter font-bold text-black shadow-[3px_3px_0px_0px_var(--secondary)] ">
           <SelectValue placeholder="Select User Type" />
         </SelectTrigger>
@@ -47,7 +63,7 @@ const RegistrationHeader = () => {
           <SelectGroup className="font-inter font-bold">
             <SelectLabel>USER</SelectLabel>
             <SelectItem value="farmer">Farmer</SelectItem>
-            <SelectItem value="local market">Local Market Owner</SelectItem>
+            <SelectItem value="market">Local Market Owner</SelectItem>
             <SelectItem value="logistic">Logistic Partner</SelectItem>
           </SelectGroup>
         </SelectContent>
@@ -63,7 +79,7 @@ const RegistrationHeader = () => {
             placeholder="Email"
             value={email}
             className="font-inter font-semibold bg-(--teritary) pt-5 pb-5"
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={handleUserSelect}
           />
           <Button
             type="submit"
