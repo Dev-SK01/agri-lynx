@@ -37,14 +37,14 @@
   "shortcuts": [
     {
       "name": "TODO",
-      "url": "https://dev-sk01.github.io/NotesEDU/todo",
+      "url": "https://agri-lynx-git-srikanth-devsk001s-projects.vercel.app/",
       "description": "Goto Todo App"
     },
     {
       "name": "Journal",
-      "url": "https://dev-sk01.github.io/NotesEDU/journal",
+      "url": "https://agri-lynx-git-srikanth-devsk001s-projects.vercel.app/",
       "description": "Goto journal"
     }
   ],
-  "scope": "https://dev-sk01.github.io/NotesEDU"
+  "scope": "https://agri-lynx-git-srikanth-devsk001s-projects.vercel.app/"
 }
