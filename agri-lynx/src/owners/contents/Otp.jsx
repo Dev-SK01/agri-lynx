@@ -49,6 +49,7 @@ const OtpInputField = () => {
       <div className="flex justify-center items-center" >
       <Button type="submit" className="text-white bg-(--secondary) font-bold text-[1.2rem] mt-5">Continue</Button>
       </div>
+      <br></br>
     </>
   )
 }

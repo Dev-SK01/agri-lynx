@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/button'
 import React from 'react'
 import Selection from './contents/Selection';
 import Email from './contents/Email';
@@ -18,15 +17,8 @@ const LocalMarketOwnerRegistration = () => {
       <Selection />
       <Email />
       <OtpInputField/>
-      <Personal />
+      <Personal/>
       <Address />
-      
-     
-
-     
-     
-
-      {/* Personal Details*/}
 
     </div>
 
