@@ -21,6 +21,6 @@
         @apply bg-(--secondary)  text-xs font-bold text-white p-1 rounded-sm font-inter
     }
     .otp{
-        @apply w-5 bg-gray-200 space-x-20 mx-1.5 focus:border-2 focus:border-(--teritary)
+        @apply w-7 h-7 rounded bg-gray-300 space-x-20 mx-1.5 focus:border-2 focus:border-(--teritary)
     }
 }

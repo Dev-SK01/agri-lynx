@@ -18,7 +18,7 @@ const FarmerLogin = (otp, setOtp, handleChange) => {
           <div className='mt-7'>
             <p className='font-bold font-inter ms-0.5'>Email </p>
             <div className='flex gap-1.5 ms-0.5 mt-4 relative'>
-              <input className='bg-gray-300 rounded-sm h-7 p-1 font-inter' type="email" placeholder='Email' />
+              <input id='EmailInput' className='bg-gray-300 rounded-sm h-7 p-1 font-inter' type="email" placeholder='Email' />
 
               <button type='submit' className='click-btn text-base  h-7 w-20 p-0.5'>Verify</button>
             </div>
@@ -45,7 +45,7 @@ const FarmerLogin = (otp, setOtp, handleChange) => {
 
       </div>
     </div>
-
+    
   )
 }
 
