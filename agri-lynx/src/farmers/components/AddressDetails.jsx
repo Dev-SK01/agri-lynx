@@ -16,13 +16,13 @@ const AddressDetails = () => {
     SetPincode,
   } = useContext(FarmerContext);
 
-  console.log({
-    address,
-    taluk,
-    district,
-    state,
-    pincode,
-  });
+  // console.log({
+  //   address,
+  //   taluk,
+  //   district,
+  //   state,
+  //   pincode,
+  // });
 
   return (
     <>

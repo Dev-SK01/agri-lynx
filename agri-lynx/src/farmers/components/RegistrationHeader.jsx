@@ -84,7 +84,7 @@ const RegistrationHeader = () => {
           />
           <Button
             type="submit"
-            className="text-white bg-(--secondary) font-bold text-[1.2rem] hover:bg-(--teritary) hover:text-black"
+            className="text-white bg-(--secondary) font-bold text-[1.2rem] hover:bg-(--teritary) hover:text-black active:bg-(--teritary) active:text-black"
             onClick={handleEmailVerification}
             disabled={isOtpVerified ? true : false}
           >

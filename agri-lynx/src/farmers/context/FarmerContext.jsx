@@ -17,13 +17,19 @@ export const FarmerContextProvider = ({ children }) => {
     numberError: false,
     alternateError: false,
   });
-
   // address details states
   const [address, setAddress] = useState("test-test-test");
   const [taluk, setTaluk] = useState("tl");
   const [district, setDistrict] = useState("dt");
   const [state, setState] = useState("st");
   const [pincode, SetPincode] = useState("630555");
+  // bank details states
+  const[ifscCode ,setIfscCode] = useState("IOBA0001872");
+  const[accountNumber,setAccountNumber] = useState("1234567");
+  const[accountHolderName,setAccountHolderName] = useState("ahn")
+  const[bankName,setBankName] = useState("");
+  const[bankBranch,setBankBranch] = useState("");
+  const[upiId,setUpiId] = useState("@");
   // email validation function
   const validateEmail = (email) => {
     return email.match(
@@ -58,6 +64,12 @@ export const FarmerContextProvider = ({ children }) => {
         district, setDistrict,
         state, setState,
         pincode, SetPincode,
+        ifscCode ,setIfscCode,
+        accountNumber,setAccountNumber,
+        accountHolderName,setAccountHolderName,
+        bankName,setBankName,
+        bankBranch,setBankBranch,
+        upiId,setUpiId,
       }}
     >
       {children}
