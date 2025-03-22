@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Input } from "@/components/ui/input";
-import FarmerContext from "../context/FarmerContext";
+import RegistrationContext from "../context/RegistrationContext";
 
 const AddressDetails = () => {
   const {
@@ -14,7 +14,7 @@ const AddressDetails = () => {
     setState,
     pincode,
     SetPincode,
-  } = useContext(FarmerContext);
+  } = useContext(RegistrationContext);
 
   // console.log({
   //   address,

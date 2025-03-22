@@ -1,8 +1,9 @@
 import { createContext, useState } from "react";
 
-const FarmerContext = createContext({});
+const RegistrationContext = createContext({});
 
-export const FarmerContextProvider = ({ children }) => {
+export const RegistrationContextProvider = ({ children }) => {
+  const[isRegistered , setIsRegistered] = useState(false)
   const [email, setEmail] = useState("");
   const [isCodeSent, setCodeSent] = useState(true);
   const [isOtpVerified, setOtpVerified] = useState(true);
@@ -30,15 +31,30 @@ export const FarmerContextProvider = ({ children }) => {
   const[bankName,setBankName] = useState("");
   const[bankBranch,setBankBranch] = useState("");
   const[upiId,setUpiId] = useState("@");
+  // vehicle details states
+  const [vehicleType,setVehicleType] =useState("vt");
+  // TN-90-AZ-8491
+  const [vehicleNumber,setVehicleNumber] = useState("");
+  // D6101-40706-60905
+  const [licenseNumber,setLicenseNumber] = useState("")
   // email validation function
   const validateEmail = (email) => {
     return email.match(
       /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     );
   };
-
+  // vehicle number validation
+  const validateVehicleNumber = (str) => {
+    const regEx = new RegExp("^[A-Z]{2}[-][0-9]{1,2}[-][A-Z]{1,2}[-][0-9]{3,4}$")
+    return regEx.test(str);
+  }
+  // license number validation
+  const validateLicenseNumber = (str) => {
+    const regExp = new RegExp("^[A-Z](?:\\d[- ]*){14}$");
+    return regExp.test(str);
+  }
   return (
-    <FarmerContext
+    <RegistrationContext
       value={{
         email,
         setEmail,
@@ -70,11 +86,16 @@ export const FarmerContextProvider = ({ children }) => {
         bankName,setBankName,
         bankBranch,setBankBranch,
         upiId,setUpiId,
+        vehicleType,setVehicleType,
+        vehicleNumber,setVehicleNumber,
+        licenseNumber,setLicenseNumber,
+        validateVehicleNumber,validateLicenseNumber,
+        isRegistered , setIsRegistered,
       }}
     >
       {children}
-    </FarmerContext>
+    </RegistrationContext>
   );
 };
 
-export default FarmerContext;
+export default RegistrationContext;

@@ -11,8 +11,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import OneTimePassword from "./OneTimePassword";
-import FarmerContext from "../context/FarmerContext";
-import { ToastContainer, toast, Slide } from "react-toastify";
+import RegistrationContext from "../context/RegistrationContext";
+import {toast} from "react-toastify";
 import Toast from "../../utils/toast";
 
 const RegistrationHeader = () => {
@@ -25,15 +25,20 @@ const RegistrationHeader = () => {
     isOtpVerified,
     userType,
     setUserType,
-  } = useContext(FarmerContext);
+  } = useContext(RegistrationContext);
 
   const handleEmailVerification = () => {
     // validating email
     if (validateEmail(email)) {
-      // email otp api implementation
-      setCodeSent(true);
-      if (isCodeSent) {
+      // checking user is registered
+      const isRegistered = handleRegisteredUser(email);
+      if (!isRegistered) {
+        // email otp api implementation
+        setCodeSent(true);
+        // otp sent message
         Toast(toast.success, "OTP sent Successfully");
+      } else {
+        Toast(toast.error, "User Already Registered! LOGIN");
       }
     } else {
       Toast(toast.error, "Enter Proper Email!");
@@ -47,7 +52,15 @@ const RegistrationHeader = () => {
       setEmail(e.target.value);
     }
   };
-  
+  const handleRegisteredUser = (email) => {
+    const response = "";
+    // send true or false from backend if user presents
+    if (response) {
+      return true;
+    } else {
+      return false;
+    }
+  };
   return (
     <>
       <header>
@@ -55,7 +68,7 @@ const RegistrationHeader = () => {
           REGISTRATION
         </h1>
       </header>
-      {/* select dropdown for user selection */}
+      {/* select dropdown for user selection disabled={isOtpVerified?true:false} */}
       <Select onValueChange={(value) => setUserType(value)}>
         <SelectTrigger className="w-[180px] pb-3 pt-3 mt-5 bg-(--teritary) font-inter font-bold text-black shadow-[3px_3px_0px_0px_var(--secondary)] ">
           <SelectValue placeholder="Select User Type" />
@@ -81,6 +94,7 @@ const RegistrationHeader = () => {
             value={email}
             className="font-inter font-semibold bg-(--teritary) pt-5 pb-5"
             onChange={handleUserSelect}
+            disabled={isOtpVerified ? true : false}
           />
           <Button
             type="submit"
@@ -92,20 +106,6 @@ const RegistrationHeader = () => {
           </Button>
         </div>
       </div>
-      {/* toast container */}
-      <ToastContainer
-        position="top-center"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-        transition={Slide}
-      />
       {(isCodeSent || isOtpVerified) && <OneTimePassword />}
     </>
   );

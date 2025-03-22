@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import { Input } from "@/components/ui/input";
-import FarmerContext from "../context/FarmerContext";
+import RegistrationContext from "../context/RegistrationContext";
+import Toast from "@/utils/toast";
+import { toast } from "react-toastify";
 const BankDetails = () => {
   const {
     ifscCode,
@@ -15,41 +17,42 @@ const BankDetails = () => {
     setBankBranch,
     upiId,
     setUpiId,
-  } = useContext(FarmerContext);
+  } = useContext(RegistrationContext);
 
-  console.log({
-    ifscCode,
-    accountNumber,
-    accountHolderName,
-    bankName,
-    bankBranch,
-    upiId,
-  });
+  // console.log({
+  //   ifscCode,
+  //   accountNumber,
+  //   accountHolderName,
+  //   bankName,
+  //   bankBranch,
+  //   upiId,
+  // });
 
-  const fetchBankDetails = async (ifsc)=>{
-    const END_POINT =`https://ifsc.razorpay.com/${ifsc}`;
-   try{
-    const response = await fetch(END_POINT);
-    if(!response.ok){
-      console.error("Failed To Fetch")
+  const fetchBankDetails = async (ifsc) => {
+    const END_POINT = `https://ifsc.razorpay.com/${ifsc}`;
+    try {
+      const response = await fetch(END_POINT);
+      if (!response.ok) {
+        console.error("Failed To Fetch");
+        Toast(toast.error, "Error In Fetch Bank Details");
+      } else if (response.ok) {
+        Toast(toast.success, "Bank Details Fetched");
+      }
+      const bankData = await response.json();
+      return bankData;
+    } catch (err) {
+      console.error(err.message);
     }
-    const bankData = await response.json();
-    return bankData;
-   }catch(err){
-    console.error(err.message)
-   }
-  }
+  };
 
-  const handleIFSC = async (e) =>{
-    setIfscCode(e.target.value)
-    if(ifscCode.length == 11 && ifscCode !== "IOBA0001872"){
+  const handleIFSC = async () => {
+    if (ifscCode.length == 11 && ifscCode !== "IOBA0001872") {
       const bankData = await fetchBankDetails(ifscCode);
-      if(bankData){
         setBankName(bankData.BANK);
         setBankBranch(bankData.BRANCH);
-      }
     }
-  }
+  };
+
   return (
     <>
       <div className="w-full max-w-sm mt-10">
@@ -66,13 +69,14 @@ const BankDetails = () => {
           placeholder="Enter Your IFSC Code"
           className="font-inter bg-(--teritary) pt-5 pb-5"
           id="ifsc-code"
-          onChange={(e) => handleIFSC(e)}
-          style={{textTransform:"uppercase"}}
+          onChange={(e) => {
+            setIfscCode(e.target.value);
+            handleIFSC();
+          }}
+          style={{ textTransform: "uppercase" }}
         />
         {(ifscCode.length < 11 || ifscCode.length > 11) && (
-          <p className="text-red-600 font-semibold">
-            enter correct IFSC code!
-          </p>
+          <p className="text-red-600 font-semibold">enter correct IFSC code!</p>
         )}
       </div>
       <div className="w-full max-w-sm mt-5">
@@ -84,7 +88,7 @@ const BankDetails = () => {
           placeholder="Enter Your Account Number"
           className="font-inter bg-(--teritary) pt-5 pb-5"
           id="account-number"
-          onChange={(e)=> setAccountNumber(e.target.value)}
+          onChange={(e) => setAccountNumber(e.target.value)}
         />
         {accountNumber.length < 5 && (
           <p className="text-red-600 font-semibold">
@@ -101,9 +105,9 @@ const BankDetails = () => {
           placeholder="Enter Your Account Holder Name"
           className="font-inter bg-(--teritary) pt-5 pb-5"
           id="holder-name"
-          onChange={(e)=> setAccountHolderName(e.target.value)}
+          onChange={(e) => setAccountHolderName(e.target.value)}
         />
-         {accountHolderName.length < 3 && (
+        {accountHolderName.length < 3 && (
           <p className="text-red-600 font-semibold">
             enter correct Account Holder Name!
           </p>
@@ -118,13 +122,11 @@ const BankDetails = () => {
           placeholder="Enter Your UPI ID"
           className="font-inter bg-(--teritary) pt-5 pb-5"
           id="upi"
-          onChange={(e)=>setUpiId(e.target.value)}
-          style={{textTransform:"uppercase"}}
+          onChange={(e) => setUpiId(e.target.value)}
+          style={{ textTransform: "uppercase" }}
         />
         {!upiId.includes("@") && (
-          <p className="text-red-600 font-semibold">
-            enter correct UPI ID!
-          </p>
+          <p className="text-red-600 font-semibold">enter correct UPI ID!</p>
         )}
       </div>
       <div className="w-full max-w-sm mt-5">
@@ -136,7 +138,7 @@ const BankDetails = () => {
           placeholder="Enter Your Bank Name"
           className="font-inter bg-(--teritary) pt-5 pb-5"
           id="bank-name"
-          style={{textTransform:"uppercase"}}
+          style={{ textTransform: "uppercase" }}
           disabled={true}
           key={1}
           value={bankName}
@@ -151,7 +153,7 @@ const BankDetails = () => {
           placeholder="Enter Your Bank Branch"
           className="font-inter bg-(--teritary) pt-5 pb-5"
           id="branch"
-          style={{textTransform:"uppercase"}}
+          style={{ textTransform: "uppercase" }}
           disabled={true}
           key={2}
           value={bankBranch}

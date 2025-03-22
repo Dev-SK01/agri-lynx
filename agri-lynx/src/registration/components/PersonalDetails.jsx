@@ -1,7 +1,7 @@
 import React, { useContext, useReducer } from "react";
 import { Input } from "@/components/ui/input";
 import phoneSvg from "../../assets/phone.svg";
-import FarmerContext from "../context/FarmerContext";
+import RegistrationContext from "../context/RegistrationContext";
 
 const PersonalDetails = () => {
   const {
@@ -13,7 +13,7 @@ const PersonalDetails = () => {
     setAlternatePhoneNumber,
     personalDetailsError,
     setPersonalDetailsError,
-  } = useContext(FarmerContext);
+  } = useContext(RegistrationContext);
 
   // console.log({
   //   name: name,

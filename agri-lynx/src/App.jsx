@@ -1,12 +1,29 @@
 import React from "react";
-import FarmerRegistration from "./farmers/FarmerRegistration";
-import { FarmerContextProvider } from "./farmers/context/FarmerContext";
+import Registration from "./registration/Registration";
+import { RegistrationContextProvider } from "./registration/context/RegistrationContext";
+import { ToastContainer, Slide } from "react-toastify";
 
 function App() {
   return (
-    <FarmerContextProvider>
-      <FarmerRegistration />
-    </FarmerContextProvider>
+    <>
+      <RegistrationContextProvider>
+        <Registration />
+      </RegistrationContextProvider>
+      {/* toast container */}
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Slide}
+      />
+    </>
   );
 }
 

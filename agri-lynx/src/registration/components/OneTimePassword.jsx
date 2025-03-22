@@ -5,12 +5,12 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { Button } from "@/components/ui/button";
-import FarmerContext from "../context/FarmerContext";
-import { ToastContainer, toast ,Slide} from "react-toastify";
+import RegistrationContext from "../context/RegistrationContext";
+import {toast} from "react-toastify";
 import Toast from "@/utils/toast";
 
 const OneTimePassword = () => {
-  const { otp, setOtp, setOtpVerified ,isOtpVerified} = useContext(FarmerContext);
+  const { otp, setOtp, setOtpVerified ,isOtpVerified} = useContext(RegistrationContext);
   
   const verifyOtp = () => {
     if (!otp || otp.length !== 6) {
@@ -31,26 +31,32 @@ const OneTimePassword = () => {
             <InputOTPSlot
               index={0}
               className="ml-2 mr-2 bg-(--teritary) rounded-sm px-5 py-5"
+              disabled={isOtpVerified ? true : false}
             />
             <InputOTPSlot
               index={1}
               className="ml-2 mr-2 bg-(--teritary) rounded-sm px-5 py-5"
+              disabled={isOtpVerified ? true : false}
             />
             <InputOTPSlot
               index={2}
               className="ml-2 mr-2 bg-(--teritary) rounded-sm px-5 py-5"
+              disabled={isOtpVerified ? true : false}
             />
             <InputOTPSlot
               index={3}
               className="ml-2 mr-2 bg-(--teritary) rounded-sm px-5 py-5"
+              disabled={isOtpVerified ? true : false}
             />
             <InputOTPSlot
               index={4}
               className="ml-2 mr-2 bg-(--teritary) rounded-sm px-5 py-5"
+              disabled={isOtpVerified ? true : false}
             />
             <InputOTPSlot
               index={5}
               className="ml-2 mr-2 bg-(--teritary) rounded-sm px-5 py-5"
+              disabled={isOtpVerified ? true : false}
             />
           </InputOTPGroup>
         </InputOTP>
@@ -63,20 +69,6 @@ const OneTimePassword = () => {
           Continue
         </Button>
       </div>
-      {/* toast container */}
-      <ToastContainer
-        position="top-center"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-        transition={Slide}
-      />
     </>
   );
 };
