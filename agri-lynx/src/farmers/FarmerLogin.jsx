@@ -6,7 +6,7 @@ const FarmerLogin = (otp, setOtp, handleChange) => {
     <div className=' flex justify-center items-center h-dvh '>
       <div className='items-center border-(--secondary) rounded-3xl border-2  w- h-100 p-4 grow-0' >
 
-        <form action="" className='justify-items-center flex-col items-center relative'>
+        <form action="" className='justify-items-center '>
           <h1 className="font-inknut  text-xl">LOGIN</h1>
           <select name="user" id="user" className='bg-(--teritary) rounded-2xl h-8 border-y-4 border-b-(--secondary) border-t-0 mt-4 font-inter' >
             <option value="Select ">Select the type</option>
