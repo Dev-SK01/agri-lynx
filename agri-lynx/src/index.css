@@ -7,6 +7,11 @@
 
 /* Tailwindcss */
 @import "tailwindcss";
+
+.bc{
+    background-size: contain;
+    background-image: url(./assets/bg.svg);
+}
 /* css variables  */
 :root{
     --primary: #ffffff;

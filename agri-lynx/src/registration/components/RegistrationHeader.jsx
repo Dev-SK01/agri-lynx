@@ -94,13 +94,13 @@ const RegistrationHeader = () => {
             value={email}
             className="font-inter font-semibold bg-(--teritary) pt-5 pb-5"
             onChange={handleUserSelect}
-            disabled={isOtpVerified ? true : false}
+            disabled={isCodeSent ? true : false}
           />
           <Button
             type="submit"
             className="text-white bg-(--secondary) font-bold text-[1.2rem] hover:bg-(--teritary) hover:text-black active:bg-(--teritary) active:text-black"
             onClick={handleEmailVerification}
-            disabled={isOtpVerified ? true : false}
+            disabled={isCodeSent ? true : false}
           >
             Verify
           </Button>

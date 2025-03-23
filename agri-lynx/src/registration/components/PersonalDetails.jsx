@@ -21,9 +21,10 @@ const PersonalDetails = () => {
   //   alternatePhoneNumber: alternatePhoneNumber,
   // });
 
-  const handleUserInput = (e, fieldValue, stateFunc, fieldType) => {
-    stateFunc(e.target.value);
-    fieldTypeValidation(fieldType, fieldValue);
+  const handleUserInput = (e, stateFunc, fieldType) => {
+    const value = e.target.value;
+    stateFunc(value);
+    fieldTypeValidation(fieldType, value);
   };
 
   const fieldTypeValidation = (fieldType, fieldValue) => {
@@ -45,7 +46,7 @@ const PersonalDetails = () => {
     }
     // phone number input
     if (fieldType == "phone") {
-      if (fieldValue.length == 9) {
+      if (fieldValue.length == 10) {
         setPersonalDetailsError({
           nameError: false,
           numberError: false,
@@ -60,7 +61,7 @@ const PersonalDetails = () => {
       }
     }
     if (fieldType == "alternate") {
-      if (fieldValue.length == 9) {
+      if (fieldValue.length == 10) {
         setPersonalDetailsError({
           nameError: false,
           numberError: false,
@@ -86,7 +87,7 @@ const PersonalDetails = () => {
           placeholder="Enter Your Name"
           className="font-inter bg-(--teritary) pt-5 pb-5"
           id="name"
-          onChange={(e) => handleUserInput(e, name, setName, "name")}
+          onChange={(e) => handleUserInput(e, setName, "name")}
         />
         {personalDetailsError.nameError && (
           <p className="text-red-600 font-semibold">enter proper name</p>
@@ -102,7 +103,7 @@ const PersonalDetails = () => {
           className="font-inter  bg-(--teritary) pt-5 pb-5"
           id="number"
           onChange={(e) =>
-            handleUserInput(e, phoneNumber, setPhoneNumber, "phone")
+            handleUserInput(e, setPhoneNumber, "phone")
           }
         />
         {personalDetailsError.numberError && (
@@ -124,14 +125,7 @@ const PersonalDetails = () => {
           placeholder="Enter Your Alternate Number"
           className="font-inter  bg-(--teritary) pt-5 pb-5"
           id="alter-number"
-          onChange={(e) =>
-            handleUserInput(
-              e,
-              alternatePhoneNumber,
-              setAlternatePhoneNumber,
-              "alternate"
-            )
-          }
+          onChange={(e) =>handleUserInput(e,setAlternatePhoneNumber,"alternate")}
         />
         {alternatePhoneNumber == phoneNumber && (
           <p className="text-red-600 font-semibold">

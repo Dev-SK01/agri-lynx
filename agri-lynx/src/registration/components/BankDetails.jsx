@@ -45,9 +45,11 @@ const BankDetails = () => {
     }
   };
 
-  const handleIFSC = async () => {
-    if (ifscCode.length == 11 && ifscCode !== "IOBA0001872") {
-      const bankData = await fetchBankDetails(ifscCode);
+  const handleIFSC = async (e) => {
+    const ifsc = e.target.value;
+    setIfscCode(ifsc);
+    if (ifsc.length == 11 && ifsc !== "IOBA0001872") {
+      const bankData = await fetchBankDetails(ifsc);
         setBankName(bankData.BANK);
         setBankBranch(bankData.BRANCH);
     }
@@ -69,10 +71,7 @@ const BankDetails = () => {
           placeholder="Enter Your IFSC Code"
           className="font-inter bg-(--teritary) pt-5 pb-5"
           id="ifsc-code"
-          onChange={(e) => {
-            setIfscCode(e.target.value);
-            handleIFSC();
-          }}
+          onChange={(e) => handleIFSC(e)}
           style={{ textTransform: "uppercase" }}
         />
         {(ifscCode.length < 11 || ifscCode.length > 11) && (
@@ -135,7 +134,7 @@ const BankDetails = () => {
         </label>
         <Input
           type="text"
-          placeholder="Enter Your Bank Name"
+          placeholder="BANK NAME"
           className="font-inter bg-(--teritary) pt-5 pb-5"
           id="bank-name"
           style={{ textTransform: "uppercase" }}
@@ -150,7 +149,7 @@ const BankDetails = () => {
         </label>
         <Input
           type="text"
-          placeholder="Enter Your Bank Branch"
+          placeholder="BRANCH NAME"
           className="font-inter bg-(--teritary) pt-5 pb-5"
           id="branch"
           style={{ textTransform: "uppercase" }}

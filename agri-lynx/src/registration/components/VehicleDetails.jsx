@@ -22,27 +22,28 @@ const VehicleDetails = () => {
     licenseNumber
   });
   const handleVehicleNumber = (e) => {
-    // vehicle number error found , inner less , outer more
-    setVehicleNumber(e.target.value.toUpperCase());
-    console.log("inner",vehicleNumber.length);
+    const Vnumber = e.target.value.toUpperCase();
+    setVehicleNumber(Vnumber);
+    console.log("inner",Vnumber.length);
     
-    if(vehicleNumber.length == 12 || vehicleNumber.length == 13){
-      if(!validateVehicleNumber(vehicleNumber)){
+    if(Vnumber.length == 12 || Vnumber.length == 13){
+      if(!validateVehicleNumber(Vnumber)){
         Toast(toast.error,"Enter Correct Vehicle Number");
       }
-    }else if(vehicleNumber.length > 13){
+    }else if(Vnumber.length > 13){
       Toast(toast.error,"Vehicle Number Should Not Exceed 13 Digits!");
     }
   }
 
   const handleLicenseNumber = (e)=>{
-    setLicenseNumber(e.target.value.toUpperCase());
-    console.log("inner",licenseNumber.length);
-    if(licenseNumber.length == 15 || licenseNumber.length == 17){
-      if(!validateLicenseNumber(licenseNumber)){
+    const Lnumber = e.target.value.toUpperCase()
+    setLicenseNumber(Lnumber);
+    console.log("inner",Lnumber.length);
+    if(Lnumber.length == 15 || Lnumber.length == 17){
+      if(!validateLicenseNumber(Lnumber)){
         Toast(toast.error,"Enter Correct License Number");
       }
-    }else if(licenseNumber.length > 17){
+    }else if(Lnumber.length > 17){
       Toast(toast.error,"License Number Should Not Exceed 17 Digits!");
     }
   }

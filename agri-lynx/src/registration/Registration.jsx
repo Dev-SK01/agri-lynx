@@ -37,6 +37,7 @@ const Registration = () => {
   } = useContext(RegistrationContext);
 
   const [isClicked, setIsClicked] = useState(false);
+  
 // farmers registration
   const handleFarmerRegistration = () => {
     if (
@@ -217,9 +218,7 @@ const Registration = () => {
               Register Now
             </Button>
           </>
-        ) : (
-          <p className="font-bold text-green-500">NO USER SELECTED</p>
-        ))}
+        ) :<></>)}
     </Container>
   );
 };
