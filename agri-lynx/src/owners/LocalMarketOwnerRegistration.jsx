@@ -3,23 +3,24 @@ import Selection from './contents/Selection';
 import Email from './contents/Email';
 import Personal  from './contents/Personal';
 import OtpInputField from './contents/Otp';
-import Address from './contents/Address';
+
+import { Button } from '@/components/ui/button';
 
 const LocalMarketOwnerRegistration = () => {
 
 
   return (
-    <div className="place-content-center ">
+    <div className="place-content-center flex flex-col items-center justify-center ">
 
-      <h1 className="--font-inknut font-bold text-2xl mt-5  text-center">Registration</h1>
+      <h1 className="font-inknut text-2xl mt-5  text-center">Registration</h1>
 
      
       <Selection />
       <Email />
       <OtpInputField/>
       <Personal/>
-      <Address />
-
+      
+      
     </div>
 
   )
