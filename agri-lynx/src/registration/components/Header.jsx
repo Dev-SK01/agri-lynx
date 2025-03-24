@@ -15,7 +15,7 @@ import RegistrationContext from "../context/RegistrationContext";
 import { toast } from "react-toastify";
 import Toast from "../../utils/toast";
 
-const Header = ({ verificationHandler, headerType , otpHandler }) => {
+const Header = ({ verificationHandler, headerType , otpHandler}) => {
   const { email, setEmail, isCodeSent, isOtpVerified, userType, setUserType,} =
     useContext(RegistrationContext);
 

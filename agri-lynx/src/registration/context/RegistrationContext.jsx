@@ -2,6 +2,7 @@ import { createContext, useState } from "react";
 import { toast } from "react-toastify";
 import Toast from "../../utils/toast";
 import { useNavigate } from "react-router-dom";
+import Loader from "@/utils/Loader";
 
 const RegistrationContext = createContext({});
 
@@ -42,6 +43,7 @@ export const RegistrationContextProvider = ({ children }) => {
   const [licenseNumber, setLicenseNumber] = useState("");
   // user data states
   const [userData, setUserData] = useState();
+  const[isLoading,setIsLoading] = useState(false);
   // email validation function
   const validateEmail = (email) => {
     return email.match(
@@ -86,7 +88,7 @@ export const RegistrationContextProvider = ({ children }) => {
   };
   // registration handlers backend api for isRegistered
   const handleRegisteredUser = (email) => {
-    const response = false;
+    const response = true;
     // send true or false from backend if user presents
     if (response) {
       return true;
@@ -101,6 +103,9 @@ export const RegistrationContextProvider = ({ children }) => {
       const isRegistered = handleRegisteredUser(email);
       if (!isRegistered) {
         // email otp api implementation
+        setIsLoading(true); 
+        // loading for user experience
+        setTimeout(()=> setIsLoading(false),2000);
         setCodeSent(true);
         // otp sent message
         Toast(toast.success, "OTP sent Successfully");
@@ -119,6 +124,8 @@ export const RegistrationContextProvider = ({ children }) => {
     } else {
       // otp verification api
       setOtpVerified(true);
+      setIsLoading(true);
+      setTimeout(()=>setIsLoading(false),2000)
       Toast(toast.success, "OTP Verified");
     }
   };
@@ -129,6 +136,9 @@ export const RegistrationContextProvider = ({ children }) => {
       const isRegistered = handleRegisteredUser(email);
       if (isRegistered) {
         // email otp api implementation
+        setIsLoading(true); 
+        // loading for user experience
+        setTimeout(()=> setIsLoading(false),2000);
         setCodeSent(true);
         // otp sent message
         Toast(toast.success, "OTP sent Successfully");
@@ -145,11 +155,14 @@ export const RegistrationContextProvider = ({ children }) => {
     if (!otp || otp.length !== 6) {
       Toast(toast.error, "Enter OTP!");
     } else {
-      // otp verification api for login 
+      // otp verification api for login
       setOtpVerified(true);
-      const response = {userId:"123456789",userType};
+      setIsLoading(true); 
+      // loading for user experience
+      setTimeout(()=> setIsLoading(false),2500);
+      Toast(toast.success,"Logging In....");
+      const response = { userId: "123456789", userType };
       setUserData(response);
-      Toast(toast.success, "Logging In...");
       if (userType === "farmer") {
         navigate("farmerdashboard");
       } else if (userType === "market") {
@@ -216,8 +229,8 @@ export const RegistrationContextProvider = ({ children }) => {
         verifyOtp,
         handleUserLogin,
         loginOtpVerify,
-        userData,
-        setUserData,
+        userData,setUserData,
+        isLoading,setIsLoading
       }}
     >
       {children}

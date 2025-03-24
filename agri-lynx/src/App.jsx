@@ -8,9 +8,10 @@ import Login from "./pages/Login";
 import FarmerDashboard from "./farmers/FarmerDashboard";
 import ProctedRoute from "./ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
-
+import { BadgeCheck, CircleAlert} from 'lucide-react';
+import Loader from "./utils/Loader";
 function App() {
-  const { userData } = useContext(RegistrationContext);
+  const { userData , isOtpVerified , isLoading} = useContext(RegistrationContext);
   return (
     <>
       <Routes>
@@ -30,20 +31,29 @@ function App() {
           <Route path="logisticdashboard" element={<FarmerDashboard />}></Route>
         </Route>
       </Routes>
-
+      {isLoading && <Loader/>}
       {/* toast container */}
       <ToastContainer
-        position="bottom-center"
+        position={isOtpVerified ? "bottom-center" : "top-center"}
         autoClose={2000}
         hideProgressBar={false}
         newestOnTop={false}
-        closeOnClick
+        closeOnClick={true}
         rtl={false}
         pauseOnFocusLoss
-        draggable
-        pauseOnHover
+        draggable={true}
         theme="light"
         transition={Slide}
+        icon={({ type}) => {
+          switch (type) {
+            case 'error':
+              return <CircleAlert className="stroke-red-500" />;
+            case 'success':
+              return <BadgeCheck className="stroke-green-500" />;
+            default:
+              return null;
+          }
+        }}
       />
     </>
   );

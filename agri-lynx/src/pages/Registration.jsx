@@ -10,7 +10,7 @@ import VehicleDetails from "../registration/components/VehicleDetails";
 import Toast from "@/utils/toast";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-
+import bottomBg from "../assets/login-bottom-bg.svg"
 const Registration = () => {
   const {
     isOtpVerified,
@@ -38,6 +38,7 @@ const Registration = () => {
     verifyOtp,
     userData,
     setUserData,
+    setIsLoading,
   } = useContext(RegistrationContext);
 
   const [isClicked, setIsClicked] = useState(false);
@@ -46,6 +47,7 @@ const Registration = () => {
   const handleFarmerRegistration = () => {
     // disable btn
     setIsClicked(true);
+    setIsLoading(true);
     if (
       phoneNumber === "pn" ||
       alternatePhoneNumber === "an" ||
@@ -83,18 +85,22 @@ const Registration = () => {
       // settimg timout for btn disabled
       setTimeout(() => setIsClicked(false), 3000);
       //backend api
-      const response = {userId: "123456789", userType };
+      const response = { userId: "123456789", userType };
       // checking registered user or not from server response
-        Toast(toast.success, "registered Successfully");
-        setUserData(response);
-        // clearing form function;
-        clearForm();
-        Toast(toast.update, "Redirecting....");
-        navigate("farmerdashboard");
+      Toast(toast.success, "registered Successfully");
+      setUserData(response);
+      // clearing form function;
+      clearForm();
+      Toast(toast.update, "Redirecting....");
+      navigate("farmerdashboard");
+      setTimeout(() => setIsLoading, 3000);
     }
   };
   // local market owners registration
   const handleLocalMarketRegistration = () => {
+    // disable btn
+    setIsClicked(true);
+    setIsLoading(true);
     if (
       phoneNumber === "pn" ||
       alternatePhoneNumber === "an" ||
@@ -107,8 +113,6 @@ const Registration = () => {
     ) {
       Toast(toast.error, "Enter Correct Details!");
     } else {
-      // disable btn
-      setIsClicked(true);
       const marketData = {
         email,
         name,
@@ -123,18 +127,21 @@ const Registration = () => {
       console.log(marketData);
       setTimeout(() => setIsClicked(false), 3000);
       //backend api
-      const response = {userId: "123456789", userType };
+      const response = { userId: "123456789", userType };
       // checking registered user or not from server response
-        Toast(toast.success, "registered Successfully");
-        setUserData(response);
-        // clearing form function;
-        clearForm();
-        Toast(toast.update, "Redirecting....");
-        navigate("localmarketdashboard");
+      Toast(toast.success, "registered Successfully");
+      setUserData(response);
+      // clearing form function;
+      clearForm();
+      Toast(toast.update, "Redirecting....");
+      navigate("localmarketdashboard");
+      setTimeout(() => setIsLoading(false), 3000);
     }
   };
   // logistics registration
   const handleLogisticsRegistration = () => {
+    // disable btn
+    setIsClicked(true);
     if (
       phoneNumber === "pn" ||
       alternatePhoneNumber === "an" ||
@@ -154,8 +161,6 @@ const Registration = () => {
     ) {
       Toast(toast.error, "Enter Correct Details!");
     } else {
-      // disable btn
-      setIsClicked(true);
       const logisticsData = {
         email,
         name,
@@ -173,14 +178,15 @@ const Registration = () => {
       console.log(logisticsData);
       setTimeout(() => setIsClicked(false), 3000);
       //backend api
-      const response = {userId: "123456789", userType };
+      const response = { userId: "123456789", userType };
       // checking registered user or not from server response
-        Toast(toast.success, "registered Successfully");
-        setUserData(response);
-        // clearing form function;
-        clearForm();
-        Toast(toast.update, "Redirecting....");
-        navigate("logisticdashboard");
+      Toast(toast.success, "registered Successfully");
+      setUserData(response);
+      // clearing form function;
+      clearForm();
+      Toast(toast.update, "Redirecting....");
+      navigate("logisticdashboard");
+      setTimeout(()=> setIsLoading(false),3000);
     }
   };
   return (
@@ -190,6 +196,7 @@ const Registration = () => {
         headerType={"REGISTRATION"}
         otpHandler={verifyOtp}
       />
+       {!isOtpVerified && <img src={bottomBg} alt="login-bottom-bg" className="mt-10"/>}
       {isOtpVerified &&
         (userType == "farmer" ? (
           <>
