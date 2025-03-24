@@ -1,14 +1,15 @@
 import React, { useContext, useState } from "react";
-import RegistrationHeader from "./components/RegistrationHeader";
-import PersonalDetails from "./components/PersonalDetails";
-import AddressDetails from "./components/AddressDetails";
-import BankDetails from "./components/BankDetails";
+import Header from "../registration/components/Header";
+import PersonalDetails from "../registration/components/PersonalDetails";
+import AddressDetails from "../registration/components/AddressDetails";
+import BankDetails from "../registration/components/BankDetails";
 import { Button } from "@/components/ui/button";
-import Container from "./components/Container";
-import RegistrationContext from "./context/RegistrationContext";
-import VehicleDetails from "./components/VehicleDetails";
+import Container from "../registration/components/Container";
+import RegistrationContext from "../registration/context/RegistrationContext";
+import VehicleDetails from "../registration/components/VehicleDetails";
 import Toast from "@/utils/toast";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Registration = () => {
   const {
@@ -32,14 +33,19 @@ const Registration = () => {
     vehicleType,
     vehicleNumber,
     licenseNumber,
-    isRegistered,
-    setIsRegistered,
+    clearForm,
+    handleEmailVerification,
+    verifyOtp,
+    userData,
+    setUserData,
   } = useContext(RegistrationContext);
 
   const [isClicked, setIsClicked] = useState(false);
-  
-// farmers registration
+  const navigate = useNavigate();
+  // farmers registration
   const handleFarmerRegistration = () => {
+    // disable btn
+    setIsClicked(true);
     if (
       phoneNumber === "pn" ||
       alternatePhoneNumber === "an" ||
@@ -51,12 +57,11 @@ const Registration = () => {
       ifscCode === "IOBA0001872" ||
       accountNumber === "1234567" ||
       accountHolderName === "ahn" ||
-      upiId === "@" || name == ""
+      upiId === "@" ||
+      name == ""
     ) {
       Toast(toast.error, "Enter Correct Details!");
     } else {
-      // disable btn
-    setIsClicked(true);
       const farmerData = {
         email,
         name,
@@ -75,18 +80,20 @@ const Registration = () => {
         upiId,
       };
       console.log(farmerData);
-      setTimeout(()=>setIsClicked(false),3000);
-      const response = { serverStatus: true }; //backend api
-      if (response.serverStatus) {
-        setIsRegistered(true);
-        Toast(toast.success, "Registered successFully");
-      } else {
-        setIsRegistered(false);
-        Toast(toast.error, "Error In Registration");
-      }
+      // settimg timout for btn disabled
+      setTimeout(() => setIsClicked(false), 3000);
+      //backend api
+      const response = {userId: "123456789", userType };
+      // checking registered user or not from server response
+        Toast(toast.success, "registered Successfully");
+        setUserData(response);
+        // clearing form function;
+        clearForm();
+        Toast(toast.update, "Redirecting....");
+        navigate("farmerdashboard");
     }
   };
-// local market owners registration
+  // local market owners registration
   const handleLocalMarketRegistration = () => {
     if (
       phoneNumber === "pn" ||
@@ -95,12 +102,13 @@ const Registration = () => {
       taluk === "tl" ||
       district === "dt" ||
       state === "st" ||
-      pincode === "630555" || name == ""
+      pincode === "630555" ||
+      name == ""
     ) {
       Toast(toast.error, "Enter Correct Details!");
     } else {
       // disable btn
-    setIsClicked(true);
+      setIsClicked(true);
       const marketData = {
         email,
         name,
@@ -113,18 +121,19 @@ const Registration = () => {
         pincode,
       };
       console.log(marketData);
-      setTimeout(()=>setIsClicked(false),3000);
-      const response = { serverStatus: true }; //backend api
-      if (response.serverStatus) {
-        setIsRegistered(true);
-        Toast(toast.success, "Registered successFully");
-      } else {
-        setIsRegistered(false);
-        Toast(toast.error, "Error In Registration");
-      }
+      setTimeout(() => setIsClicked(false), 3000);
+      //backend api
+      const response = {userId: "123456789", userType };
+      // checking registered user or not from server response
+        Toast(toast.success, "registered Successfully");
+        setUserData(response);
+        // clearing form function;
+        clearForm();
+        Toast(toast.update, "Redirecting....");
+        navigate("localmarketdashboard");
     }
   };
-// logistics registration
+  // logistics registration
   const handleLogisticsRegistration = () => {
     if (
       phoneNumber === "pn" ||
@@ -140,12 +149,13 @@ const Registration = () => {
       upiId === "@" ||
       vehicleType === "vt" ||
       vehicleNumber == "" ||
-      licenseNumber == "" || name == ""
+      licenseNumber == "" ||
+      name == ""
     ) {
       Toast(toast.error, "Enter Correct Details!");
     } else {
       // disable btn
-    setIsClicked(true);
+      setIsClicked(true);
       const logisticsData = {
         email,
         name,
@@ -158,24 +168,28 @@ const Registration = () => {
         pincode,
         vehicleType,
         vehicleNumber,
-        licenseNumber
+        licenseNumber,
       };
       console.log(logisticsData);
-      setTimeout(()=>setIsClicked(false),3000);
-      const response = { serverStatus: true }; //backend api
-      if (response.serverStatus) {
-        setIsRegistered(true);
-        Toast(toast.success, "Registered successFully");
-      } else {
-        setIsRegistered(false);
-        Toast(toast.error, "Error In Registration");
-      }
+      setTimeout(() => setIsClicked(false), 3000);
+      //backend api
+      const response = {userId: "123456789", userType };
+      // checking registered user or not from server response
+        Toast(toast.success, "registered Successfully");
+        setUserData(response);
+        // clearing form function;
+        clearForm();
+        Toast(toast.update, "Redirecting....");
+        navigate("logisticdashboard");
     }
   };
-
   return (
     <Container>
-      <RegistrationHeader />
+      <Header
+        verificationHandler={handleEmailVerification}
+        headerType={"REGISTRATION"}
+        otpHandler={verifyOtp}
+      />
       {isOtpVerified &&
         (userType == "farmer" ? (
           <>
@@ -218,7 +232,9 @@ const Registration = () => {
               Register Now
             </Button>
           </>
-        ) :<></>)}
+        ) : (
+          <></>
+        ))}
     </Container>
   );
 };

@@ -7,16 +7,16 @@ const Container = ({ children }) => {
     <>
       <div className="flex justify-center items-center  flex-col h-[20vh] bc">
         <Logo />
-        <nav className="w-full max-w-sm flex flex-row justify-around bg-(--teritary) px-1 py-2 rounded-sm mb-4">
+        <nav className="w-full max-w-sm flex flex-row justify-around bg-(--teritary) px-1 py-2 rounded-sm mb-4 ">
           <Link
-            to={"/"}
-            className="text-black bg-(--primary) font-bold font-inter w-1/3 p-2 active:bg-(--secondary) rounded-sm text-center"
+            to="/"
+            className="text-black bg-(--primary) font-bold font-inter w-1/3 p-2 active:bg-(--teritary) rounded-sm text-center active:text-(--secondary)"
           >
             Register
           </Link>
           <Link
-            to={"login"}
-            className="text-black bg-(--primary) font-bold font-inter w-1/3 p-2 active:bg-(--secondary) rounded-sm text-center"
+            to="/login"
+            className="text-black bg-(--primary) font-bold font-inter w-1/3 p-2 active:bg-(--teritary) rounded-sm text-center active:text-(--secondary)"
           >
             Login
           </Link>

@@ -12,38 +12,12 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import OneTimePassword from "./OneTimePassword";
 import RegistrationContext from "../context/RegistrationContext";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 import Toast from "../../utils/toast";
 
-const RegistrationHeader = () => {
-  const {
-    email,
-    setEmail,
-    isCodeSent,
-    setCodeSent,
-    validateEmail,
-    isOtpVerified,
-    userType,
-    setUserType,
-  } = useContext(RegistrationContext);
-
-  const handleEmailVerification = () => {
-    // validating email
-    if (validateEmail(email)) {
-      // checking user is registered
-      const isRegistered = handleRegisteredUser(email);
-      if (!isRegistered) {
-        // email otp api implementation
-        setCodeSent(true);
-        // otp sent message
-        Toast(toast.success, "OTP sent Successfully");
-      } else {
-        Toast(toast.error, "User Already Registered! LOGIN");
-      }
-    } else {
-      Toast(toast.error, "Enter Proper Email!");
-    }
-  };
+const Header = ({ verificationHandler, headerType , otpHandler }) => {
+  const { email, setEmail, isCodeSent, isOtpVerified, userType, setUserType,} =
+    useContext(RegistrationContext);
 
   const handleUserSelect = (e) => {
     if (!userType) {
@@ -52,20 +26,11 @@ const RegistrationHeader = () => {
       setEmail(e.target.value);
     }
   };
-  const handleRegisteredUser = (email) => {
-    const response = "";
-    // send true or false from backend if user presents
-    if (response) {
-      return true;
-    } else {
-      return false;
-    }
-  };
   return (
     <>
       <header>
         <h1 className="font-inknut text-center text-2xl mt-1 font-bold">
-          REGISTRATION
+          {headerType}
         </h1>
       </header>
       {/* select dropdown for user selection disabled={isOtpVerified?true:false} */}
@@ -99,16 +64,18 @@ const RegistrationHeader = () => {
           <Button
             type="submit"
             className="text-white bg-(--secondary) font-bold text-[1.2rem] hover:bg-(--teritary) hover:text-black active:bg-(--teritary) active:text-black"
-            onClick={handleEmailVerification}
+            onClick={verificationHandler}
             disabled={isCodeSent ? true : false}
           >
             Verify
           </Button>
         </div>
       </div>
-      {(isCodeSent || isOtpVerified) && <OneTimePassword />}
+      {(isCodeSent || isOtpVerified) && (
+        <OneTimePassword otpHandler={otpHandler} />
+      )}
     </>
   );
 };
 
-export default RegistrationHeader;
+export default Header;

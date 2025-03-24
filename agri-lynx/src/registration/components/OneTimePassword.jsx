@@ -6,21 +6,10 @@ import {
 } from "@/components/ui/input-otp";
 import { Button } from "@/components/ui/button";
 import RegistrationContext from "../context/RegistrationContext";
-import {toast} from "react-toastify";
-import Toast from "@/utils/toast";
 
-const OneTimePassword = () => {
-  const { otp, setOtp, setOtpVerified ,isOtpVerified} = useContext(RegistrationContext);
-  
-  const verifyOtp = () => {
-    if (!otp || otp.length !== 6) {
-      Toast(toast.error,"Enter OTP!");
-    }else{
-      // otp verification api
-      setOtpVerified(true);
-      Toast(toast.success,"OTP Verified");
-    }
-  };
+
+const OneTimePassword = ({otpHandler}) => {
+  const { otp, setOtp,isOtpVerified} = useContext(RegistrationContext);
   
   return (
     <>
@@ -63,7 +52,7 @@ const OneTimePassword = () => {
         <Button
           type="submit"
           className="text-white bg-(--secondary) font-bold text-[1.2rem] mt-5"
-          onClick={verifyOtp}
+          onClick={otpHandler}
           disabled={isOtpVerified ? true : false}
         >
           Continue
