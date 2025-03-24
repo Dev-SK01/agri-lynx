@@ -4,7 +4,7 @@ import OtpInputField from '../components/OtpInputField'
 const FarmerLogin = (otp, setOtp, handleChange) => {
   return (
     <div className=' flex justify-center items-center h-dvh '>
-      <div className='items-center border-(--secondary) rounded-3xl border-2  w- h-100 p-4 grow-0' >
+      <div className='items-center border-(--secondary) rounded-3xl border-2   h-100 p-4 grow-0 ' >
 
         <form action="" className='justify-items-center flex-col items-center relative'>
           <h1 className="font-inknut  text-xl">LOGIN</h1>

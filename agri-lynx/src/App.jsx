@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import LocalMarketOwnerRegistration from './owners/LocalMarketOwnerRegistration'
 import FarmerLogin from './farmers/FarmerLogin'
+import FarmerProduceListing from './farmers/FarmerProduceListing'
 
 
 function App() {
@@ -9,7 +10,9 @@ function App() {
   return (
     <>
     {/* <LocalMarketOwnerRegistration /> */}
-    <FarmerLogin />
+    {/* <FarmerLogin /> */}
+    <FarmerProduceListing />
+
     </>
   )
 }
