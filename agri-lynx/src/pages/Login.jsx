@@ -12,7 +12,7 @@ const Login = () => {
         headerType={"LOGIN"}
         otpHandler={loginOtpVerify}
       />
-      <img src={bottomBg} alt="login-bottom-bg" className="mt-10"/>
+      <img src={bottomBg} alt="login-bottom-bg" className="absolute bottom-0"/>
     </Container>
   );
 };

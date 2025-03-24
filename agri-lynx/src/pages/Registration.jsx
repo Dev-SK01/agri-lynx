@@ -196,7 +196,7 @@ const Registration = () => {
         headerType={"REGISTRATION"}
         otpHandler={verifyOtp}
       />
-       {!isOtpVerified && <img src={bottomBg} alt="login-bottom-bg" className="mt-10"/>}
+       {!isOtpVerified && <img src={bottomBg} alt="login-bottom-bg" className="absolute bottom-0"/>}
       {isOtpVerified &&
         (userType == "farmer" ? (
           <>
