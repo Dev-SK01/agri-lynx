@@ -17,7 +17,8 @@ function App() {
       <Routes>
         <Route
           index
-          element={userData ? <Dashboard /> : <Registration />}
+          // element={userData ? <Dashboard /> : <Registration />}
+          element={<FarmerDashboard />}
         ></Route>
         <Route path="login" element={<Login />}></Route>
         <Route path="*" element={<NotFound />}></Route>
