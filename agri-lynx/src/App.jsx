@@ -13,8 +13,8 @@ function App() {
     <>
     {/* <LocalMarketOwnerRegistration /> */}
     {/* <FarmerLogin /> */}
-    {/* <FarmerProduceListing /> */}
-    <ApiCommodityList />
+    <FarmerProduceListing />
+    {/* <ApiCommodityList /> */}
     </>
   )
 }

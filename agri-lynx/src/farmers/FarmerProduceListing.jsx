@@ -11,24 +11,20 @@ import vector from "../assets/Vector.svg"
 const FarmerProduceListing = () => {
     return (
         // <div className=' flex justify-center items-center h-dvh '>
-        <div className='border-(--secondary)   items-center p-2   bg-(--primary) justify-items-center  absolute bottom-0 top-0 w-dvw  m-0 me-0'>
-            <header className='flex  rounded-xl h-16 pt-2 bg-(--green) mt-5  w-100 text-xl'>
-                <h1 className='  font-bold font-inter pt-1 ms-10 text-3xl '>Welcome ! Rishi! </h1>
-                <div className='ms-5 pb-1 '> <img src={avatar} alt="avatar" /></div>
+        <div className='flex-col border-(--secondary)   items-center p-2   bg-(--primary) justify-center justify-items-center  bottom-0 top-0 w-[95%] h-dvh m-0 me-0 fixed'>
+            <header className='flex rounded-xl h-16 pt-2  bg-(--green) mt-5  w-90 text-xl  '>
+                <h1 className=' flex font-bold font-inter pt-2  pb-2 ps-2 text-xl    justify-center w-[80%]'>Rishi</h1>
+                <div className=' pb-1 pe '> <img src={avatar} alt="avatar" /></div>
             </header>
             <div className='flex gap-2  font-inknut mt-8 text-2xl'>
                 <h1>Add Your Produce </h1> <div><img src={crops} alt="crops" /></div>
             </div>
             <div className=''>
-                <select className='bg-(--green) rounded-2xl p-1 text-1xl font-inter font-bold ps-3 mt-6 h-10 w-50 border-e-4 border-b-4 border-(--secondary)' name='user' > <img src={vector} alt="vector" />
-                    <option value="commodity">Select Commidity</option>
-                    <option value="commodity">Select Commidity</option>
-                    <option value="commodity">Select Commidity</option>
-                    <option value="commodity">Select Commidity</option>
-                </select>
-                {/* <div><ApiCommodityList /></div> */}
+            <ApiCommodityList />
+                   
+               
             </div>
-            <div>
+            <div >
                 <div className='mt-13  '>
                     <p className='font-bold font-inter text-lg'>MARKET PRICE RANGE ₹</p>
                     <input type="text " className=' mt-2 h-10 p-1 bg-(--teritary)  w-90' />
