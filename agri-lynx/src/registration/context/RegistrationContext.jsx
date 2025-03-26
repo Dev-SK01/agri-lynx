@@ -157,9 +157,9 @@ export const RegistrationContextProvider = ({ children }) => {
     } else {
       // otp verification api for login
       setOtpVerified(true);
-      setIsLoading(true);
+      // setIsLoading(true);
       // loading for user experience
-      setTimeout(() => setIsLoading(false), 2500);
+      // setTimeout(() => setIsLoading(false), 2500);
       Toast(toast.success, "Logging In....");
       const response = { userId: "123456789", userType };
       setUserData(response);

@@ -10,7 +10,7 @@ import VehicleDetails from "../registration/components/VehicleDetails";
 import Toast from "@/utils/toast";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import bottomBg from "../assets/login-bottom-bg.svg"
+import bottomBg from "../assets/login-bottom-bg.svg";
 const Registration = () => {
   const {
     isOtpVerified,
@@ -38,16 +38,15 @@ const Registration = () => {
     verifyOtp,
     userData,
     setUserData,
-    setIsLoading,
   } = useContext(RegistrationContext);
 
   const [isClicked, setIsClicked] = useState(false);
+  // router navigation
   const navigate = useNavigate();
   // farmers registration
   const handleFarmerRegistration = () => {
     // disable btn
     setIsClicked(true);
-    setIsLoading(true);
     if (
       phoneNumber === "pn" ||
       alternatePhoneNumber === "an" ||
@@ -84,23 +83,25 @@ const Registration = () => {
       console.log(farmerData);
       // settimg timout for btn disabled
       setTimeout(() => setIsClicked(false), 3000);
-      //backend api
-      const response = { userId: "123456789", userType };
-      // checking registered user or not from server response
-      Toast(toast.success, "registered Successfully");
-      setUserData(response);
-      // clearing form function;
-      clearForm();
-      Toast(toast.update, "Redirecting....");
-      navigate("farmerdashboard");
-      setTimeout(() => setIsLoading, 3000);
+      try {
+        //backend api
+        const response = { userId: "123456789", userType };
+        // checking registered user or not from server response
+        Toast(toast.success, "registered Successfully");
+        setUserData(response);
+        // clearing form function;
+        clearForm();
+        Toast(toast.update, "Redirecting....");
+        navigate("farmerdashboard");
+      } catch (err) {
+        console.log(err.message);
+      }
     }
   };
   // local market owners registration
   const handleLocalMarketRegistration = () => {
     // disable btn
     setIsClicked(true);
-    setIsLoading(true);
     if (
       phoneNumber === "pn" ||
       alternatePhoneNumber === "an" ||
@@ -126,16 +127,19 @@ const Registration = () => {
       };
       console.log(marketData);
       setTimeout(() => setIsClicked(false), 3000);
-      //backend api
-      const response = { userId: "123456789", userType };
-      // checking registered user or not from server response
-      Toast(toast.success, "registered Successfully");
-      setUserData(response);
-      // clearing form function;
-      clearForm();
-      Toast(toast.update, "Redirecting....");
-      navigate("localmarketdashboard");
-      setTimeout(() => setIsLoading(false), 3000);
+      try {
+        //backend api
+        const response = { userId: "123456789", userType };
+        // checking registered user or not from server response
+        Toast(toast.success, "registered Successfully");
+        setUserData(response);
+        // clearing form function;
+        clearForm();
+        Toast(toast.update, "Redirecting....");
+        navigate("localmarketdashboard");
+      } catch (err) {
+        console.log(err.message);
+      }
     }
   };
   // logistics registration
@@ -177,72 +181,85 @@ const Registration = () => {
       };
       console.log(logisticsData);
       setTimeout(() => setIsClicked(false), 3000);
-      //backend api
-      const response = { userId: "123456789", userType };
-      // checking registered user or not from server response
-      Toast(toast.success, "registered Successfully");
-      setUserData(response);
-      // clearing form function;
-      clearForm();
-      Toast(toast.update, "Redirecting....");
-      navigate("logisticdashboard");
-      setTimeout(()=> setIsLoading(false),3000);
+      try {
+        //backend api
+        const response = { userId: "123456789", userType };
+        // checking registered user or not from server response
+        Toast(toast.success, "registered Successfully");
+        setUserData(response);
+        // clearing form function;
+        clearForm();
+        Toast(toast.update, "Redirecting....");
+        navigate("logisticdashboard");
+      } catch (err) {
+        console.log(err.message);
+      }
     }
   };
   return (
-    <Container>
-      <Header
-        verificationHandler={handleEmailVerification}
-        headerType={"REGISTRATION"}
-        otpHandler={verifyOtp}
-      />
-       {!isOtpVerified && <img src={bottomBg} alt="login-bottom-bg" className="absolute bottom-0"/>}
-      {isOtpVerified &&
-        (userType == "farmer" ? (
-          <>
-            <PersonalDetails />
-            <AddressDetails />
-            <BankDetails />
-            <Button
-              type="submit"
-              className="text-white bg-(--secondary) font-bold text-[1.2rem] mt-5 font-inter mb-4 w-full max-w-sm active:bg-(--teritary) active:text-black"
-              disabled={isClicked}
-              onClick={handleFarmerRegistration}
-            >
-              Register Now
-            </Button>
-          </>
-        ) : userType == "market" ? (
-          <>
-            <PersonalDetails />
-            <AddressDetails />
-            <Button
-              type="submit"
-              className="text-white bg-(--secondary) font-bold text-[1.2rem] mt-5 font-inter mb-4 w-full max-w-sm active:bg-(--teritary) active:text-black"
-              disabled={isClicked}
-              onClick={handleLocalMarketRegistration}
-            >
-              Register Now
-            </Button>
-          </>
-        ) : userType == "logistic" ? (
-          <>
-            <PersonalDetails />
-            <AddressDetails />
-            <VehicleDetails />
-            <Button
-              type="submit"
-              className="text-white bg-(--secondary) font-bold text-[1.2rem] mt-5 font-inter mb-4 w-full max-w-sm active:bg-(--teritary) active:text-black"
-              disabled={isClicked}
-              onClick={handleLogisticsRegistration}
-            >
-              Register Now
-            </Button>
-          </>
-        ) : (
-          <></>
-        ))}
-    </Container>
+    !userData && (
+      <>
+        <Container>
+          <Header
+            verificationHandler={handleEmailVerification}
+            headerType={"REGISTRATION"}
+            otpHandler={verifyOtp}
+          />
+          {!isOtpVerified && (
+            <img
+              src={bottomBg}
+              alt="login-bottom-bg"
+              className="absolute bottom-0"
+            />
+          )}
+          {isOtpVerified &&
+            (userType == "farmer" ? (
+              <>
+                <PersonalDetails />
+                <AddressDetails />
+                <BankDetails />
+                <Button
+                  type="submit"
+                  className="text-white bg-(--secondary) font-bold text-[1.2rem] mt-5 font-inter mb-4 w-full max-w-sm active:bg-(--teritary) active:text-black"
+                  disabled={isClicked}
+                  onClick={handleFarmerRegistration}
+                >
+                  Register Now
+                </Button>
+              </>
+            ) : userType == "market" ? (
+              <>
+                <PersonalDetails />
+                <AddressDetails />
+                <Button
+                  type="submit"
+                  className="text-white bg-(--secondary) font-bold text-[1.2rem] mt-5 font-inter mb-4 w-full max-w-sm active:bg-(--teritary) active:text-black"
+                  disabled={isClicked}
+                  onClick={handleLocalMarketRegistration}
+                >
+                  Register Now
+                </Button>
+              </>
+            ) : userType == "logistic" ? (
+              <>
+                <PersonalDetails />
+                <AddressDetails />
+                <VehicleDetails />
+                <Button
+                  type="submit"
+                  className="text-white bg-(--secondary) font-bold text-[1.2rem] mt-5 font-inter mb-4 w-full max-w-sm active:bg-(--teritary) active:text-black"
+                  disabled={isClicked}
+                  onClick={handleLogisticsRegistration}
+                >
+                  Register Now
+                </Button>
+              </>
+            ) : (
+              <></>
+            ))}
+        </Container>
+      </>
+    )
   );
 };
 

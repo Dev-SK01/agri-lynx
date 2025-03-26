@@ -8,7 +8,7 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       <RegistrationContextProvider>
-        <App />
+        <App className="scroll-smooth"/>
       </RegistrationContextProvider>
     </BrowserRouter>
   </StrictMode>

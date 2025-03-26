@@ -1,26 +1,47 @@
-import React from 'react'
-import editBtn from "../../assets/editBtn.svg"
-const Produce = () => {
-  return (
-    <section className="flex w-full items-center justify-around  mt-8 bg-(--green) rounded-md py-8 relative">
-        <div className="bg-(--primary)">
-            product image
-        </div>
-        <img 
-            src={editBtn} 
-            alt="edit" 
-            className="bg-(--primary) rounded-md h-[25px] w-[25px] absolute top-1 right-1"
-        />
-        <div>
-            <p className="bg-(--primary)">Commodity Name</p>
-           <div className='flex items-center justify-around '>
-            <p className="bg-(--primary)">Quantity</p>
-            <p className="bg-(--primary)">Price</p>
-           </div>
-           <p className="bg-(--primary)">Market Price</p>
-        </div>
-    </section>
-  )
-}
+import React, { useContext } from "react";
+import editBtn from "../../assets/editBtn.svg";
+import tomato from "../../assets/tomato.jpg";
+import FarmerContext from "../context/FarmerContext";
 
-export default Produce
+const Produce = () => {
+  const { produceList, setProduceList } = useContext(FarmerContext);
+  // console.log("ProduceComponent:",produceList);
+
+  return produceList.map((produce) => (
+    <section
+      className="flex w-full items-center justify-evenly mt-8 bg-(--green) rounded-md py-2  relative"
+      key={produce.listingId}
+    >
+      <div className="bg-(--primary)">
+        <img
+          src={tomato}
+          alt={produce.commodity}
+          className="object-cover h-40 w-34 rounded-lg"
+        />
+      </div>
+      <img
+        src={editBtn}
+        alt="edit"
+        className="bg-(--primary) rounded-lg h-[25px] w-[25px] absolute top-1 right-1"
+      />
+      <div className="mr-4">
+        <p className="bg-(--primary) px-5 py-3 rounded-md font-inter font-bold text-center mr-2">
+          {produce.commodity}
+        </p>
+        <div className="flex items-center justify-around mt-4">
+          <p className="bg-(--primary) px-5 py-2 rounded-lg font-inter font-bold text-center">
+            {produce.quantity + "KG"}
+          </p>
+          <p className="bg-(--primary) px-5 py-2 rounded-lg font-inter font-bold text-center ml-2">
+            {produce.price + "/KG"}
+          </p>
+        </div>
+        <p className="bg-(--primary) px-5 py-3 rounded-lg font-inter font-bold text-center  mt-3 text-green-600">
+          &#8377;1200 - &#8377;13000
+        </p>
+      </div>
+    </section>
+  ));
+};
+
+export default Produce;
