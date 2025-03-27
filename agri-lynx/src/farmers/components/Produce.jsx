@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import editBtn from "../../assets/editBtn.svg";
 import tomato from "../../assets/tomato.jpg";
 import FarmerContext from "../context/FarmerContext";
@@ -7,6 +7,14 @@ const Produce = () => {
   const { produceList, setProduceList } = useContext(FarmerContext);
   // console.log("ProduceComponent:",produceList);
 
+  const fetchImage = async (commodity) => {
+    const SECRET_KEY = "tZgxfcaCQfk66V1uKAGMIOwwUMmK-IH2qEniGtwDfTc";
+    const res = await fetch(
+      `https://api.unsplash.com/search/photos?page=1&query=${commodity}&client_id=${SECRET_KEY}`
+    );
+    const data = await res.json();
+    return data.results[0].urls.small;
+  };
   return produceList.map((produce) => (
     <section
       className="flex w-full items-center justify-evenly mt-8 bg-(--green) rounded-md py-2  relative"
@@ -14,9 +22,10 @@ const Produce = () => {
     >
       <div className="bg-(--primary)">
         <img
-          src={tomato}
+          src={produce.imageUrl}
           alt={produce.commodity}
           className="object-cover h-40 w-34 rounded-lg"
+          loading="lazy"
         />
       </div>
       <img
