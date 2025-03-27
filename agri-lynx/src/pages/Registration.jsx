@@ -38,6 +38,7 @@ const Registration = () => {
     verifyOtp,
     userData,
     setUserData,
+    setOtpVerified,
   } = useContext(RegistrationContext);
 
   const [isClicked, setIsClicked] = useState(false);
@@ -93,6 +94,7 @@ const Registration = () => {
         clearForm();
         Toast(toast.update, "Redirecting....");
         navigate("farmerdashboard");
+        setOtpVerified(false);
       } catch (err) {
         console.log(err.message);
       }
@@ -137,6 +139,7 @@ const Registration = () => {
         clearForm();
         Toast(toast.update, "Redirecting....");
         navigate("localmarketdashboard");
+        setOtpVerified(false);
       } catch (err) {
         console.log(err.message);
       }
@@ -191,6 +194,7 @@ const Registration = () => {
         clearForm();
         Toast(toast.update, "Redirecting....");
         navigate("logisticdashboard");
+        setOtpVerified(false);
       } catch (err) {
         console.log(err.message);
       }

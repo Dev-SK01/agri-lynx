@@ -165,10 +165,13 @@ export const RegistrationContextProvider = ({ children }) => {
       setUserData(response);
       if (userType === "farmer") {
         navigate("farmerdashboard");
+        setOtpVerified(false);
       } else if (userType === "market") {
         navigate("localmarketdashboard");
+        setOtpVerified(false);
       } else {
         navigate("logisticdashboard");
+        setOtpVerified(false);
       }
     }
   };

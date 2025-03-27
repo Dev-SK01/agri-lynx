@@ -20,7 +20,7 @@ const Produce = () => {
       className="flex w-full items-center justify-evenly mt-8 bg-(--green) rounded-md py-2  relative"
       key={produce.listingId}
     >
-      <div className="bg-(--primary)">
+      <div className="bg-(--primary) rounded-lg">
         <img
           src={produce.imageUrl}
           alt={produce.commodity}

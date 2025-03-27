@@ -8,26 +8,30 @@ import Toast from "@/utils/toast";
 import { toast } from "react-toastify";
 
 const Search = () => {
+
   const { produceList, setProduceList, farmerProduces } =
     useContext(FarmerContext);
+
   // console.log("Search :",produceList);
+
   const searchProduce = (e) => {
     const produceName = e.target.value;
     // console.log(produceName.toLowerCase());
     const filteredProduceData = produceList.filter((produce) => {
       if (produce.commodity.toLowerCase().includes(produceName)) {
+        // returning the produce list
         return produce;
       }
     });
     // setting the filtered produce list
     if (filteredProduceData.length == 0 || produceName == "") {
-      Toast(toast.warn,"No Produces Found...");
+      Toast(toast.warn, "No Produces Found...");
       setProduceList(farmerProduces);
     } else {
       setProduceList(filteredProduceData);
     }
   };
-  
+
   return (
     <div className="flex w-full items-center justify-center mt-10">
       <SearchIcon className="absolute left-8" />

@@ -4,7 +4,7 @@ import RegistrationContext from "@/registration/context/RegistrationContext";
 const FarmerContext = createContext({});
 
 export const FarmerContextProvider = ({ children }) => {
-  const { userData } = useContext(RegistrationContext);
+  const {userData} = useContext(RegistrationContext);
   // farmer data from server
   const [farmerData, setFarmerData] = useState([
     {
@@ -72,8 +72,10 @@ export const FarmerContextProvider = ({ children }) => {
   const [isContentLoading, setIsContentLoading] = useState(false);
   // copying the farmer produce list 
   const farmerProduces = farmerData[0].productList || [];
+  console.log("FarmerContext:",farmerProduces);
+  
   const [produceList, setProduceList] = useState(farmerProduces);
-
+  // setting otp verifired false for toast container top 
   return (
     <FarmerContext
       value={{
