@@ -80,6 +80,7 @@ const Registration = () => {
         bankName,
         bankBranch,
         upiId,
+        userType // send res for login data
       };
       console.log(farmerData);
       // settimg timout for btn disabled
@@ -90,6 +91,8 @@ const Registration = () => {
         // checking registered user or not from server response
         Toast(toast.success, "registered Successfully");
         setUserData(response);
+        // localstorage for user data
+        localStorage.setItem("userData", JSON.stringify(response));
         // clearing form function;
         clearForm();
         Toast(toast.update, "Redirecting....");
@@ -126,6 +129,7 @@ const Registration = () => {
         district,
         state,
         pincode,
+        userType // send res for login data
       };
       console.log(marketData);
       setTimeout(() => setIsClicked(false), 3000);
@@ -135,6 +139,8 @@ const Registration = () => {
         // checking registered user or not from server response
         Toast(toast.success, "registered Successfully");
         setUserData(response);
+        // localstorage for user data
+        localStorage.setItem("userData", JSON.stringify(response));
         // clearing form function;
         clearForm();
         Toast(toast.update, "Redirecting....");
@@ -181,6 +187,7 @@ const Registration = () => {
         vehicleType,
         vehicleNumber,
         licenseNumber,
+        userType // send res for login data
       };
       console.log(logisticsData);
       setTimeout(() => setIsClicked(false), 3000);
@@ -190,6 +197,8 @@ const Registration = () => {
         // checking registered user or not from server response
         Toast(toast.success, "registered Successfully");
         setUserData(response);
+        // localstorage for user data
+        localStorage.setItem("userData", JSON.stringify(response));
         // clearing form function;
         clearForm();
         Toast(toast.update, "Redirecting....");

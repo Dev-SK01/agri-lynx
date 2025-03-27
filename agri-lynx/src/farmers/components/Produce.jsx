@@ -15,6 +15,7 @@ const Produce = () => {
     const data = await res.json();
     return data.results[0].urls.small;
   };
+
   return produceList.map((produce) => (
     <section
       className="flex w-full items-center justify-evenly mt-8 bg-(--green) rounded-md py-2  relative"
@@ -46,7 +47,7 @@ const Produce = () => {
           </p>
         </div>
         <p className="bg-(--primary) px-5 py-3 rounded-lg font-inter font-bold text-center  mt-3 text-green-600">
-          &#8377;1200 - &#8377;13000
+          &#8377;{produce.minPrice} - &#8377;{produce.maxPrice}
         </p>
       </div>
     </section>

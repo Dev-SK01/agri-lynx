@@ -6,9 +6,9 @@ const Dashboard = () => {
   const { userData } = useContext(RegistrationContext);
   return (
     <>
-      {userData.userType === "farmer" ? (
+      {userData?.userType === "farmer" ? (
         <FarmerDashboard />
-      ) : userData.userType === "market" ? (
+      ) : userData?.userType === "market" ? (
         <FarmerDashboard />
       ) : (
         <FarmerDashboard />

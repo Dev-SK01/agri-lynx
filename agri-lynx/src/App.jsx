@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import Registration from "./pages/Registration";
 import RegistrationContext from "./registration/context/RegistrationContext";
 import { ToastContainer, Slide } from "react-toastify";
@@ -11,9 +11,17 @@ import Dashboard from "./pages/Dashboard";
 import { BadgeCheck, CircleAlert } from "lucide-react";
 import Loader from "./utils/Loader";
 import { FarmerContextProvider } from "./farmers/context/FarmerContext";
+import FarmerProfile from "./farmers/components/FarmerProfile";
+
 function App() {
-  const { userData, isOtpVerified, isLoading } =
+  const { userData, isOtpVerified, isLoading, setUserData } =
     useContext(RegistrationContext);
+    useEffect(() => {
+      // localStorage userData for
+      const localUserData = JSON.parse(localStorage.getItem("userData"));
+      setUserData(localUserData);
+      console.log(userData, "Got It!");
+    }, []);
   return (
     <>
       <FarmerContextProvider>
@@ -23,14 +31,12 @@ function App() {
             element={userData ? <Dashboard /> : <Registration />}
             // element={<FarmerDashboard />}
           ></Route>
-          <Route path="login" element={<Login />}></Route>
+          <Route path="/login" element={<Login />}></Route>
           <Route path="*" element={<NotFound />}></Route>
           {/* procted Route */}
           <Route element={<ProctedRoute />}>
-            <Route 
-              path="farmerdashboard" 
-              element={<FarmerDashboard />}
-            ></Route>
+            <Route path="farmerdashboard" element={<FarmerDashboard />} />
+            <Route path="farmerprofile" element={<FarmerProfile />} />
             <Route
               path="localmarketdashboard"
               element={<FarmerDashboard />}

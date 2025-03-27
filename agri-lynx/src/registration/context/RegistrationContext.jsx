@@ -161,8 +161,11 @@ export const RegistrationContextProvider = ({ children }) => {
       // loading for user experience
       // setTimeout(() => setIsLoading(false), 2500);
       Toast(toast.success, "Logging In....");
+      // get userType and userId from api
       const response = { userId: "123456789", userType };
       setUserData(response);
+      // localstorage for user data
+      localStorage.setItem("userData", JSON.stringify(response));
       if (userType === "farmer") {
         navigate("farmerdashboard");
         setOtpVerified(false);

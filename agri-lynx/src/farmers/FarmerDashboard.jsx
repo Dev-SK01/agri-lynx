@@ -8,7 +8,8 @@ import { PulseLoader } from "react-spinners";
 import FarmerContext from "./context/FarmerContext";
 import Toast from "@/utils/toast";
 import { toast } from "react-toastify";
-
+import welcomeImg from "../assets/welcome.svg";
+import { Outlet } from "react-router-dom";
 const FarmerDashboard = () => {
   const {
     userData,
@@ -16,6 +17,8 @@ const FarmerDashboard = () => {
     setFarmerData,
     isContentLoading,
     setIsContentLoading,
+    produceList,
+    setProduceList,
   } = useContext(FarmerContext);
 
   const fetchFarmerDataById = () => {
@@ -55,11 +58,20 @@ const FarmerDashboard = () => {
         >
           {!isContentLoading && (
             <>
-              <Produce />
+              {produceList.length ? (
+                <Produce />
+              ) : (
+                <img
+                  src={welcomeImg}
+                  alt="welcome-img"
+                  className="object-fit h-[67vh]"
+                />
+              )}
             </>
           )}
           {isContentLoading && <PulseLoader />}
         </div>
+        {/* bottom navigation menu */}
         <BottomNavigation />
       </div>
     </>
