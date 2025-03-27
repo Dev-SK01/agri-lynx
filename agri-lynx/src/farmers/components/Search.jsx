@@ -15,7 +15,7 @@ const Search = () => {
   // console.log("Search :",produceList);
 
   const searchProduce = (e) => {
-    const produceName = e.target.value;
+    const produceName = e.target.value.toLowerCase();
     // console.log(produceName.toLowerCase());
     const filteredProduceData = produceList.filter((produce) => {
       if (produce.commodity.toLowerCase().includes(produceName)) {
