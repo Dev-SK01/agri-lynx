@@ -1,42 +1,53 @@
-import React, { useState } from "react";
-import data from "./../farmers/data.json";
-import axios from "axios";
-const ApiCommodityList = () => {
-  const commodityData = JSON.parse(JSON.stringify(data));
-  const params = new URLSearchParams();
-  params.append("language", "en");
-  params.append("stateName", "TAMIL NADU");
-  params.append("apmcName", "-- Select APMCs --");
-  params.append("fromDate", "2025-02-28");
-  params.append("toDate", "2025-02-28");
+import React, { useEffect, useState } from "react";
+
+const ApiCommodityList = ({handleChange}) => {
+
+
+  async function getCommodityList () {
+    try{
+      const response = await fetch(
+        "https://cors-proxy-vauu.onrender.com/https://enam.gov.in/web/Ajax_ctrl/commodity_list",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: new URLSearchParams({
+            language: "en",
+            stateName: "TAMIL NADU",
+            apmcName: "-- Select APMCs --",
+            fromDate: "2025-02-28",
+            toDate: "2025-02-28",
+          }),
+        }
+      );
+      const apiCommodityList = await response.json();
+      // console.log(apiCommodityList);
+      setCommodityList(apiCommodityList.data);
+    }catch(err){
+      console.log(err.message);
       
-  async function apiCall() {
-    const response = await axios.post(
-      "https://cors-anywhere.herokuapp.com/https://enam.gov.in/web/Ajax_ctrl/commodity_list",
-      params,
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded,charset=UTF-8",
-        },
-        crossdomain: true,
-      }
-    );
-    const apiCommodityList = await response.data;
-    console.log(apiCommodityList);
+    }
   }
-  apiCall();
-  const [commodityList, setCommodityList] = useState(new Option(length));
+  const [commodityList, setCommodityList] = useState([]);
+  // console.log(commodityList);
+  useEffect(() => {
+    getCommodityList();
+  }, []);
+  // console.log(optionValue);
+
   return (
     <>
       <select
+        onChange={handleChange}
         name="commodity-list"
         id="commodity-list "
-        className="bg-(--green) rounded-2xl p-1 text-1xl font-inter font-bold ps-3 mt-6 h-10 w-50 border-e-4 border-b-4 border-(--secondary)"
+        className="bg-(--green) rounded-2xl p-1 text-xl font-inter font-bold ps-3 mt-6 h-10 w-60 border-e-4 border-b-4 border-(--secondary)"
       >
         <option value={0}>Select Commodity</option>
-        {commodityData.data.map((data) => (
+        {commodityList.map((data,index) => (
           <>
-            <option>{data.commodity}</option>
+            <option value={data.commodity} key={index}>{data.commodity}</option>
           </>
         ))}
       </select>
