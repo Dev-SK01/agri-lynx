@@ -4,7 +4,9 @@ import RegistrationContext from "@/registration/context/RegistrationContext";
 const FarmerContext = createContext({});
 
 export const FarmerContextProvider = ({ children }) => {
-  const {userData ,setUserData} = useContext(RegistrationContext);
+  const {userData ,setUserData ,setOtp,setEmail,setCodeSent} = useContext(RegistrationContext);
+  // clearing opt and email after user login
+  setOtp("");setEmail("");setCodeSent(false);
   // farmer data from server
   const [farmerData, setFarmerData] = useState(
     {

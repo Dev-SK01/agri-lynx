@@ -8,10 +8,11 @@ import Login from "./pages/Login";
 import FarmerDashboard from "./farmers/FarmerDashboard";
 import ProctedRoute from "./ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
-import { BadgeCheck, CircleAlert } from "lucide-react";
+import { BadgeCheck, CircleAlert ,MessageCircleWarningIcon} from "lucide-react";
 import Loader from "./utils/Loader";
 import { FarmerContextProvider } from "./farmers/context/FarmerContext";
 import FarmerProfile from "./farmers/components/FarmerProfile";
+import UpdateProduce from "./farmers/components/UpdateProduce";
 
 function App() {
   const { userData, isOtpVerified, isLoading, setUserData } =
@@ -20,7 +21,7 @@ function App() {
       // localStorage userData for
       const localUserData = JSON.parse(localStorage.getItem("userData"));
       setUserData(localUserData);
-      console.log(userData, "Got It!");
+      console.log("Done.");
     }, []);
   return (
     <>
@@ -37,6 +38,9 @@ function App() {
           <Route element={<ProctedRoute />}>
             <Route path="farmerdashboard" element={<FarmerDashboard />} />
             <Route path="farmerprofile" element={<FarmerProfile />} />
+            <Route path="updateproduce">
+              <Route path=":listingId" element={<UpdateProduce />} />
+            </Route>
             <Route
               path="localmarketdashboard"
               element={<FarmerDashboard />}
@@ -68,6 +72,8 @@ function App() {
               return <CircleAlert className="stroke-red-500" />;
             case "success":
               return <BadgeCheck className="stroke-green-500" />;
+            case "warning":
+              return <MessageCircleWarningIcon className="stroke-yellow-500" />
             default:
               return null;
           }

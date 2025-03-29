@@ -20,7 +20,7 @@ const FarmerProfile = () => {
   };
 
   return (
-    <div className="flex items-center justify-center flex-col">
+    <div className="flex items-center justify-center flex-col scrollbar">
       <div className="w-[95%] h-[10vh] mt-4 ">
         <Navigation />
       </div>

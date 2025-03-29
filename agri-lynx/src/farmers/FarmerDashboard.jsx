@@ -20,9 +20,8 @@ const FarmerDashboard = () => {
     produceList,
     setProduceList,
   } = useContext(FarmerContext);
-
   const fetchFarmerDataById = () => {
-    // here used user data from the registration context for fetch user data by id
+    // here used user data from the registration context to fetch user data by id
     try {
       setIsContentLoading(true);
       // backend api
@@ -69,7 +68,7 @@ const FarmerDashboard = () => {
               )}
             </>
           )}
-          {isContentLoading && <PulseLoader />}
+          {isContentLoading && <PulseLoader color="#4CA14D" />}
         </div>
         {/* bottom navigation menu */}
         <BottomNavigation />

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import editBtn from "../../assets/editBtn.svg";
-import tomato from "../../assets/tomato.jpg";
 import FarmerContext from "../context/FarmerContext";
+import { Link } from "react-router-dom";
 
 const Produce = () => {
   const { produceList, setProduceList } = useContext(FarmerContext);
@@ -29,11 +29,13 @@ const Produce = () => {
           loading="lazy"
         />
       </div>
-      <img
-        src={editBtn}
-        alt="edit"
-        className="bg-(--primary) rounded-lg h-[25px] w-[25px] absolute top-1 right-1"
-      />
+      <Link to={`/updateproduce/${produce.listingId}`}>
+        <img
+          src={editBtn}
+          alt="edit"
+          className="bg-(--primary) rounded-lg h-[25px] w-[25px] absolute top-1 right-1"
+        />
+      </Link>
       <div className="mr-4">
         <p className="bg-(--primary) px-5 py-3 rounded-md font-inter font-bold text-center mr-2">
           {produce.commodity}
