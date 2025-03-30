@@ -1,26 +1,21 @@
 import React from 'react'
-import Selection from './contents/Selection';
-import Email from './contents/Email';
-import Personal  from './contents/Personal';
-import OtpInputField from './contents/Otp';
+import Selection from './Registration/Selection';
+import Email from './Registration/Email';
+import Personal  from './Registration/Personal';
+import OtpInputField from './Registration/Otp';
 
-import { Button } from '@/components/ui/button';
+
 
 const LocalMarketOwnerRegistration = () => {
 
 
   return (
     <div className="place-content-center flex flex-col items-center justify-center ">
-
-      <h1 className="font-inknut text-2xl mt-5  text-center">Registration</h1>
-
-     
+     <h1 className="font-inknut text-2xl mt-5  text-center">Registration</h1>
       <Selection />
       <Email />
       <OtpInputField/>
       <Personal/>
-      
-      
     </div>
 
   )
