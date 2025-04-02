@@ -9,8 +9,8 @@ function App() {
   return (
     <>
       {/* <LocalMarketOwnerRegistration/>  */}
-       {/* <LocalMarketOwnerProductList/>  */}
-       <LocalMarketOwnerMyOrder/>
+       <LocalMarketOwnerProductList/> 
+{/*        <LocalMarketOwnerMyOrder/> */}
     </>
   )
 }
