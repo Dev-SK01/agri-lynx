@@ -33,7 +33,7 @@ const ApiCommodityList = ({handleChange}) => {
   // console.log(commodityList);
   useEffect(() => {
     getCommodityList();
-  }, []);
+  }, [commodityList]);
   // console.log(optionValue);
 
   return (
