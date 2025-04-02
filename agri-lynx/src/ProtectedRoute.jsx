@@ -4,7 +4,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 
 const ProctedRoute = () => {
   const{userData} = useContext(RegistrationContext);
-  console.log(userData);
+  console.log("Procted Route :",userData);
   if(!userData){
     return <Navigate to="/"/>
   }

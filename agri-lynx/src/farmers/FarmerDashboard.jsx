@@ -9,7 +9,7 @@ import FarmerContext from "./context/FarmerContext";
 import Toast from "@/utils/toast";
 import { toast } from "react-toastify";
 import welcomeImg from "../assets/welcome.svg";
-import { Outlet } from "react-router-dom";
+
 const FarmerDashboard = () => {
   const {
     userData,
@@ -19,7 +19,9 @@ const FarmerDashboard = () => {
     setIsContentLoading,
     produceList,
     setProduceList,
+    farmerProduces
   } = useContext(FarmerContext);
+
   const fetchFarmerDataById = () => {
     // here used user data from the registration context to fetch user data by id
     try {
@@ -37,7 +39,25 @@ const FarmerDashboard = () => {
     }
   };
 
+  const searchProduce = (e) => {
+    const produceName = e.target.value.toLowerCase();
+    // console.log(produceName.toLowerCase());
+    const filteredProduceData = produceList.filter((produce) => {
+      if (produce.commodity.toLowerCase().includes(produceName)) {
+        // returning the produce list
+        return produce;
+      }
+    });
+    // setting the filtered produce list
+    if (filteredProduceData.length == 0 || produceName == "") {
+      Toast(toast.warn, "No Produces Found...");
+      setProduceList(farmerProduces);
+    } else {
+      setProduceList(filteredProduceData);
+    }
+  };
   useEffect(() => {
+    // fetching farmer data using userData
     fetchFarmerDataById();
   }, []);
 
@@ -46,7 +66,7 @@ const FarmerDashboard = () => {
       <div className="flex items-center justify-center flex-col">
         <div className="w-[95%] h-[20vh] mt-4">
           <Navigation />
-          <Search />
+          <Search searchFunction={searchProduce}/>
         </div>
         <div
           className={
