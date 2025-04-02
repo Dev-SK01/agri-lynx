@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Orders = ({ orderData }) => {
   return orderData.map((order) => (
     <Link to={`/farmerorderdetails/${order.orderId}`}>
-      <section className="flex w-full items-center justify-between mt-8 bg-(--teritary) rounded-md py-2  relative border-l-8 border-l-green-600">
+      <section className="flex w-full items-center justify-between mt-8 bg-(--teritary) rounded-md py-2  relative border-l-8 border-l-green-600" key={order.orderId}>
         <div className="ml-4">
           <p className="bg-(--primary) rounded-sm font-inter font-bold px-18 py-2 text-center  mb-2">
             {order.commodity}

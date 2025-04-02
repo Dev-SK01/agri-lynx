@@ -139,7 +139,7 @@ export const FarmerContextProvider = ({ children }) => {
   );
   const [packedOrders, setPackedOrders] = useState([
     {
-      orderId: "9g3h57hs34n84hi08er38rje",
+      orderId: "9g3h57hs34n84hi08er38swe",
       listingId: "u7g6b52bd7dn9n3b",
       quantity: "100",
       price: "250",
@@ -262,7 +262,7 @@ export const FarmerContextProvider = ({ children }) => {
   ]);
   const [deliveredorders, setDeliveredOrders] = useState([
     {
-      orderId: "9g3h57hs34n84hi08er38rje",
+      orderId: "9g3h57hs34n84hi08er38w809",
       listingId: "u7g6b52bd7dn9n3b",
       quantity: "100",
       price: "250",
@@ -302,7 +302,8 @@ export const FarmerContextProvider = ({ children }) => {
     },
   ]);
   const [selectedStatus, setSelectedStatus] = useState("ordered");
-  
+  // combining all orders
+  const allOrders = farmerOrders.concat(packedOrders,shippedOrders,deliveredorders,cancelledOrders);
   return (
     <FarmerContext
       value={{
@@ -325,7 +326,8 @@ export const FarmerContextProvider = ({ children }) => {
         setcancelledOrders,
         deliveredorders,
         setDeliveredOrders,
-        selectedStatus, setSelectedStatus
+        selectedStatus, setSelectedStatus,
+        allOrders
       }}
     >
       {children}
