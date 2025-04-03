@@ -32,7 +32,7 @@ const Filter = () => {
       setPackedOrders(res);
       setTimeout(() => setIsContentLoading(false), 2000);
     } catch (err) {
-      Toast(toast.error, "Failed To Get orders!");
+      Toast(toast.error, err.message);
     }
   };
   const handlePackedOrders = () => {
@@ -45,7 +45,7 @@ const Filter = () => {
       setFarmerOrders(res);
       setTimeout(() => setIsContentLoading(false), 2000);
     } catch (err) {
-      Toast(toast.error, "Failed To Get orders!");
+      Toast(toast.error,err.message);
     }
   };
   const handleShippedOrders = () => {
@@ -58,7 +58,7 @@ const Filter = () => {
       setShippedOrders(res);
       setTimeout(() => setIsContentLoading(false), 2000);
     } catch (err) {
-      Toast(toast.error, "Failed To Get orders!");
+      Toast(toast.error, err.message);
     }
   };
   const handleDeliveredOrders = () => {
@@ -71,7 +71,7 @@ const Filter = () => {
       setDeliveredOrders(res);
       setTimeout(()=> setIsContentLoading(false),2000);
     }catch(err){
-      Toast(toast.error,"Failed To Get orders!")
+      Toast(toast.error,err.message)
     }
   }
   const handleCancelledOrders = () => {
@@ -84,7 +84,7 @@ const Filter = () => {
       setcancelledOrders(res);
       setTimeout(()=> setIsContentLoading(false),2000);
     }catch(err){
-      Toast(toast.error,"Failed To Get orders!")
+      Toast(toast.error,err.message)
     }
   }
 
@@ -93,7 +93,7 @@ const Filter = () => {
     <div className="flex rounded-sm  p-2 bg-(--green) mt-5 w-full text-xl justify-between items-center overflow-x-scroll scrollbar">
       <button
         onClick={handleOrderedOrders}
-        className={`rounded-sm font-medium font-inter ml-2 px-2 py-1 ${
+        className={`rounded-sm font-bold font-inter ml-2 px-2 py-1 ${
           selectedStatus == "ordered" &&
           "bg-(--primary) border-1 border-green-600"
         }`}
@@ -102,7 +102,7 @@ const Filter = () => {
       </button>
       <button
         onClick={handlePackedOrders}
-        className={`rounded-sm font-medium font-inter ml-2 px-2 py-1 ${
+        className={`rounded-sm font-bold font-inter ml-2 px-2 py-1 ${
           selectedStatus == "packed" &&
           "bg-(--primary) border-1 border-green-600"
         }`}
@@ -111,7 +111,7 @@ const Filter = () => {
       </button>
       <button
         onClick={handleShippedOrders}
-        className={`rounded-sm font-medium font-inter ml-2 px-2 py-1 ${
+        className={`rounded-sm font-bold font-inter ml-2 px-2 py-1 ${
           selectedStatus == "shipped" &&
           "bg-(--primary) border-1 border-green-600"
         }`}
@@ -120,7 +120,7 @@ const Filter = () => {
       </button>
       <button
         onClick={handleDeliveredOrders}
-        className={`rounded-sm font-medium font-inter ml-2 px-2 py-1 ${
+        className={`rounded-sm font-bold font-inter ml-2 px-2 py-1 ${
           selectedStatus == "delivered" &&
           "bg-(--primary) border-1 border-green-600"
         }`}
@@ -129,7 +129,7 @@ const Filter = () => {
       </button>
       <button
         onClick={handleCancelledOrders}
-        className={`rounded-sm font-medium font-inter ml-2 px-2 py-1 ${
+        className={`rounded-sm font-bold font-inter ml-2 px-2 py-1 ${
           selectedStatus == "cancelled" &&
           "bg-(--primary) border-1 border-green-600"
         }`}

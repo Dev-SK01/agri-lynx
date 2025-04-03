@@ -39,7 +39,7 @@ const FarmerOrders = () => {
       }
       setTimeout(() => setIsContentLoading(false), 2000);
     } catch (err) {
-      console.log(err.message);
+      Toast(toast.error,err.message);
     }
   };
 
