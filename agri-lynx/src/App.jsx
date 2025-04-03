@@ -1,13 +1,18 @@
-import { useState } from 'react'
+import React from 'react'
+// import { useState } from 'react'
 import LocalMarketOwnerRegistration from './owners/LocalMarketOwnerRegistration'
-function App() {
+import LocalMarketOwnerDashboard from './owners/LocalMarketOwnerDashboard'
 
 
+const App = () => {
   return (
     <>
-    <LocalMarketOwnerRegistration />
-    </>
+
+   {/* <LocalMarketOwnerRegistration /> */}
+   <LocalMarketOwnerDashboard/>
+  </>
   )
 }
 
 export default App
+
