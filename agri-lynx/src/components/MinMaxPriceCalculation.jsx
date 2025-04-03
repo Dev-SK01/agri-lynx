@@ -8,7 +8,7 @@ const MinMaxPriceCalculation = ({ marketPrice }) => {
         <input
           type="text"
           className=" mt-2 h-10 p-1 bg-(--teritary) font-inter font-bold text-xl text-(--secondary) w-90"
-          value={"  " + marketPrice.minPrice + " - " + marketPrice.maxPrice}
+          value={"  ₹" + marketPrice.minPrice + " - " +" ₹"+ marketPrice.maxPrice}
           disabled = {true}
         />
       </div>
