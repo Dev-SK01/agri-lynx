@@ -19,6 +19,7 @@ import FarmerProfile from "./farmers/components/FarmerProfile";
 import UpdateProduce from "./farmers/components/UpdateProduce";
 import FarmerOrders from "./farmers/FarmerOrders";
 import FarmerOrderDetails from "./farmers/components/FarmerOrderDetails";
+import FarmerAnalytics from "./farmers/FarmerAnalytics";
 
 function App() {
   const { userData, isOtpVerified, isLoading, setUserData } =
@@ -53,6 +54,7 @@ function App() {
             <Route path="farmerorderdetails">
               <Route path=":orderId" element={<FarmerOrderDetails />}/>
             </Route>
+            <Route path="farmeranalytics" element={<FarmerAnalytics />} />
             {/* local market Routes */}
             <Route path="localmarketdashboard" element={<FarmerDashboard />} />
             {/* Loginstics Routes */}

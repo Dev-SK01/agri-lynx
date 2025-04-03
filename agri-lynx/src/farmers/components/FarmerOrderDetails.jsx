@@ -152,109 +152,106 @@ const FarmerOrderDetails = () => {
         {!isContentLoading && (
           <>
             {/* order details */}
-            <div>
+            <div className="pb-2 border-b-1 border-b-green-300">
               <div className="flex text-center items-center ">
                 <img src={orderImg} alt="orderImg" />
-                <h1 className="font-extrabold text-[1.4rem] mt-2">
+                <h1 className="font-extrabold text-[1.4rem] mt-2 font-inter">
                   ORDER DETAILS
                 </h1>
               </div>
               <div className="ml-12">
-                <span className="font-[600]">
+                <span className="font-[600] font-inter">
                   COMMODITY : <span>{orderData[0]?.commodity}</span>
                 </span>
                 <br />
-                <span className="font-[600]">
+                <span className="font-[600] font-inter">
                   QUANTITY : <span>{orderData[0]?.quantity}.KG</span>
                 </span>
                 <br />
-                <span className="font-[600]">
+                <span className="font-[600] font-inter">
                   PRICE : &#8377; <span>{orderData[0]?.price}</span>
                 </span>
                 <br />
-                <span className="font-[600]">
+                <span className="font-[600] font-inter">
                   COMMODITY PRICE : &#8377;{" "}
                   <span>{orderData[0]?.commodityPrice}</span>
                 </span>
                 <br />
               </div>
             </div>
-            <hr />
             {/* customer details */}
-            <div className="mt-2">
+            <div className="pb-2 border-b-1 border-b-green-300">
               <div className="flex text-center items-center ">
                 <img src={avatar} alt="avatar" />
-                <h1 className="font-extrabold text-[1.4rem] mt-2">CUSTOMER</h1>
+                <h1 className="font-extrabold text-[1.4rem] mt-2 font-inter">CUSTOMER</h1>
               </div>
               <div className="ml-12">
-                <span className="font-[600]">
+                <span className="font-[600] font-inter">
                   NAME : <span>{orderData[0]?.customer?.name}</span>
                 </span>
                 <br />
-                <span className="font-[600]">
+                <span className="font-[600] font-inter">
                   NUMBER : +91<span>{orderData[0]?.customer?.phoneNumber}</span>
                 </span>
                 <br />
-                <span className="font-[600]">
+                <span className="font-[600] font-inter">
                   EMAIL : <span>{orderData[0]?.customer?.email}</span>
                 </span>
                 <br />
               </div>
             </div>
-            <hr />
             {/* logistics details */}
             {orderData[0]?.logistics && (
-              <>
+              <div className="pb-2 border-b-1 border-b-green-300">
                 <div className="mt-4 ml-2">
                   <div className="flex text-center items-center ">
                     <img src={logisticImg} alt="avatar" />
-                    <h1 className="font-extrabold text-[1.4rem] mt-2 ml-2">
+                    <h1 className="font-extrabold text-[1.4rem] mt-2 font-inter ml-2">
                       LOGISTICS
                     </h1>
                   </div>
                   <div className="ml-12">
-                    <span className="font-[600]">
+                    <span className="font-[600] font-inter">
                       NAME : <span>{orderData[0]?.logistics?.name}</span>
                     </span>
                     <br />
-                    <span className="font-[600]">
+                    <span className="font-[600] font-inter">
                       NUMBER : +91
                       <span>{orderData[0]?.logistics?.phoneNumber}</span>
                     </span>
                     <br />
-                    <span className="font-[600]">
+                    <span className="font-[600] font-inter">
                       EMAIL : <span>{orderData[0]?.logistics?.email}</span>
                     </span>
                     <br />
                   </div>
                 </div>
-                <hr />
-              </>
+  
+              </div>
             )}
             {/* address details */}
-            <div className="mt-4 ml-2">
+            <div className="mt-4 pb-2 border-b-1 border-b-green-300">
               <div className="flex text-center items-center ">
                 <img src={locationImg} alt="avatar" />
-                <h1 className="font-extrabold text-[1.4rem] mt-2 ml-2">
+                <h1 className="font-extrabold text-[1.4rem] mt-2 font-inter ml-2">
                   DELIVER TO
                 </h1>
               </div>
               <div className="ml-12">
-                <span className="font-[600]">
+                <span className="font-[600] font-inter">
                   ADDRESS : <span>{orderData[0]?.customer?.address}</span>
                 </span>
                 <br />
-                <span className="font-[600]">
+                <span className="font-[600] font-inter">
                   DISTRICT : <span>{orderData[0]?.customer?.district}</span>
                 </span>
                 <br />
-                <span className="font-[600]">
+                <span className="font-[600] font-inter">
                   PINCODE : <span>{orderData[0]?.customer?.pincode}</span>
                 </span>
                 <br />
               </div>
             </div>
-            <hr />
           </>
         )}
         {isContentLoading && <PulseLoader color="#4CA14D" />}

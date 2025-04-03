@@ -27,7 +27,7 @@ const BottomNavigation = () => {
           />
         </div>
       </Link>
-      <Link to="login">
+      <Link to="/farmeranalytics">
         <div className="h-[50px] w-[50px] bg-(--primary) rounded-sm flex items-center justify-center">
           <img
             src={analyticsIcon}
