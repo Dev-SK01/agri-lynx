@@ -54,12 +54,12 @@ const FarmerOrderDetails = () => {
         const res = true;
         if (res) {
           Toast(toast.success, "Order Status Updated Successfully");
-        }else{
+        } else {
           Toast(toast.error, "Failed To Update Status!");
         }
         setTimeout(() => setIsContentLoading(false), 2000);
       } catch (err) {
-        Toast(toast.error,err.message);
+        Toast(toast.error, err.message);
       }
     }
   };
@@ -93,7 +93,7 @@ const FarmerOrderDetails = () => {
           className="text-black text-center"
           disabled={
             orderData[0].orderStatus === "delivered" ||
-            orderData[0].orderStatus === "cancelled" || 
+            orderData[0].orderStatus === "cancelled" ||
             orderData[0].orderStatus === "shipped"
               ? true
               : false
@@ -155,98 +155,106 @@ const FarmerOrderDetails = () => {
             <div>
               <div className="flex text-center items-center ">
                 <img src={orderImg} alt="orderImg" />
-                <h1 className="font-bold text-[1.4rem] mt-2">ORDER DETAILS</h1>
+                <h1 className="font-extrabold text-[1.4rem] mt-2">
+                  ORDER DETAILS
+                </h1>
               </div>
               <div className="ml-12">
-                <span className="font-[500]">
+                <span className="font-[600]">
                   COMMODITY : <span>{orderData[0]?.commodity}</span>
                 </span>
                 <br />
-                <span className="font-[500]">
+                <span className="font-[600]">
                   QUANTITY : <span>{orderData[0]?.quantity}.KG</span>
                 </span>
                 <br />
-                <span className="font-[500]">
+                <span className="font-[600]">
                   PRICE : &#8377; <span>{orderData[0]?.price}</span>
                 </span>
                 <br />
-                <span className="font-[500]">
+                <span className="font-[600]">
                   COMMODITY PRICE : &#8377;{" "}
                   <span>{orderData[0]?.commodityPrice}</span>
                 </span>
                 <br />
               </div>
             </div>
+            <hr />
             {/* customer details */}
             <div className="mt-2">
               <div className="flex text-center items-center ">
                 <img src={avatar} alt="avatar" />
-                <h1 className="font-bold text-[1.4rem] mt-2">CUSTOMER</h1>
+                <h1 className="font-extrabold text-[1.4rem] mt-2">CUSTOMER</h1>
               </div>
               <div className="ml-12">
-                <span className="font-[500]">
+                <span className="font-[600]">
                   NAME : <span>{orderData[0]?.customer?.name}</span>
                 </span>
                 <br />
-                <span className="font-[500]">
+                <span className="font-[600]">
                   NUMBER : +91<span>{orderData[0]?.customer?.phoneNumber}</span>
                 </span>
                 <br />
-                <span className="font-[500]">
+                <span className="font-[600]">
                   EMAIL : <span>{orderData[0]?.customer?.email}</span>
                 </span>
                 <br />
               </div>
             </div>
+            <hr />
             {/* logistics details */}
             {orderData[0]?.logistics && (
-              <div className="mt-4 ml-2">
-                <div className="flex text-center items-center ">
-                  <img src={logisticImg} alt="avatar" />
-                  <h1 className="font-bold text-[1.4rem] mt-2 ml-2">
-                    LOGISTICS
-                  </h1>
+              <>
+                <div className="mt-4 ml-2">
+                  <div className="flex text-center items-center ">
+                    <img src={logisticImg} alt="avatar" />
+                    <h1 className="font-extrabold text-[1.4rem] mt-2 ml-2">
+                      LOGISTICS
+                    </h1>
+                  </div>
+                  <div className="ml-12">
+                    <span className="font-[600]">
+                      NAME : <span>{orderData[0]?.logistics?.name}</span>
+                    </span>
+                    <br />
+                    <span className="font-[600]">
+                      NUMBER : +91
+                      <span>{orderData[0]?.logistics?.phoneNumber}</span>
+                    </span>
+                    <br />
+                    <span className="font-[600]">
+                      EMAIL : <span>{orderData[0]?.logistics?.email}</span>
+                    </span>
+                    <br />
+                  </div>
                 </div>
-                <div className="ml-12">
-                  <span className="font-[500]">
-                    NAME : <span>{orderData[0]?.logistics?.name}</span>
-                  </span>
-                  <br />
-                  <span className="font-[500]">
-                    NUMBER : +91
-                    <span>{orderData[0]?.logistics?.phoneNumber}</span>
-                  </span>
-                  <br />
-                  <span className="font-[500]">
-                    EMAIL : <span>{orderData[0]?.logistics?.email}</span>
-                  </span>
-                  <br />
-                </div>
-              </div>
+                <hr />
+              </>
             )}
             {/* address details */}
             <div className="mt-4 ml-2">
               <div className="flex text-center items-center ">
                 <img src={locationImg} alt="avatar" />
-                <h1 className="font-bold text-[1.4rem] mt-2 ml-2">
+                <h1 className="font-extrabold text-[1.4rem] mt-2 ml-2">
                   DELIVER TO
                 </h1>
               </div>
               <div className="ml-12">
-                <span className="font-[500]">
+                <span className="font-[600]">
                   ADDRESS : <span>{orderData[0]?.customer?.address}</span>
                 </span>
                 <br />
-                <span className="font-[500]">
+                <span className="font-[600]">
                   DISTRICT : <span>{orderData[0]?.customer?.district}</span>
                 </span>
                 <br />
-                <span className="font-[500]">
+                <span className="font-[600]">
                   PINCODE : <span>{orderData[0]?.customer?.pincode}</span>
                 </span>
                 <br />
               </div>
             </div>
+            <hr />
           </>
         )}
         {isContentLoading && <PulseLoader color="#4CA14D" />}
