@@ -1,11 +1,11 @@
 import React from 'react'
-import MyOrders from './MyOrders/MyOrders'
+import MyOrders from './MyOrders/MyOrders';
+import { OwnerContextProvider } from './context/OwnerContext';
 const LocalMarketOwnerMyOrder = () => {
   return (
-    <div>
-
-      <MyOrders/>
-    </div>
+    <OwnerContextProvider>
+      <MyOrders />
+    </OwnerContextProvider>
   )
 }
 
