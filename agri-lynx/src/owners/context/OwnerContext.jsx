@@ -33,6 +33,8 @@ export const OwnerContextProvider = ({ children }) => {
         imageUrl: "https://media.istockphoto.com/id/1459115525/photo/tomato-vegetables-isolated-on-white-background.webp",
         purchaseDate: new Date().toUTCString(),
         status: "delivered",
+        minPrice: "2000",
+        maxPrice: "2300",
       },
       {
         commodity: "Potato",
@@ -43,6 +45,8 @@ export const OwnerContextProvider = ({ children }) => {
         imageUrl: "https://media.istockphoto.com/id/157430678/photo/three-potatoes.webp",
         purchaseDate: new Date().toUTCString(),
         status: "shipped",
+        minPrice: "2000",
+        maxPrice: "2300",
       },
       {
         commodity: "Brinjal",
@@ -53,6 +57,8 @@ export const OwnerContextProvider = ({ children }) => {
         imageUrl: "https://images.unsplash.com/photo-1639428134238-b548770d4b77",
         purchaseDate: new Date().toUTCString(),
         status: "ordered",
+        minPrice: "2000",
+        maxPrice: "2300",
       },
     ],
   });
@@ -69,6 +75,8 @@ export const OwnerContextProvider = ({ children }) => {
       orderStatus: "ordered",
       bookingStatus: "pending",
       commodity: "Tomato",
+      minPrice: "2000",
+      maxPrice: "2300",
       imageUrl: "https://media.istockphoto.com/id/1459115525/photo/tomato-vegetables-isolated-on-white-background.webp",
       farmer: {
         name: "Prasanth Muthusamy",
@@ -92,16 +100,18 @@ export const OwnerContextProvider = ({ children }) => {
     },
   ]);
 
-  const [shippedOrders, setShippedOrders] = useState([
+  const [cancelOrders, setcancelOrders] = useState([
     {
       orderId: "mkt9g3h57hs35",
       listingId: "purch124xyz",
       quantity: "200",
       price: "15",
       orderDate: new Date().toUTCString(),
-      orderStatus: "shipped",
+      orderStatus: "cancelled",
       bookingStatus: "pending",
       commodity: "Potato",
+      minPrice: "2000",
+      maxPrice: "2300",
       imageUrl: "https://media.istockphoto.com/id/157430678/photo/three-potatoes.webp",
       farmer: {
         name: "Prasanth Muthusamy",
@@ -135,6 +145,8 @@ export const OwnerContextProvider = ({ children }) => {
       orderStatus: "delivered",
       bookingStatus: "completed",
       commodity: "Tomato",
+      minPrice: "2000",
+      maxPrice: "2300",
       imageUrl: "https://media.istockphoto.com/id/1459115525/photo/tomato-vegetables-isolated-on-white-background.webp",
       farmer: {
         name: "Prasanth Muthusamy",
@@ -163,8 +175,21 @@ export const OwnerContextProvider = ({ children }) => {
   const [selectedStatus, setSelectedStatus] = useState("ordered");
 
   // Combining all orders   
-  const allOrders = marketOrders.concat(shippedOrders,deliveredOrders)
- 
+  const allOrders = marketOrders.concat(cancelOrders,deliveredOrders)
+  const cancelOrder = (orderId) => {
+    const orderToCancel = marketOrders.find(order => order.orderId === orderId);
+    if (orderToCancel) {
+      setMarketOrders((prev) =>
+        prev.filter(order => order.orderId !== orderId)
+      );
+      setcancelOrders((prev) => [
+        ...prev,
+        { ...orderToCancel, orderStatus: "canceled" }
+      ]);
+    }
+  };
+  
+  
   return (
     <OwnerContext
       value={{
@@ -174,13 +199,15 @@ export const OwnerContextProvider = ({ children }) => {
         setIsContentLoading,
         marketOrders,
         setMarketOrders,
-        shippedOrders,
-        setShippedOrders,
+        cancelOrders,
+        setcancelOrders,
         deliveredOrders,
         setDeliveredOrders,
         selectedStatus,
         setSelectedStatus,
         allOrders,
+        cancelOrder
+        
       }}
     >
       {children}

@@ -5,15 +5,17 @@ import analytics from '../../Assest/analytics.svg';
 import logistic from '../../Assest/logistic.svg';
 import ordericon from '../../Assest/ordericon.svg';
 import product from '../../Assest/product.svg';
+import { Button } from '@/components/ui/button';
 
 
 
 const accessKey = "ngZx_O2HxOkiG9ML_VctB1Z2ImTU5OsYXNK_Jivcq2E";
 
 const MyOrders = () => {
-    const { marketOwnerData, allOrders, selectedStatus, setSelectedStatus } = useContext(OwnerContext);
+    const { marketOwnerData, allOrders, selectedStatus, setSelectedStatus, cancelOrder } = useContext(OwnerContext);
+
     const [images, setImages] = useState({});
-     
+
     useEffect(() => {
         if (!allOrders) return; // Prevent API call if allOrders is undefined
         const fetchImages = async () => {
@@ -75,13 +77,32 @@ const MyOrders = () => {
                             </div>
                             <div>
                                 <p className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-28 items-center font-bold font-inter'>
-                                    {item.quantity}
+                                    {item.quantity}.KG
                                 </p>
-                                <img
+                                {/* <img
                                     src={images[item.commodity] || ''}
                                     alt={item.commodity}
                                     className='h-20 w-20 mt-2 ms-6 pt-1 rounded-2xl'
-                                />
+                                /> */}
+                                <p className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-28 items-center font-bold font-inter'>
+                                    $ {item.price}
+                                </p>
+                                {item.orderStatus !== "delivered" && item.orderStatus !== "canceled" && (
+                                    <Button
+                                    onClick={() => {
+                                        const confirmCancel = window.confirm("Are you sure you want to cancel this order?");
+                                        if (confirmCancel) {
+                                          cancelOrder(item.orderId);
+                                          alert("Your order has been cancelled successfully.");
+                                        }
+                                      }}
+                                        className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--secondary)] mt-2 ms-2 w-28 items-center font-bold font-inter text-black'
+                                    >
+                                        Cancel
+                                    </Button>
+                                )}
+
+
                             </div>
                         </div>
 

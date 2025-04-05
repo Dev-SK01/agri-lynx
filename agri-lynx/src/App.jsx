@@ -10,14 +10,9 @@ function App() {
   return (
     <>
       {/* <LocalMarketOwnerRegistration/>  */}
-<<<<<<< HEAD
-       <LocalMarketOwnerProductList/> 
-{/*        <LocalMarketOwnerMyOrder/> */}
-=======
        {/* <LocalMarketOwnerProductList/>  */}
-       {/* <LocalMarketOwnerMyOrder/> */}
-      <Logistic />
->>>>>>> e6d5002 (my order fixed)
+       <LocalMarketOwnerMyOrder/>
+      {/* <Logistic /> */}
     </>
   )
 }
