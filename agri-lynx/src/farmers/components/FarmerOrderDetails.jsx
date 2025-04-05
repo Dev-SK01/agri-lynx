@@ -24,28 +24,43 @@ import OrderStatusVerification from "./OrderStatusVerification";
 
 const FarmerOrderDetails = () => {
   const { orderId } = useParams();
-  const { allOrders, setIsContentLoading, isContentLoading } =
-    useContext(FarmerContext);
+  const {
+    allOrders,
+    farmerOrders,
+    setFarmerOrders,
+    packedOrders,
+    setPackedOrders,
+    shippedOrders,
+    setShippedOrders,
+    setIsContentLoading,
+    isContentLoading,
+  } = useContext(FarmerContext);
   const [isOtpView, setOtpView] = useState(false);
+  // state of shipped order status
+  const [orderStatus,setOrderStatus] = useState("");
   // console.log("All Orders :", allOrders);
 
-  const orderData = allOrders?.filter((orders) => {
-    if (orderId.toLocaleLowerCase() === orders.orderId.toLocaleLowerCase()) {
-      return orders;
+  const orderData = allOrders?.filter((order) => {
+    if (orderId.toLowerCase() === order.orderId.toLowerCase()) {
+      return order;
     }
   });
   // console.log(orderData);
-
   const handleOrderStatus = (value) => {
+    setOrderStatus(value);
     if (value === "packed") {
-      handlePackedOrder();
+      if (orderData[0].logistics) {
+        handlePackedOrder(value);
+      } else {
+        Toast(toast.error, "Book Logistic Partner...!");
+      }
     }
     if (value == "shipped") {
-      handleShippedOrder();
+      handleShippedOrder(value);
     }
   };
 
-  const handlePackedOrder = () => {
+  const handlePackedOrder = (value) => {
     if (confirm("Are sure to Update Order Status")) {
       setIsContentLoading(true);
       try {
@@ -53,6 +68,16 @@ const FarmerOrderDetails = () => {
         const req = "";
         const res = true;
         if (res) {
+          // state logic
+          const packedOrder = orderData;
+          const orderedOrder = farmerOrders.filter((order) => {
+            if (orderId.toLowerCase() !== order.orderId.toLowerCase()) {
+              return order;
+            }
+          });
+          packedOrder[0].orderStatus = value;
+          setPackedOrders([...packedOrders, packedOrder[0]]);
+          setFarmerOrders(orderedOrder);
           Toast(toast.success, "Order Status Updated Successfully");
         } else {
           Toast(toast.error, "Failed To Update Status!");
@@ -66,6 +91,7 @@ const FarmerOrderDetails = () => {
 
   const handleShippedOrder = () => {
     if (confirm("Are sure to Update Order Status")) {
+      // for otp verification
       setOtpView(true);
     }
   };
@@ -134,7 +160,12 @@ const FarmerOrderDetails = () => {
               </SelectItem>
               <SelectItem
                 value="shipped"
-                disabled={orderData[0].orderStatus === "shipped" ? true : false}
+                disabled={
+                  orderData[0].orderStatus === "shipped" ||
+                  orderData[0].orderStatus === "ordered"
+                    ? true
+                    : false
+                }
               >
                 Shipped
               </SelectItem>
@@ -183,7 +214,9 @@ const FarmerOrderDetails = () => {
             <div className="pb-2 border-b-1 border-b-green-300">
               <div className="flex text-center items-center ">
                 <img src={avatar} alt="avatar" />
-                <h1 className="font-extrabold text-[1.4rem] mt-2 font-inter">CUSTOMER</h1>
+                <h1 className="font-extrabold text-[1.4rem] mt-2 font-inter">
+                  CUSTOMER
+                </h1>
               </div>
               <div className="ml-12">
                 <span className="font-[600] font-inter">
@@ -191,7 +224,10 @@ const FarmerOrderDetails = () => {
                 </span>
                 <br />
                 <span className="font-[600] font-inter">
-                  NUMBER : +91<span>{orderData[0]?.customer?.phoneNumber}</span>
+                  NUMBER :{" "}
+                  <a href={`tel:+91${orderData[0]?.customer?.phoneNumber}`}>
+                    +91<span>{orderData[0]?.customer?.phoneNumber}</span>
+                  </a>
                 </span>
                 <br />
                 <span className="font-[600] font-inter">
@@ -216,8 +252,12 @@ const FarmerOrderDetails = () => {
                     </span>
                     <br />
                     <span className="font-[600] font-inter">
-                      NUMBER : +91
-                      <span>{orderData[0]?.logistics?.phoneNumber}</span>
+                      NUMBER :{" "}
+                      <a
+                        href={`tel:+91${orderData[0]?.logistics?.phoneNumber}`}
+                      >
+                        +91<span>{orderData[0]?.logistics?.phoneNumber}</span>
+                      </a>
                     </span>
                     <br />
                     <span className="font-[600] font-inter">
@@ -226,7 +266,6 @@ const FarmerOrderDetails = () => {
                     <br />
                   </div>
                 </div>
-  
               </div>
             )}
             {/* address details */}
@@ -261,6 +300,8 @@ const FarmerOrderDetails = () => {
         <OrderStatusVerification
           orderData={orderData}
           setOtpView={setOtpView}
+          orderId={orderId}
+          orderStatus={orderStatus}
         />
       )}
     </div>

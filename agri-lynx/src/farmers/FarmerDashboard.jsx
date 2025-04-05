@@ -29,13 +29,13 @@ const FarmerDashboard = () => {
       // backend api
       const response = userData;
       if (response) {
-        Toast(toast.success, "Data Fectched Successfully");
+        // Toast(toast.success, "Data Fectched Successfully");
       } else {
         Toast(toast.error, "Failed to Fetch Data");
       }
       setTimeout(() => setIsContentLoading(false), 2000);
     } catch (err) {
-      console.log(err.message);
+      Toast(toast.error,err.message);
     }
   };
 

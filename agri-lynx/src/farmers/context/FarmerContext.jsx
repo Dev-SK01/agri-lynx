@@ -187,7 +187,7 @@ export const FarmerContextProvider = ({ children }) => {
       commodityPrice: "2.5",
       orderDate: new Date().toUTCString(),
       orderStatus: "shipped",
-      bookingStatus: "pending",
+      bookingStatus: "booked",
       commodity: "Bitter Guard",
       imageUrl:
         "https://images.unsplash.com/photo-1720680052575-e629a9eff73b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Yml0dGVyJTIwZ291cmR8ZW58MHwxfDB8fHwy",
@@ -220,7 +220,7 @@ export const FarmerContextProvider = ({ children }) => {
       },
     },
   ]);
-  const [cancelledOrders, setcancelledOrders] = useState([
+  const [cancelledOrders, setCancelledOrders] = useState([
     {
       orderId: "9g3h57hs34n84hi08er38",
       listingId: "u7g6b52bd7dn9n3b",
@@ -229,7 +229,7 @@ export const FarmerContextProvider = ({ children }) => {
       commodityPrice: "2.5",
       orderDate: new Date().toUTCString(),
       orderStatus: "cancelled",
-      bookingStatus: "pending",
+      bookingStatus: "cancelled",
       commodity: "Bitter Guard",
       imageUrl:
         "https://images.unsplash.com/photo-1720680052575-e629a9eff73b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Yml0dGVyJTIwZ291cmR8ZW58MHwxfDB8fHwy",
@@ -271,7 +271,7 @@ export const FarmerContextProvider = ({ children }) => {
       commodityPrice: "2.5",
       orderDate: new Date().toUTCString(),
       orderStatus: "delivered",
-      bookingStatus: "pending",
+      bookingStatus: "booked",
       commodity: "Bitter Guard",
       imageUrl:
         "https://images.unsplash.com/photo-1720680052575-e629a9eff73b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Yml0dGVyJTIwZ291cmR8ZW58MHwxfDB8fHwy",
@@ -331,7 +331,7 @@ export const FarmerContextProvider = ({ children }) => {
         shippedOrders,
         setShippedOrders,
         cancelledOrders,
-        setcancelledOrders,
+        setCancelledOrders,
         deliveredorders,
         setDeliveredOrders,
         selectedStatus,

@@ -5,12 +5,15 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import calanderImg from "../../assets/calendar.svg";
 import Toast from "@/utils/toast";
 import { toast } from "react-toastify";
+import FarmerContext from "../context/FarmerContext";
 
-const OrderStatusVerification = ({ orderData, setOtpView }) => {
+const OrderStatusVerification = ({ orderData, setOtpView, orderId,orderStatus }) => {
+  const { packedOrders, setPackedOrders, shippedOrders, setShippedOrders } =
+    useContext(FarmerContext);
   const [otp, setOtp] = useState("");
   //   console.log("OTP :", otp);
 
@@ -36,7 +39,18 @@ const OrderStatusVerification = ({ orderData, setOtpView }) => {
         const req = "";
         const res = true;
         if (res) {
-          Toast(toast.success, "OTP Verified Successfully");
+          // packed and shipped state changes
+          const shippedOrder = orderData;
+          const packedOrder = packedOrders.filter((order) => {
+            if (orderId.toLowerCase() !== order.orderId.toLowerCase()) {
+              return order;
+            }
+          });
+          shippedOrder[0].orderStatus = orderStatus;
+          console.log(shippedOrder);
+          setShippedOrders([...shippedOrders, shippedOrder[0]]);
+          setPackedOrders(packedOrder);
+          Toast(toast.success, "Order Status Updated Successfully");
           setTimeout(() => setOtpView(false), 2000);
         } else {
           Toast(toast.error, "Failed To Verify OTP!");

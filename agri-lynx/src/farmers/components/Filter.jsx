@@ -15,7 +15,7 @@ const Filter = () => {
     shippedOrders,
     setShippedOrders,
     cancelledOrders,
-    setcancelledOrders,
+    setCancelledOrders,
     deliveredorders,
     setDeliveredOrders,
     farmerData,
@@ -29,7 +29,7 @@ const Filter = () => {
       // backend api
       const req = "";
       const res = farmerOrders;
-      setPackedOrders(res);
+      setFarmerOrders(res);
       setTimeout(() => setIsContentLoading(false), 2000);
     } catch (err) {
       Toast(toast.error, err.message);
@@ -42,7 +42,7 @@ const Filter = () => {
       // backend api
       const req = "";
       const res = packedOrders;
-      setFarmerOrders(res);
+      setPackedOrders(res);
       setTimeout(() => setIsContentLoading(false), 2000);
     } catch (err) {
       Toast(toast.error,err.message);
@@ -81,7 +81,7 @@ const Filter = () => {
       // backend api
       const req = "";
       const res = cancelledOrders;
-      setcancelledOrders(res);
+      setCancelledOrders(res);
       setTimeout(()=> setIsContentLoading(false),2000);
     }catch(err){
       Toast(toast.error,err.message)

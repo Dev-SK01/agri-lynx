@@ -19,14 +19,16 @@ const FarmerAnalytics = () => {
         </div>
       </div>
       <div className="overflow-auto h-[70vh] rounded-md scrollbar">
+        {/* farmer orders analytics */}
         <AnalyticsHistory />
+        {/* market price section */}
         <div className="w-full mt-6">
-          <div className="mb-2">
-            <span className="font-bold font-inter bg-(--green) text-2xl px-4 py-[.2rem] border-1 border-black rounded-md">
-              MARKET PRICE
-            </span>
-          </div>
           <a href="https://www.agmarknet.gov.in" target="_self">
+            <div className="mb-2">
+              <span className="font-bold font-inter bg-(--green) text-2xl px-4 py-[.2rem] border-1 border-black rounded-md">
+                MARKET PRICE
+              </span>
+            </div>
             <div className="w-[100%] h-[350px] mt-4">
               <embed
                 src="https://www.agmarknet.gov.in"

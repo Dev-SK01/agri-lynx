@@ -26,7 +26,7 @@ const UpdateProduce = () => {
     }
   };
   return (
-    <div className="flex items-center justify-center flex-col">
+    <div className="flex items-center justify-center flex-col mt-4">
       <Navigation />
       <p>FARMER ID :{farmerData.farmerId}</p>
       <p> LISTING ID : {listingId}</p>

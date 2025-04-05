@@ -6,16 +6,7 @@ import { Link } from "react-router-dom";
 const Produce = () => {
   const { produceList, setProduceList } = useContext(FarmerContext);
   // console.log("ProduceComponent:",produceList);
-
-  const fetchImage = async (commodity) => {
-    const SECRET_KEY = "tZgxfcaCQfk66V1uKAGMIOwwUMmK-IH2qEniGtwDfTc";
-    const res = await fetch(
-      `https://api.unsplash.com/search/photos?page=1&query=${commodity}&client_id=${SECRET_KEY}`
-    );
-    const data = await res.json();
-    return data.results[0].urls.small;
-  };
-
+  
   return produceList.map((produce) => (
     <section
       className="flex w-full items-center justify-evenly mt-8 bg-(--green) rounded-md py-2  relative"
