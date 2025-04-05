@@ -1,15 +1,16 @@
 import React from 'react'
 // import { useState } from 'react'
 import LocalMarketOwnerRegistration from './owners/LocalMarketOwnerRegistration'
-import LocalMarketOwnerDashboard from './owners/LocalMarketOwnerDashboard'
-
+import LocalMarketOwnerDashboard from './owners/DashBoard/LocalMarketOwnerDashboard'
+import Dashboard from './owners/Dashboard'
 
 const App = () => {
   return (
     <>
 
    {/* <LocalMarketOwnerRegistration /> */}
-   <LocalMarketOwnerDashboard/>
+  
+   <Dashboard/>
   </>
   )
 }
