@@ -11,8 +11,8 @@ function App() {
     <>
       {/* <LocalMarketOwnerRegistration/>  */}
        {/* <LocalMarketOwnerProductList/>  */}
-       <LocalMarketOwnerMyOrder/>
-      {/* <Logistic /> */}
+       {/* <LocalMarketOwnerMyOrder/> */}
+      <Logistic />
     </>
   )
 }
