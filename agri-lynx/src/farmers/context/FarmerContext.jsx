@@ -74,7 +74,7 @@ export const FarmerContextProvider = ({ children }) => {
         maxPrice: "530",
       },
       {
-        commodity: "Bitter Guard",
+        commodity: "Bitter Gourd",
         quantity: "1000",
         price: "250",
         listingId: "u7g6b52bd7dn9n3e",

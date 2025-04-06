@@ -19,25 +19,8 @@ const FarmerDashboard = () => {
     setIsContentLoading,
     produceList,
     setProduceList,
-    farmerProduces
+    farmerProduces,
   } = useContext(FarmerContext);
-
-  const fetchFarmerDataById = () => {
-    // here used user data from the registration context to fetch user data by id
-    try {
-      setIsContentLoading(true);
-      // backend api
-      const response = userData;
-      if (response) {
-        // Toast(toast.success, "Data Fectched Successfully");
-      } else {
-        Toast(toast.error, "Failed to Fetch Data");
-      }
-      setTimeout(() => setIsContentLoading(false), 2000);
-    } catch (err) {
-      Toast(toast.error,err.message);
-    }
-  };
 
   const searchProduce = (e) => {
     const produceName = e.target.value.toLowerCase();
@@ -56,17 +39,34 @@ const FarmerDashboard = () => {
       setProduceList(filteredProduceData);
     }
   };
+ 
   useEffect(() => {
-    // fetching farmer data using userData
+    const fetchFarmerDataById = () => {
+      // here used user data from the registration context to fetch user data by id
+      try {
+        setIsContentLoading(true);
+        // backend api
+        const response = userData;
+        if (response) {
+          Toast(toast.success, "Data Fectched Successfully");
+        } else {
+          Toast(toast.error, "Failed to Fetch Data");
+        }
+      } catch (err) {
+        Toast(toast.error, err.message);
+      } finally {
+        setTimeout(() => setIsContentLoading(false), 2000);
+      }
+    };
     fetchFarmerDataById();
-  }, []);
+  },[]);
 
   return (
     <>
       <div className="flex items-center justify-center flex-col">
         <div className="w-[95%] h-[20vh] mt-4">
           <Navigation />
-          <Search searchFunction={searchProduce}/>
+          <Search searchFunction={searchProduce} />
         </div>
         <div
           className={
