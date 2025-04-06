@@ -1,5 +1,5 @@
 import React from 'react'
-import OtpInputField from '../components/OtpInputField'
+import OtpInputField from './components/OtpInputField'
 
 const FarmerLogin = (otp, setOtp, handleChange) => {
   return (

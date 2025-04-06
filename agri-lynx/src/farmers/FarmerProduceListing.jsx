@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import ApiCommodityList from "../components/ApiCommodityList";
+import ApiCommodityList from "./components/ApiCommodityList";
 import avatar from "../assets/avatar.svg";
 import crops from "../assets/crops.svg";
 import Frame from "../assets/Frame.svg";
 import dabba from "../assets/orders-icon.svg";
 import car from "../assets/commute.svg";
 import Analytics from "../assets/Analytics.svg";
-import MinMaxPriceCalculation from "../components/MinMaxPriceCalculation";
+import MinMaxPriceCalculation from "./components/MinMaxPriceCalculation";
 import { format, subDays } from "date-fns";
 
 const FarmerProduceListing = () => {
@@ -95,8 +95,7 @@ const FarmerProduceListing = () => {
       method:"POST",
       body:produceDetails
     });
-    console.log("ProduceData : " ,produceDetails);
-    
+    console.log("ProduceData : ",produceDetails);
   }catch(err){
     console.log(err.message);
     

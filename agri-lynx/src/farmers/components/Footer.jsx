@@ -1,8 +1,8 @@
 import React from 'react'
-import crops from "../assets/crops.svg";
-import dabba from "../assets/orders-icon.svg";
-import car from "../assets/commute.svg";
-import Analytics from "../assets/Analytics.svg";
+import crops from "../../assets/crops.svg";
+import dabba from "../../assets/orders-icon.svg";
+import car from "../../assets/commute.svg";
+import Analytics from "../../assets/Analytics.svg";
 
 
 const Footer = () => {
