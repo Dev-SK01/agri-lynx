@@ -54,11 +54,11 @@ const FarmerLogisticsDetails = () => {
               alt="search"
             />
             <input
-              className=" w-70  justify-items-center text-2xl  font-inter"
+              className=" w-70  justify-items-center text-xl  font-inknut"
               type="text"
               onChange={(e) => setSearchItem(e.target.value)}
               value={searchItem}
-              placeholder="      Search Logistics "
+              placeholder="      search logistics "
             />
           </div>
         </div>
@@ -80,17 +80,17 @@ const FarmerLogisticsDetails = () => {
               key={Logistics.logisticsPartnerId}
               className="flex-col font-inter font-bold text-lg  border-s-10 border-(--secondary)  bg-(--teritary) rounded-xl w-[90dvw] p-2  mb-2"
             >
-              <p className=" flex me-20 p-1.5 m-2 bg-(--primary) rounded gap-3 pt-1.5 items-center">
+              <p className=" flex me-20 p-1.5 m-2 bg-(--primary) rounded gap-3 pt-1.5  shadow-[0px_11px_9px_-1px_rgba(0,_0,_0,_0.1)]">
                 {" "}
                 <img src={avatar1} className="size-8" alt="avatar" />
                 {Logistics.name}
               </p>
-              <p className="flex  me-20 p-1.5 m-2 bg-(--primary) rounded  gap-3">
+              <p className="flex  me-20 p-1.5 m-2 bg-(--primary) rounded  gap-3  shadow-[0px_11px_9px_-1px_rgba(0,_0,_0,_0.1)]">
                 {" "}
                 <img src={phone} alt="phone" />
                 {Logistics.phoneNumber}
               </p>
-              <p className="flex p-1.5  m-2 bg-(--primary) rounded  gap-3">
+              <p className="flex p-1.5  m-2 bg-(--primary) rounded  gap-3 shadow-[0px_11px_9px_-1px_rgba(0,_0,_0,_0.1)]  ">
                 {" "}
                 <img src={location} alt="location" />
                 {Logistics.address +

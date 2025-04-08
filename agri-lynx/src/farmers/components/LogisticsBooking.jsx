@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import location from "../../assets/location.svg";
@@ -9,33 +9,63 @@ import delivery from "../../assets/delivery.svg";
 import FarmerLogisticsContext from "../Context/FarmerLogisticsContext";
 import { useParams } from "react-router-dom";
 const LogisticsBooking = () => {
-  const { LogisticsDetails, setLogisticsDetails } = useContext(
+  let farmerOrdersDetails;
+  const[selectedName,setSelectedName] = useState("");
+  const { LogisticsDetails, setLogisticsDetails,farmerOrders,setFarmerOrders } = useContext(
     FarmerLogisticsContext
   );
   const { partnerId } = useParams();
   const logisticsData = LogisticsDetails.filter((logistics) => {
-    if (
-      logistics.logisticsPartnerId.toLowerCase() === partnerId.toLowerCase()
-    ) {
+    if (logistics.logisticsPartnerId.toLowerCase() === partnerId.toLowerCase()) {
       return logistics;
     }
   });
+  // const farmerOrderData = farmerOrders.filter((farmerData)=>{
+  //   if(farmerData.orderStatus === "ordered"){
+  //     return farmerData; 
+  //   }
+  // })
 
-  console.log(logisticsData);
+function handleBookLogisticsPartner(e){
+  const userSelectedOrder = farmerOrders.filter((farmerOrders) => {
+    if(selectedName === farmerOrders.farmer.name){
+      return farmerOrders;
+     }
+  });
+  // farmer remainin orders
+  const logisticsUpdatedOrders = farmerOrders.filter((farmerOrders) => {
+    if(selectedName !== farmerOrders.farmer.name){
+      return farmerOrders;
+     }
+  });
+  const logistics = logisticsData[0];
+  // appending logistics data to order data
+  const logisticsAddedData = {...userSelectedOrder[0],logistics}
+  console.log(logisticsAddedData, logisticsUpdatedOrders);
+  logisticsUpdatedOrders.push(logisticsAddedData);
+  console.log(logisticsUpdatedOrders);
+  // updating farmer orders state
+  setFarmerOrders(logisticsUpdatedOrders);
+  
+}
+  console.log(farmerOrders)
 
   return (
     <>
       <div className=" flex-col border-(--secondary)   items-center p-2   bg-(--primary) justify-center justify-items-center  bottom-0 top-0  m-0 me-0 ">
         <Header />
         <select
+          onChange={(e)=>setSelectedName(e.target.value)}
           name="orders"
           id="orders"
           className="flex-row justify-items-center bg-(--green) rounded-2xl p-1 pe-5 ps-9 text-xl font-inter font-bold  mt-6 h-[6dvh] w-60 border-e-4 border-b-4 border-(--secondary)"
         >
-          <option value="Rishi">Select Orders</option>
-          <option value="Rishi">srikant</option>
-          <option value="Rishi">k7</option>
-          <option value="Rishi">elumalai</option>
+          <option value="select">Select Orders</option>
+        {farmerOrders.map((farmerOrder)=>(
+          <option key={farmerOrder.orderId} value={farmerOrder.farmer.name}>{farmerOrder.farmer.name}</option>
+        ))}
+          
+          
         </select>
         <div className="h-[60dvh] mt-3 overflow-y-scroll">
           {logisticsData.map((logistics) => (
@@ -133,7 +163,8 @@ const LogisticsBooking = () => {
             </>
           ))}
         </div>
-        <button
+        <button 
+          onClick={(e)=>handleBookLogisticsPartner(e)}
           type="submit"
           className="flex gap-2 font-bold text-xl px-1 mt-2 p-1.5 text-(--primary)  bg-(--secondary) rounded h-[5dvh] "
         >
