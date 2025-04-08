@@ -47,7 +47,7 @@ const FarmerLogisticsDetails = () => {
           <div className=" flex-col justify-items-center bg-(--green) mt-2 border-(--secondary) p-0.5 border-2 rounded-xl   w-40 ">
             <p className="font-inter font-bold text-2xl">Logistics</p>
           </div>
-          <div className="flex justify-center h-10 bg-gray-200 p-1 rounded-2xl w-90 mt-3 font-inter pe-3 ">
+          <div className="flex justify-center h-10 bg-gray-200 p-1 rounded-2xl w-[80dvw] mt-3 font-inter pe-3 ">
             <img
               className="flex ms-4  pb-2 size-10"
               src={search}
@@ -66,7 +66,7 @@ const FarmerLogisticsDetails = () => {
           {LogisticsDetails.filter((Logistics) => {
             return searchItem.toLowerCase() === ""
               ? Logistics
-              : Logistics.name.toLowerCase().includes(searchItem) ||
+              :   Logistics.name.toLowerCase().includes(searchItem.toLowerCase()) ||
                   Logistics.phoneNumber.toLowerCase().includes(searchItem) ||
                   Logistics.address.toLowerCase().includes(searchItem) ||
                   Logistics.pincode
@@ -80,7 +80,7 @@ const FarmerLogisticsDetails = () => {
               key={Logistics.logisticsPartnerId}
               className="flex-col font-inter font-bold text-lg  border-s-10 border-(--secondary)  bg-(--teritary) rounded-xl w-[90dvw] p-2  mb-2"
             >
-              <p className=" flex me-20 p-1.5 m-1 bg-(--primary) rounded gap-3 pt-1.5 items-center">
+              <p className=" flex me-20 p-1.5 m-2 bg-(--primary) rounded gap-3 pt-1.5 items-center">
                 {" "}
                 <img src={avatar1} className="size-8" alt="avatar" />
                 {Logistics.name}

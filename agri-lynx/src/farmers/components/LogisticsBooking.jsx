@@ -25,19 +25,19 @@ const LogisticsBooking = () => {
 
   return (
     <>
-      <div className=" flex-col border-(--secondary)   items-center p-2   bg-(--primary) justify-center justify-items-center  bottom-0 top-0 w-[100%] h-[dvh]  m-0 me-0 ">
+      <div className=" flex-col border-(--secondary)   items-center p-2   bg-(--primary) justify-center justify-items-center  bottom-0 top-0  m-0 me-0 ">
         <Header />
         <select
           name="orders"
           id="orders"
-          className="flex-row justify-items-center bg-(--green) rounded-2xl p-1 pe-5 ps-9 text-xl font-inter font-bold  mt-6 h-[5dvh] w-60 border-e-4 border-b-4 border-(--secondary)"
+          className="flex-row justify-items-center bg-(--green) rounded-2xl p-1 pe-5 ps-9 text-xl font-inter font-bold  mt-6 h-[6dvh] w-60 border-e-4 border-b-4 border-(--secondary)"
         >
           <option value="Rishi">Select Orders</option>
           <option value="Rishi">srikant</option>
           <option value="Rishi">k7</option>
           <option value="Rishi">elumalai</option>
         </select>
-        <div className="h-[58dvh] mt-5 overflow-y-scroll">
+        <div className="h-[60dvh] mt-3 overflow-y-scroll">
           {logisticsData.map((logistics) => (
             <>
                <div className="font-inter font-bold  mt-2  mb-2">
@@ -135,7 +135,7 @@ const LogisticsBooking = () => {
         </div>
         <button
           type="submit"
-          className="flex gap-2 font-bold text-xl  mt-2 p-1.5 text-(--primary)  bg-(--secondary) rounded h-[5dvh] "
+          className="flex gap-2 font-bold text-xl px-1 mt-2 p-1.5 text-(--primary)  bg-(--secondary) rounded h-[5dvh] "
         >
           Book Now <img src={delivery} alt="delivery" />
         </button>
