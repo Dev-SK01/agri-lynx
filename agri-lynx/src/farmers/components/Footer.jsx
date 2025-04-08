@@ -8,18 +8,18 @@ import Analytics from "../../assets/Analytics.svg";
 const Footer = () => {
   return (
     <>
-      <footer className="flex w-dvw justify-center h-[15dvh]">
-          <div className=" flex h-16 rounded-3xl bg-(--green) w-100 py-2 absolute bottom-4 justify-center">
-            <div className="ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1">
-              <img src={crops} alt="crops" />
+      <footer className="flex  mt-4 mb-0.5 h-[8dvh] ">
+          <div className=" flex flex-row justify-evenly  items-center rounded-3xl bg-(--green) w-100 ">
+            <div className="h-12 w-12 bg-white rounded-xl p-1 ps-1.5 ">
+              <img src={crops} alt="crops"className=''/>
             </div>
-            <div className="ms-7 me-7 h-12 w-12 bg-white rounded-xl p-0.5">
+            <div className="  h-12 w-12 bg-white rounded-xl  p-0.5">
               <img src={dabba} alt="order-icon" />
             </div>
-            <div className="ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1.5">
+            <div className="  h-12 w-12 bg-white rounded-xl p-1 ps-1.5 pt-1.5">
               <img src={car} alt="commute" />
             </div>
-            <div className="ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-2">
+            <div className=" h-12 w-12 bg-white rounded-xl p-1 ps-1.5 pt-2">
               <img src={Analytics} alt="analytics" />
             </div>
           </div>

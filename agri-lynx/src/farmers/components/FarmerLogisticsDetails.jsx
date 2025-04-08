@@ -43,18 +43,18 @@ const FarmerLogisticsDetails = () => {
   return (
     <>
       <>
-        <div className="flex-col w-[100%] mt-3 h-[15dvh] justify-items-center pe-3  ">
-          <div className=" flex-col justify-items-center bg-(--green) mt-5 border-(--secondary) p-0.5 border-2 rounded-xl   w-40 ">
+        <div className="flex-col w-[100%] mt-3 h-[13.6dvh] justify-items-center pe-3  ">
+          <div className=" flex-col justify-items-center bg-(--green) mt-3 border-(--secondary) p-0.5 border-2 rounded-xl   w-40 ">
             <p className="font-inter font-bold text-2xl">Logistics</p>
           </div>
-          <div className="flex justify-center  bg-gray-200 h-10 p-1 rounded-2xl w-90 mt-5 font-inter pe-3 ">
+          <div className="flex justify-center h-10 bg-gray-200 p-1 rounded-2xl w-90 mt-5 font-inter pe-3 ">
             <img
               className="flex ms-4  pb-2 size-10"
               src={search}
               alt="search"
             />
             <input
-              className=" w-70 justify-items-center text-2xl  font-inter"
+              className=" w-70  justify-items-center text-2xl  font-inter"
               type="text"
               onChange={(e) => setSearchItem(e.target.value)}
               value={searchItem}
@@ -62,50 +62,55 @@ const FarmerLogisticsDetails = () => {
             />
           </div>
         </div>
-        <div className="flex-col justify-items-center h-[60dvh] overflow-y-scroll w-[95dvw] ">
-        {LogisticsDetails.filter((Logistics)=>{
-         return searchItem.toLowerCase() === ''
-         ? Logistics 
-         : Logistics.name.toLowerCase().includes(searchItem) 
-         || Logistics.phoneNumber.toLowerCase().includes(searchItem)
-         || Logistics.address.toLowerCase().includes(searchItem)
-         || (Logistics.pincode).toString().toLowerCase().includes(searchItem)
-         || Logistics.village.toLowerCase().includes(searchItem)
-         || Logistics.district.toLowerCase().includes(searchItem) })
-        .map((Logistics) => (
-          <div key={Logistics.logisticsPartnerId} className="flex-col font-inter font-bold text-lg  border-s-10 border-(--secondary)  bg-(--teritary) rounded-xl w-[90dvw] p-2 mt-2 mb-2">
-            <p className=" flex me-20 p-1.5 m-1 bg-(--primary) rounded gap-3 pt-1.5 items-center">
-              {" "}
-              <img src={avatar1} className="size-8" alt="avatar" />
-              {Logistics.name}
-            </p>
-            <p className="flex  me-20 p-1.5 m-2 bg-(--primary) rounded  gap-3">
-              {" "}
-              <img src={phone} alt="phone" />
-              {Logistics.phoneNumber}
-            </p>
-            <p className="flex p-1.5  m-2 bg-(--primary) rounded  gap-3">
-              {" "}
-              <img src={location} alt="location" />
-              {Logistics.address +
-                Logistics.village +
-                "\n" +
-                Logistics.district +
-                "-" +
-                Logistics.pincode}
-            </p>
-            <div className="flex-col justify-items-center w-[95%] ">
-              <Link
-                to={`/farmerlogisticsdetails/${Logistics.logisticsPartnerId}`}
-                className="flex gap-2   p-1 text-(--primary)  bg-(--secondary) rounded  "
-              >
-                Book Now <img src={delivery} alt="delivery" />
-              </Link>
+        <div className="flex-col justify-items-center h-[62dvh] overflow-y-scroll w-[95dvw] ">
+          {LogisticsDetails.filter((Logistics) => {
+            return searchItem.toLowerCase() === ""
+              ? Logistics
+              : Logistics.name.toLowerCase().includes(searchItem) ||
+                  Logistics.phoneNumber.toLowerCase().includes(searchItem) ||
+                  Logistics.address.toLowerCase().includes(searchItem) ||
+                  Logistics.pincode
+                    .toString()
+                    .toLowerCase()
+                    .includes(searchItem) ||
+                  Logistics.village.toLowerCase().includes(searchItem) ||
+                  Logistics.district.toLowerCase().includes(searchItem);
+          }).map((Logistics) => (
+            <div
+              key={Logistics.logisticsPartnerId}
+              className="flex-col font-inter font-bold text-lg  border-s-10 border-(--secondary)  bg-(--teritary) rounded-xl w-[90dvw] p-2  mb-2"
+            >
+              <p className=" flex me-20 p-1.5 m-1 bg-(--primary) rounded gap-3 pt-1.5 items-center">
+                {" "}
+                <img src={avatar1} className="size-8" alt="avatar" />
+                {Logistics.name}
+              </p>
+              <p className="flex  me-20 p-1.5 m-2 bg-(--primary) rounded  gap-3">
+                {" "}
+                <img src={phone} alt="phone" />
+                {Logistics.phoneNumber}
+              </p>
+              <p className="flex p-1.5  m-2 bg-(--primary) rounded  gap-3">
+                {" "}
+                <img src={location} alt="location" />
+                {Logistics.address +
+                  Logistics.village +
+                  "\n" +
+                  Logistics.district +
+                  "-" +
+                  Logistics.pincode}
+              </p>
+              <div className="flex-col justify-items-center w-[95%] ">
+                <Link
+                  to={`/farmerlogisticsdetails/${Logistics.logisticsPartnerId}`}
+                  className="flex gap-2   p-1 text-(--primary)  bg-(--secondary) rounded  "
+                >
+                  Book Now <img src={delivery} alt="delivery" />
+                </Link>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
         </div>
-        
       </>
     </>
   );

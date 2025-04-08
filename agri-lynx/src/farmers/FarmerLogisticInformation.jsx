@@ -11,7 +11,7 @@ const FarmerLogisticInformation = () => {
  
   return (
     <>
-      <div className="flex-col border-(--secondary)   items-center p-2   bg-(--primary) justify-center justify-items-center  bottom-0 top-0 w-[100%] h-[100%]  m-0 me-0 ">
+      <div className="flex-col border-(--secondary) items-center   bg-(--primary) justify-center justify-items-center  bottom-0  w-[100%]  p-0 m-0 me-0 ">
         <Header />
         <FarmerLogisticsDetails />
         <Footer />
