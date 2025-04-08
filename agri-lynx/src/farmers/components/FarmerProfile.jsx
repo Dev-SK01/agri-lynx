@@ -6,9 +6,12 @@ import FarmerContext from "../context/FarmerContext";
 import logoutImg from "../../assets/logout.svg";
 import Toast from "@/utils/toast";
 import { toast } from "react-toastify";
+import RegistrationContext from "@/registration/context/RegistrationContext";
 
 const FarmerProfile = () => {
-  const { farmerData, setUserData } = useContext(FarmerContext);
+  // context
+  const { farmerData } = useContext(FarmerContext);
+  const {setUserData} = useContext(RegistrationContext);
 
   const logOut = () => {
     if (confirm("Are you Sure !")) {

@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
-import RegistrationContext from "@/registration/context/RegistrationContext";
+import React, { useContext, useEffect } from "react";
 import Navigation from "./components/Navigation";
 import Search from "./components/Search";
 import Produce from "./components/Produce";
@@ -9,14 +8,15 @@ import FarmerContext from "./context/FarmerContext";
 import Toast from "@/utils/toast";
 import { toast } from "react-toastify";
 import welcomeImg from "../assets/welcome.svg";
+import RegistrationContext from "@/registration/context/RegistrationContext";
 
 const FarmerDashboard = () => {
+  const { userData, setUserData, setOtp, setEmail, setCodeSent } =
+    useContext(RegistrationContext);
   const {
-    userData,
     farmerData,
     setFarmerData,
     isContentLoading,
-    setIsContentLoading,
     produceList,
     setProduceList,
     farmerProduces,
@@ -39,27 +39,13 @@ const FarmerDashboard = () => {
       setProduceList(filteredProduceData);
     }
   };
- 
+
   useEffect(() => {
-    const fetchFarmerDataById = () => {
-      // here used user data from the registration context to fetch user data by id
-      try {
-        setIsContentLoading(true);
-        // backend api
-        const response = userData;
-        if (response) {
-          Toast(toast.success, "Data Fectched Successfully");
-        } else {
-          Toast(toast.error, "Failed to Fetch Data");
-        }
-      } catch (err) {
-        Toast(toast.error, err.message);
-      } finally {
-        setTimeout(() => setIsContentLoading(false), 2000);
-      }
-    };
-    fetchFarmerDataById();
-  },[]);
+    // setting farmer produce after getting the user data
+    setProduceList(farmerProduces || []);
+    // registration and login state empty
+    setOtp(""), setEmail(""), setCodeSent(false);
+  }, []);
 
   return (
     <>

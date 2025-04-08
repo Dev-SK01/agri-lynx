@@ -4,12 +4,16 @@ import "./index.css";
 import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 import { RegistrationContextProvider } from "./registration/context/RegistrationContext";
+import { FarmerContextProvider } from "./farmers/context/FarmerContext";
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
-      <RegistrationContextProvider>
-        <App className="scroll-smooth"/>
-      </RegistrationContextProvider>
+      <FarmerContextProvider>
+        <RegistrationContextProvider>
+          <App className="scroll-smooth" />
+        </RegistrationContextProvider>
+      </FarmerContextProvider>
     </BrowserRouter>
   </StrictMode>
 );

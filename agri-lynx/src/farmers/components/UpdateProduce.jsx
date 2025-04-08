@@ -23,8 +23,8 @@ const UpdateProduce = () => {
 
   const [updatedPrice, setUpdatedPrice] = useState(produceData[0]?.price);
   const [updatedMarketPrice, setUpdatedMarketPrice] = useState({
-    minPrice: "loading..",
-    maxPrice: "loading..",
+    minPrice: "0.00",
+    maxPrice: "0.00",
   });
   const [updatedQuantity, setUpdatedQuantity] = useState(produceData[0]?.quantity);
   const toDate = format(new Date(), "yyyy-MM-dd");
@@ -69,7 +69,7 @@ const UpdateProduce = () => {
       };
       setUpdatedMarketPrice(() => priceCalculation(response.data));
     } catch (err) {
-      console.error(err);
+     Toast(toast.error,err.message);
     }
   }
 
@@ -91,8 +91,8 @@ const UpdateProduce = () => {
       const res = listingId;
       if (res) {
         Toast(toast.success, "Updated Successfully.");
-        // navigating to home after updation
-        setProduceList([...remainingProduceData,produceData[0]])
+        // navigating to home after updation and reversing  array 
+        setProduceList([...remainingProduceData,produceData[0]].reverse())
         setTimeout(() => navigate("/"), 2000);
       }
     } catch (err) {

@@ -4,7 +4,7 @@ import FarmerContext from "../context/FarmerContext";
 import { Link } from "react-router-dom";
 
 const Produce = () => {
-  const { produceList, setProduceList } = useContext(FarmerContext);
+  const { produceList, setProduceList  } = useContext(FarmerContext);
   // console.log("ProduceComponent:",produceList);
   
   return produceList.map((produce) => (

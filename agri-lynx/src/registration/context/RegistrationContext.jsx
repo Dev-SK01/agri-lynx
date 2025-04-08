@@ -86,98 +86,119 @@ export const RegistrationContextProvider = ({ children }) => {
     setVehicleNumber("");
     setLicenseNumber("");
   };
-  // registration handlers backend api for isRegistered
-  const handleRegisteredUser = (email) => {
-    const response = true;
-    // send true or false from backend if user presents
-    if (response) {
-      return true;
-    } else {
-      return false;
+  // registration handlers backend api
+  const handleRegisteredUser = async (email) => {
+    try {
+      const response = false;
+      // send true or false from backend if user presents
+      if (response) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (err) {
+      Toast(toast.error, err.message);
     }
   };
   const handleEmailVerification = () => {
-    // validating email
-    setIsLoading(true);
-    if (validateEmail(email)) {
-      // checking user is registered
-      const isRegistered = handleRegisteredUser(email);
-      if (!isRegistered) {
-        // email otp api implementation
-        setCodeSent(true);
-        // otp sent message
-        Toast(toast.success, "OTP sent Successfully");
+    try {
+      // validating email
+      setIsLoading(true);
+      if (validateEmail(email)) {
+        // checking user is registered
+        const isRegistered = handleRegisteredUser(email);
+        if (!isRegistered) {
+          // email otp api implementation
+          setCodeSent(true);
+          // otp sent message
+          Toast(toast.success, "OTP sent Successfully");
+        } else {
+          Toast(toast.error, "User Already Registered! LOGIN");
+          clearForm();
+          navigate("login");
+        }
       } else {
-        Toast(toast.error, "User Already Registered! LOGIN");
-        clearForm();
-        navigate("login");
+        Toast(toast.error, "Enter Proper Email!");
       }
-    } else {
-      Toast(toast.error, "Enter Proper Email!");
+      // loading for user experience
+      setTimeout(() => setIsLoading(false), 2000);
+    } catch (err) {
+      Toast(toast.error, err.message);
     }
-    // loading for user experience
-    setTimeout(() => setIsLoading(false), 2000);
   };
   const verifyOtp = () => {
-    if (!otp || otp.length !== 6) {
-      Toast(toast.error, "Enter OTP!");
-    } else {
-      // otp verification api
-      setOtpVerified(true);
-      setIsLoading(true);
-      setTimeout(() => setIsLoading(false), 2000);
-      Toast(toast.success, "OTP Verified");
+    try {
+      if (!otp || otp.length !== 6) {
+        Toast(toast.error, "Enter OTP!");
+      } else {
+        // otp verification api
+        setOtpVerified(true);
+        setIsLoading(true);
+        setTimeout(() => setIsLoading(false), 2000);
+        Toast(toast.success, "OTP Verified");
+      }
+    } catch (err) {
+      Toast(toast.error, err.message);
     }
   };
   const handleUserLogin = () => {
-    // validating email
-    if (validateEmail(email)) {
-      // checking user is registered
-      const isRegistered = handleRegisteredUser(email);
-      if (isRegistered) {
-        // email otp api implementation
-        setIsLoading(true);
-        // loading for user experience
-        setTimeout(() => setIsLoading(false), 2000);
-        setCodeSent(true);
-        // otp sent message
-        Toast(toast.success, "OTP sent Successfully");
+    try {
+      // validating email
+      if (validateEmail(email)) {
+        // checking user is registered
+        const isRegistered = handleRegisteredUser(email);
+        if (isRegistered) {
+          // email otp api implementation
+          setIsLoading(true);
+          // loading for user experience
+          setTimeout(() => setIsLoading(false), 2000);
+          setCodeSent(true);
+          // otp sent message
+          Toast(toast.success, "OTP sent Successfully");
+        } else {
+          Toast(toast.error, "User Not Registered!");
+          clearForm();
+          navigate("/");
+        }
       } else {
-        Toast(toast.error, "User Not Registered!");
-        clearForm();
-        navigate("/");
+        Toast(toast.error, "Enter Proper Email!");
       }
-    } else {
-      Toast(toast.error, "Enter Proper Email!");
+    } catch (err) {
+      Toast(toast.error, err.message);
     }
   };
   const loginOtpVerify = () => {
     if (!otp || otp.length !== 6) {
       Toast(toast.error, "Enter OTP!");
     } else {
-      // otp verification api for login
-      setOtpVerified(true);
-      // setIsLoading(true);
-      // loading for user experience
-      // setTimeout(() => setIsLoading(false), 2500);
-      Toast(toast.success, "Logging In....");
-      // get userType and userId from api
-      const response = { userId: "123456789", userType };
-      setUserData(response);
-      // localstorage for user data
-      localStorage.setItem("userData", JSON.stringify(response));
-      if (userType === "farmer") {
-        navigate("farmerdashboard");
-        setOtpVerified(false);
-      } else if (userType === "market") {
-        navigate("localmarketdashboard");
-        setOtpVerified(false);
-      } else {
-        navigate("logisticdashboard");
-        setOtpVerified(false);
+      try {
+        // otp verification api for login
+        setOtpVerified(true);
+        // setIsLoading(true);
+        // loading for user experience
+        // setTimeout(() => setIsLoading(false), 2500);
+        Toast(toast.success, "Logging In....");
+        // get userType and userId from api
+        const response = { userId: "123456789", userType };
+        setUserData(response);
+        // localstorage for user data
+        localStorage.setItem("userData", JSON.stringify(response));
+        if (userType === "farmer") {
+          navigate("farmerdashboard");
+          setOtpVerified(false);
+        } else if (userType === "market") {
+          navigate("localmarketdashboard");
+          setOtpVerified(false);
+        } else {
+          navigate("logisticdashboard");
+          setOtpVerified(false);
+        }
+      } catch (err) {
+        Toast(toast.error, err.message);
       }
     }
   };
+  
   return (
     <RegistrationContext
       value={{
