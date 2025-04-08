@@ -44,10 +44,10 @@ const FarmerLogisticsDetails = () => {
     <>
       <>
         <div className="flex-col w-[100%] mt-3 h-[13.6dvh] justify-items-center pe-3  ">
-          <div className=" flex-col justify-items-center bg-(--green) mt-3 border-(--secondary) p-0.5 border-2 rounded-xl   w-40 ">
+          <div className=" flex-col justify-items-center bg-(--green) mt-2 border-(--secondary) p-0.5 border-2 rounded-xl   w-40 ">
             <p className="font-inter font-bold text-2xl">Logistics</p>
           </div>
-          <div className="flex justify-center h-10 bg-gray-200 p-1 rounded-2xl w-90 mt-5 font-inter pe-3 ">
+          <div className="flex justify-center h-10 bg-gray-200 p-1 rounded-2xl w-90 mt-3 font-inter pe-3 ">
             <img
               className="flex ms-4  pb-2 size-10"
               src={search}
