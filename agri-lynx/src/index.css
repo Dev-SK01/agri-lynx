@@ -8,6 +8,10 @@
 /* Tailwindcss */
 @import "tailwindcss";
 
+.bc{
+    background-size: contain;
+    background-image: url(./assets/bg.svg);
+}
 /* css variables  */
 :root{
     --primary: #ffffff;
@@ -130,4 +134,25 @@
   body {
     @apply bg-background text-foreground;
     }
+}
+
+@layer utilities {
+  .scrollbar::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    border-radius: 00vh;
+    background: #ffffff;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    background: #ffffff;
+    border-radius: 0vh;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #ffffff;
+  }
 }

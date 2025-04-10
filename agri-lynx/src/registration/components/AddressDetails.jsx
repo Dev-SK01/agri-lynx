@@ -1,8 +1,29 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import RegistrationContext from "../context/RegistrationContext";
 
 const AddressDetails = () => {
+  const {
+    address,
+    setAddress,
+    taluk,
+    setTaluk,
+    district,
+    setDistrict,
+    state,
+    setState,
+    pincode,
+    SetPincode,
+  } = useContext(RegistrationContext);
+
+  // console.log({
+  //   address,
+  //   taluk,
+  //   district,
+  //   state,
+  //   pincode,
+  // });
+
   return (
     <>
       <div className="w-full max-w-sm mt-10">
@@ -19,7 +40,13 @@ const AddressDetails = () => {
           placeholder="Enter Your Address"
           className="font-inter bg-(--teritary) pt-5 pb-5"
           id="address"
+          onChange={(e) => setAddress(e.target.value)}
         />
+        {address.length < 10 && (
+          <p className="text-red-600 font-semibold">
+            enter address!
+          </p>
+        )}
       </div>
       <div className="w-full max-w-sm mt-5">
         <label htmlFor="taluk" className="font-bold font-inter mb-2">
@@ -30,7 +57,13 @@ const AddressDetails = () => {
           placeholder="Enter Your Taluk"
           className="font-inter bg-(--teritary) pt-5 pb-5"
           id="taluk"
+          onChange={(e) => setTaluk(e.target.value)}
         />
+        {taluk.length < 2 && (
+          <p className="text-red-600 font-semibold">
+            enter taluk!
+          </p>
+        )}
       </div>
       <div className="w-full max-w-sm mt-5">
         <label htmlFor="district" className="font-bold font-inter mb-2">
@@ -41,7 +74,13 @@ const AddressDetails = () => {
           placeholder="Enter Your District"
           className="font-inter bg-(--teritary) pt-5 pb-5"
           id="district"
+          onChange={(e) => setDistrict(e.target.value)}
         />
+         {district.length < 2 && (
+          <p className="text-red-600 font-semibold">
+            enter district!
+          </p>
+        )}
       </div>
       <div className="w-full max-w-sm mt-5">
         <label htmlFor="state" className="font-bold font-inter mb-2">
@@ -52,7 +91,13 @@ const AddressDetails = () => {
           placeholder="Enter Your State"
           className="font-inter bg-(--teritary) pt-5 pb-5"
           id="state"
+          onChange={(e) => setState(e.target.value)}
         />
+         {state.length < 2 && (
+          <p className="text-red-600 font-semibold">
+            enter state!
+          </p>
+        )}
       </div>
       <div className="w-full max-w-sm mt-5">
         <label htmlFor="pincode" className="font-bold font-inter mb-2">
@@ -63,8 +108,14 @@ const AddressDetails = () => {
           placeholder="Enter Your Pincode"
           className="font-inter bg-(--teritary) pt-5 pb-5"
           id="pincode"
-          maxLength={6}
+          minLength={6}
+          onChange={(e) => SetPincode(e.target.value)}
         />
+         {pincode.length < 6 && (
+          <p className="text-red-600 font-semibold">
+            enter pincode!
+          </p>
+        )}
       </div>
     </>
   );
