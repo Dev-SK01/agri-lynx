@@ -13,7 +13,6 @@ const FarmerLogisticsDetails = () => {
     FarmerLogisticsContext
   );
   const [searchItem, setSearchItem] = useState("");
-  const [filteredUsers, setFilteredUsers] = useState("");
   LogisticsDetails.filter((logis) =>
     logis.name.toLowerCase().includes(searchItem)
   );

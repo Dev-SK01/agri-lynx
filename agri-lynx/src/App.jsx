@@ -6,6 +6,7 @@ import { Route, Routes } from "react-router-dom";
 import { FarmerLogisticsContextProvider } from "./farmers/Context/FarmerLogisticsContext";
 import FarmerLogisticInformation from "./farmers/FarmerLogisticInformation";
 import LogisticsBooking from "./farmers/components/LogisticsBooking";
+import { Slide, ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -23,6 +24,20 @@ function App() {
       {/* <FarmerLogin /> */}
       {/* <FarmerProduceListing /> */}
       {/* <ApiCommodityList /> */}
+       {/* toast container */}
+       <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        limit={1}
+        closeOnClick={true}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable={true}
+        theme="light"
+        transition={Slide}
+      />
     </>
   );
 }
