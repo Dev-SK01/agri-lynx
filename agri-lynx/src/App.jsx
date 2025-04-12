@@ -136,7 +136,7 @@ function App() {
       setUserData();
     }
   }, []);
-
+function App() {
   return (
     <>
       <Routes>
