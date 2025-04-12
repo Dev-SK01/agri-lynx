@@ -1,0 +1,29 @@
+import React, { useContext } from "react";
+import Container from "@/registration/components/Container";
+import Header from "@/registration/components/Header";
+import RegistrationContext from "@/registration/context/RegistrationContext";
+import bottomBg from "../assets/login-bottom-bg.svg";
+const Login = () => {
+  const { handleUserLogin, loginOtpVerify, userData } =
+    useContext(RegistrationContext);
+  return (
+    !userData && (
+      <>
+        <Container>
+          <Header
+            verificationHandler={handleUserLogin}
+            headerType={"LOGIN"}
+            otpHandler={loginOtpVerify}
+          />
+          <img
+            src={bottomBg}
+            alt="login-bottom-bg"
+            className="absolute bottom-0"
+          />
+        </Container>
+      </>
+    )
+  );
+};
+
+export default Login;
