@@ -1,18 +1,22 @@
-import React from 'react'
-import DashBoard from './DashBoard/DashBoard'
-import { LogisticContextProvider } from './context/LogisticContext'
-import LogisticHome from './OrderManagement/LogisticHome'
-import OrderCheckOutPage from './OrderManagement/OrderCheckOutPage'
+import React, { useContext } from 'react';
+import LogisticContext from './context/LogisticContext';
+import LogisticHome from './OrderManagement/LogisticHome';
+import OrderCheckOutPage from './OrderManagement/OrderCheckOutPage';
+import VerificationOTP from './OrderManagement/VerificationOTP';
+import OrderDetails from './OrderManagement/OrderDetails';
 const Logistic = () => {
+  const { currentPage, showOtpPopup } = useContext(LogisticContext);
+  console.log(currentPage);
+  
   return (
+    <>
+      {currentPage === "home" && <LogisticHome />}
+      {currentPage === "checkout" && <OrderCheckOutPage />}
+      {showOtpPopup && <VerificationOTP />} 
+      
+       {/* <OrderDetails/> */}
+    </>
+  );
+};
 
-    <LogisticContextProvider>
-      {/* <DashBoard /> */}
-      {/* <LogisticHome/> */}
-      <OrderCheckOutPage></OrderCheckOutPage>
-    </LogisticContextProvider>
-  )
-}
-
-export default Logistic
-
+export default Logistic;
