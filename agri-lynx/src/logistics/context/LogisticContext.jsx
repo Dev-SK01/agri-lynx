@@ -121,7 +121,7 @@ export const LogisticContextProvider = ({ children }) => {
         setStatusLocked,
 
         verifyOtpAndChangeStatus,
-        showOtpPopup
+        
       }}
     >
       {children}
