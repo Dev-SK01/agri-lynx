@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import ApiCommodityList from "./components/ApiCommodityList";
-import crops from "../assets/crops.svg";
-import Frame from "../assets/Frame.svg";
-import MinMaxPriceCalculation from "./components/MinMaxPriceCalculation";
+import ApiCommodityList from "./ApiCommodityList";
+import crops from "../../assets/crops.svg";
+import Frame from "../../assets/Frame.svg";
+import MinMaxPriceCalculation from "./MinMaxPriceCalculation";
 import { format, subDays } from "date-fns";
-import Footer from "../farmers/components/Footer";
-import Header from "./components/Header";
+import Footer from "./Footer";
+import Header from "./Header";
 import { toast } from "react-toastify";
 
 const FarmerProduceListing = () => {

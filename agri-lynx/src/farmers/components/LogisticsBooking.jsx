@@ -6,7 +6,7 @@ import phone from "../../assets/phone.svg";
 import human from "../../assets/Human.svg";
 import message from "../../assets/message.svg";
 import delivery from "../../assets/delivery.svg";
-import FarmerLogisticsContext from "../Context/FarmerLogisticsContext";
+import FarmerLogisticsContext from "../context/FarmerLogisticsContext";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 const LogisticsBooking = () => {

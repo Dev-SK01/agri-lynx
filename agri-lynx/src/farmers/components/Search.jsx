@@ -1,11 +1,10 @@
-import React, { useContext } from "react";
-import { Button } from "@/components/ui/button";
+import React from "react";
 import { Input } from "@/components/ui/input";
 import addBtn from "../../assets/addBtn.svg";
 import { SearchIcon } from "lucide-react";
+import { Link } from "react-router-dom";
 
-const Search = ({searchFunction}) => {
-    
+const Search = ({ searchFunction }) => {
   return (
     <div className="flex w-full items-center justify-center mt-10">
       <SearchIcon className="absolute left-8" />
@@ -15,9 +14,9 @@ const Search = ({searchFunction}) => {
         className="bg-(--green) p-5.5 font-inknut rounded-[25px] w-[100%] text-center"
         onChange={(e) => searchFunction(e)}
       />
-      <Button type="submit" className="p-0 ml-4">
+      <Link className="p-0 ml-4" to="/addproduce">
         <img src={addBtn} alt="addBtn" />
-      </Button>
+      </Link>
     </div>
   );
 };

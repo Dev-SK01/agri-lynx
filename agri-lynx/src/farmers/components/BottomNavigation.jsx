@@ -18,7 +18,7 @@ const BottomNavigation = () => {
           <img src={orderIcon} alt="orderIcon" className="h-[50px] w-[50px]" />
         </div>
       </Link>
-      <Link to="login">
+      <Link to="/farmerlogistics">
         <div className="h-[50px] w-[50px] bg-(--primary) rounded-sm flex items-center justify-center">
           <img
             src={logisticIcon}

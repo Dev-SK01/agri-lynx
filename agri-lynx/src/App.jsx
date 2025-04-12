@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import Registration from "./pages/Registration";
 import RegistrationContext from "./registration/context/RegistrationContext";
-import { ToastContainer, Slide ,toast } from "react-toastify";
+import { ToastContainer, Slide, toast } from "react-toastify";
 import Toast from "./utils/toast";
 import { Route, Routes } from "react-router-dom";
 import NotFound from "./pages/NotFound";
@@ -21,11 +21,15 @@ import UpdateProduce from "./farmers/components/UpdateProduce";
 import FarmerOrders from "./farmers/FarmerOrders";
 import FarmerOrderDetails from "./farmers/components/FarmerOrderDetails";
 import FarmerAnalytics from "./farmers/FarmerAnalytics";
+import FarmerProduceListing from "./farmers/components/FarmerProduceListing";
+import FarmerLogisticInformation from "./farmers/FarmerLogisticInformation";
+import LogisticsBooking from "./farmers/components/LogisticsBooking";
 
 function App() {
-  // context 
-  const { userData, isOtpVerified, isLoading, setUserData } = useContext(RegistrationContext);
-  const { setFarmerData, setIsContentLoading  } = useContext(FarmerContext);
+  // context
+  const { userData, isOtpVerified, isLoading, setUserData } =
+    useContext(RegistrationContext);
+  const { setFarmerData, setIsContentLoading } = useContext(FarmerContext);
 
   useEffect(() => {
     // localStorage userData for every time app loads.
@@ -134,9 +138,8 @@ function App() {
     // clean up fucntion
     return () => {
       setUserData();
-    }
+    };
   }, []);
-function App() {
   return (
     <>
       <Routes>
@@ -154,9 +157,14 @@ function App() {
           <Route path="updateproduce">
             <Route path=":listingId" element={<UpdateProduce />} />
           </Route>
+          <Route path="addproduce" element={<FarmerProduceListing />} />
           <Route path="farmerorders" element={<FarmerOrders />} />
           <Route path="farmerorderdetails">
             <Route path=":orderId" element={<FarmerOrderDetails />} />
+          </Route>
+          <Route path="farmerlogistics" element={<FarmerLogisticInformation />} />
+          <Route path="farmerlogisticsbooking">
+            <Route path=":partnerId" element={<LogisticsBooking />} />
           </Route>
           <Route path="farmeranalytics" element={<FarmerAnalytics />} />
           {/* local market Routes */}
@@ -197,5 +205,4 @@ function App() {
     </>
   );
 }
-
 export default App;

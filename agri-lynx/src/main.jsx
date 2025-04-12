@@ -5,15 +5,17 @@ import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 import { RegistrationContextProvider } from "./registration/context/RegistrationContext";
 import { FarmerContextProvider } from "./farmers/context/FarmerContext";
-
+import { FarmerLogisticsContextProvider } from "./farmers/context/FarmerLogisticsContext";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
-      <FarmerContextProvider>
-        <RegistrationContextProvider>
-          <App className="scroll-smooth" />
-        </RegistrationContextProvider>
-      </FarmerContextProvider>
+      <RegistrationContextProvider>
+        <FarmerContextProvider>
+          <FarmerLogisticsContextProvider>
+            <App className="scroll-smooth" />
+          </FarmerLogisticsContextProvider>
+        </FarmerContextProvider>
+      </RegistrationContextProvider>
     </BrowserRouter>
   </StrictMode>
 );

@@ -6,7 +6,7 @@ import location from "../../assets/location.svg";
 import { Link } from "react-router-dom";
 import search from "../../assets/search.svg";
 import { useEffect } from "react";
-import FarmerLogisticsContext from "../Context/FarmerLogisticsContext";
+import FarmerLogisticsContext from "../context/FarmerLogisticsContext";
 
 const FarmerLogisticsDetails = () => {
   const { LogisticsDetails, setLogisticsDetails } = useContext(
@@ -77,7 +77,7 @@ const FarmerLogisticsDetails = () => {
           }).map((Logistics) => (
             <div
               key={Logistics.logisticsPartnerId}
-              className="flex-col font-inter font-bold text-lg  border-s-10 border-(--secondary)  bg-(--teritary) rounded-xl w-[90dvw] p-2  mb-2"
+              className="flex-col font-inter font-bold text-lg  border-s-10 border-(--secondary)  bg-(--green) rounded-xl w-[90dvw] p-2  mb-2"
             >
               <p className=" flex me-20 p-1.5 m-2 bg-(--primary) rounded gap-3 pt-1.5  shadow-[0px_11px_9px_-1px_rgba(0,_0,_0,_0.1)]">
                 {" "}
@@ -101,7 +101,7 @@ const FarmerLogisticsDetails = () => {
               </p>
               <div className="flex-col justify-items-center w-[95%] ">
                 <Link
-                  to={`/farmerlogisticsdetails/${Logistics.logisticsPartnerId}`}
+                  to={`/farmerlogisticsbooking/${Logistics.logisticsPartnerId}`}
                   className="flex gap-2   p-1 text-(--primary)  bg-(--secondary) rounded  "
                 >
                   Book Now <img src={delivery} alt="delivery" />

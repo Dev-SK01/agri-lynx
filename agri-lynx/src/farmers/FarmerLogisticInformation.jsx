@@ -3,7 +3,7 @@ import {BrowserRouter,Routes,Route, data} from "react-router-dom"
 
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-import FarmerLogisticsContext from "./Context/FarmerLogisticsContext";
+import FarmerLogisticsContext from "./context/FarmerLogisticsContext";
 import FarmerLogisticsDetails from "./components/FarmerLogisticsDetails";
 
 
