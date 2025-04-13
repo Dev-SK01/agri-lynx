@@ -8,6 +8,10 @@
 /* Tailwindcss */
 @import "tailwindcss";
 
+.bc{
+    background-size: contain;
+    background-image: url(./assets/bg.svg);
+}
 /* css variables  */
 :root{
     --primary: #ffffff;
@@ -50,11 +54,13 @@
     --font-inknut: "Inknut Antiqua", sans-serif;
     --font-inter: "Inter", sans-serif ;
 }
+
 @layer components{
     .otp{
         @apply w-5 bg-gray-200  h-8 w-8 rounded space-x-20 mx-1.5 focus:border-2 focus:border-(--teritary)
     }
 }
+
 .dark {
     --background: oklch(0.145 0 0);
     --foreground: oklch(0.985 0 0);
@@ -134,4 +140,28 @@
   body {
     @apply bg-background text-foreground;
     }
+
 }
+
+
+@layer utilities {
+  .scrollbar::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    border-radius: 00vh;
+    background: #ffffff;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    background: #ffffff;
+    border-radius: 0vh;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #ffffff;
+  }
+}
+

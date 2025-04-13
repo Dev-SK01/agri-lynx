@@ -1,10 +1,21 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
-
-createRoot(document.getElementById('root')).render(
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import App from "./App.jsx";
+import { BrowserRouter } from "react-router-dom";
+import { RegistrationContextProvider } from "./registration/context/RegistrationContext";
+import { FarmerContextProvider } from "./farmers/context/FarmerContext";
+import { FarmerLogisticsContextProvider } from "./farmers/context/FarmerLogisticsContext";
+createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <App />
-  </StrictMode>,
-)
+    <BrowserRouter>
+      <RegistrationContextProvider>
+        <FarmerContextProvider>
+          <FarmerLogisticsContextProvider>
+            <App className="scroll-smooth" />
+          </FarmerLogisticsContextProvider>
+        </FarmerContextProvider>
+      </RegistrationContextProvider>
+    </BrowserRouter>
+  </StrictMode>
+);
