@@ -8,18 +8,20 @@ import message from "../../assets/message.svg";
 import delivery from "../../assets/delivery.svg";
 import FarmerLogisticsContext from "../context/FarmerLogisticsContext";
 import { useParams } from "react-router-dom";
-import { toast } from "react-toastify";;
+import { toast } from "react-toastify";
 import BottomNavigation from "./BottomNavigation";
 import Navigation from "./Navigation";
+import FarmerContext from "../context/FarmerContext";
+import UpdateProduce from "./UpdateProduce";
+
 const LogisticsBooking = () => {
   let farmerOrdersDetails;
   const [selectedName, setSelectedName] = useState("");
-  const {
-    LogisticsDetails,
-    setLogisticsDetails,
-    farmerOrders,
-    setFarmerOrders,
-  } = useContext(FarmerLogisticsContext);
+  const { LogisticsDetails, setLogisticsDetails } = useContext(
+    FarmerLogisticsContext
+  );
+  const { farmerOrders, setFarmerOrders } = useContext(FarmerContext);
+
   const { partnerId } = useParams();
   const logisticsData = LogisticsDetails.filter((logistics) => {
     if (
@@ -36,23 +38,39 @@ const LogisticsBooking = () => {
 
   function handleBookLogisticsPartner(e) {
     const userSelectedOrder = farmerOrders.filter((farmerOrders) => {
-      if (selectedName === farmerOrders.farmer.name) {
+      if (selectedName === farmerOrders.customer.name) {
         return farmerOrders;
       }
     });
+
     // farmer remainin orders
     const logisticsUpdatedOrders = farmerOrders.filter((farmerOrders) => {
-      if (selectedName !== farmerOrders.farmer.name) {
+      if (selectedName !== farmerOrders.customer.name) {
         return farmerOrders;
       }
     });
     const logistics = logisticsData[0];
     // appending logistics data to order datai
-    if (selectedName === null || selectedName === "" || selectedName === "Select Orders") {
+    if (
+      selectedName === null ||
+      selectedName === "" ||
+      selectedName === "Select Orders"
+    ) {
       toast.error("Please Select Name", {
-              toastId: "toast",
-            });
+        toastId: "toast",
+      });
     } else {
+      try {
+        // backend api
+        const res = fetch("", {
+          method: "POST",
+        });
+      } catch (err) {
+        console.log(err.message);
+      }
+
+      // changing booking status
+      userSelectedOrder[0].bookingStatus = "booked";
       const logisticsAddedData = { ...userSelectedOrder[0], logistics };
       console.log(logisticsAddedData, logisticsUpdatedOrders);
       logisticsUpdatedOrders.push(logisticsAddedData);
@@ -61,12 +79,13 @@ const LogisticsBooking = () => {
       setFarmerOrders(logisticsUpdatedOrders);
     }
   }
-  console.log(farmerOrders);
 
   return (
     <>
       <div className=" flex-col border-(--secondary)   items-center p-2   bg-(--primary) justify-center justify-items-center  bottom-0 top-0  m-0 me-0 ">
-        <div className="mt-3 w-[95dvw]"><Navigation /></div>
+        <div className="mt-3 w-[95dvw]">
+          <Navigation />
+        </div>
         <select
           onChange={(e) => setSelectedName(e.target.value)}
           name="orders"
@@ -75,8 +94,8 @@ const LogisticsBooking = () => {
         >
           <option value="Select Orders">Select Orders</option>
           {farmerOrders.map((farmerOrder) => (
-            <option key={farmerOrder.orderId} value={farmerOrder.farmer.name}>
-              {farmerOrder.farmer.name}
+            <option key={farmerOrder.orderId} value={farmerOrder.customer.name}>
+              {farmerOrder.customer.name}
             </option>
           ))}
         </select>
@@ -157,15 +176,17 @@ const LogisticsBooking = () => {
           ))}
         </div>
         <button
-          onClick={(e) => handleBookLogisticsPartner(e)}
+          onClick={(e) => handleBookLogisticsPartner()}
           type="submit"
           className="flex gap-2 font-bold text-xl px-1 mt-2 p-1.5 text-(--primary)  bg-(--secondary) rounded h-[5dvh] "
         >
           Book Now <img src={delivery} alt="delivery" />
         </button>
-        
       </div>
-      <div className="flex justify-center mt-0.5">< BottomNavigation /></div>
+      <div className="flex justify-center mt-0.5">
+        {" "}
+        <BottomNavigation />
+      </div>
     </>
   );
 };
