@@ -1,8 +1,8 @@
 import React, { useState, useContext } from 'react'
 import OwnerContext from '../context/OwnerContext'
-import Avatar from "../Assests/Avatar.svg"
-import Vector from "../Assests/Vector.svg"
-import log from "../Assests/log.svg"
+import Avatar from "../../Assests/Avatar.svg"
+import log from "../../Assests/log.svg"
+import Vector from "../../Assests/Vector.svg"
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 
