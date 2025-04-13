@@ -63,7 +63,7 @@ const FarmerDashboard = () => {
         >
           {!isContentLoading && (
             <>
-              {produceList.length ? (
+              {produceList?.length ? (
                 <Produce />
               ) : (
                 <img

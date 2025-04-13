@@ -1,11 +1,4 @@
-import { useState } from 'react'
-import LocalMarketOwnerRegistration from './owners/LocalMarketOwnerRegistration'
-import DashBoard from './logistics/DashBoard/DashBoard'
-import LocalMarketOwnerProductList from './owners/LocalMarketOwnerProductList'
-import LocalMarketOwnerMyOrder from './owners/LocalMarketOwnerMyOrder'
-import Logistic from './logistics/Logistic'
-import { LogisticContextProvider } from './logistics/context/LogisticContext'
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Registration from "./pages/Registration";
 import RegistrationContext from "./registration/context/RegistrationContext";
 import { ToastContainer, Slide, toast } from "react-toastify";
@@ -31,6 +24,12 @@ import FarmerAnalytics from "./farmers/FarmerAnalytics";
 import FarmerProduceListing from "./farmers/components/FarmerProduceListing";
 import FarmerLogisticInformation from "./farmers/FarmerLogisticInformation";
 import LogisticsBooking from "./farmers/components/LogisticsBooking";
+import LocalMarketOwnerRegistration from "./owners/LocalMarketOwnerRegistration";
+import DashBoard from "./logistics/DashBoard/DashBoard";
+import LocalMarketOwnerProductList from "./owners/LocalMarketOwnerProductList";
+import LocalMarketOwnerMyOrder from "./owners/LocalMarketOwnerMyOrder";
+import Logistic from "./logistics/Logistic";
+import { LogisticContextProvider } from "./logistics/context/LogisticContext";
 
 function App() {
   // context
@@ -149,42 +148,46 @@ function App() {
   }, []);
   return (
     <>
-      <Routes>
-        <Route
-          index
-          element={userData ? <Dashboard /> : <Registration />}
-        ></Route>
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="*" element={<NotFound />}></Route>
-        {/* procted Route */}
-        <Route element={<ProctedRoute />}>
-          {/* farmer Routes */}
-          <Route path="farmerdashboard" element={<FarmerDashboard />} />
-          <Route path="farmerprofile" element={<FarmerProfile />} />
-          <Route path="updateproduce">
-            <Route path=":listingId" element={<UpdateProduce />} />
+      <LogisticContextProvider>
+        <Routes>
+          <Route
+            index
+            element={userData ? <Dashboard /> : <Registration />}
+          ></Route>
+          <Route path="login" element={<Login />}></Route>
+          <Route path="*" element={<NotFound />}></Route>
+          {/* procted Route */}
+          <Route element={<ProctedRoute />}>
+            {/* farmer Routes */}
+            <Route path="farmerdashboard" element={<FarmerDashboard />} />
+            <Route path="farmerprofile" element={<FarmerProfile />} />
+            <Route path="updateproduce">
+              <Route path=":listingId" element={<UpdateProduce />} />
+            </Route>
+            <Route path="addproduce" element={<FarmerProduceListing />} />
+            <Route path="farmerorders" element={<FarmerOrders />} />
+            <Route path="farmerorderdetails">
+              <Route path=":orderId" element={<FarmerOrderDetails />} />
+            </Route>
+            <Route
+              path="farmerlogistics"
+              element={<FarmerLogisticInformation />}
+            />
+            <Route path="farmerlogisticsbooking">
+              <Route path=":partnerId" element={<LogisticsBooking />} />
+            </Route>
+            <Route path="farmeranalytics" element={<FarmerAnalytics />} />
+
+            {/* local market Routes */}
+            <Route path="localmarketdashboard" element={<FarmerDashboard />} />
+
+            {/* Loginstics Routes */}
+            <Route path="logisticdashboard" element={<FarmerDashboard />} />
           </Route>
-          <Route path="addproduce" element={<FarmerProduceListing />} />
-          <Route path="farmerorders" element={<FarmerOrders />} />
-          <Route path="farmerorderdetails">
-            <Route path=":orderId" element={<FarmerOrderDetails />} />
-          </Route>
-          <Route path="farmerlogistics" element={<FarmerLogisticInformation />} />
-          <Route path="farmerlogisticsbooking">
-            <Route path=":partnerId" element={<LogisticsBooking />} />
-          </Route>
-          <Route path="farmeranalytics" element={<FarmerAnalytics />} />
-
-
-          {/* local market Routes */}
-          <Route path="localmarketdashboard" element={<FarmerDashboard />} />
-
-          
-          {/* Loginstics Routes */}
-          <Route path="logisticdashboard" element={<FarmerDashboard />} />
-        </Route>
-      </Routes>
-
+        </Routes>
+      </LogisticContextProvider>
+      
+      {/* loader */}
       {isLoading && <Loader />}
 
       {/* toast container */}
