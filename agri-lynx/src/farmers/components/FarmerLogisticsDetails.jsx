@@ -61,7 +61,7 @@ const FarmerLogisticsDetails = () => {
             />
           </div>
         </div>
-        <div className="flex-col justify-items-center h-[62dvh] overflow-y-scroll w-[95dvw] ">
+        <div className="flex-col justify-items-center h-[64dvh] overflow-y-scroll w-[95dvw] ">
           {LogisticsDetails.filter((Logistics) => {
             return searchItem.toLowerCase() === ""
               ? Logistics

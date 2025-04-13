@@ -18,7 +18,7 @@ export const FarmerLogisticsContextProvider = ({children}) => {
         address:`210,south street,`,
         logisticsPartnerId: "w36ft8ndy3y26h83r"
       },
-      {
+      { 
         name: "Sridhar",
         phoneNumber:"24554257812",
         email: "ran881@gmail.com",

@@ -8,7 +8,9 @@ import message from "../../assets/message.svg";
 import delivery from "../../assets/delivery.svg";
 import FarmerLogisticsContext from "../context/FarmerLogisticsContext";
 import { useParams } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast } from "react-toastify";;
+import BottomNavigation from "./BottomNavigation";
+import Navigation from "./Navigation";
 const LogisticsBooking = () => {
   let farmerOrdersDetails;
   const [selectedName, setSelectedName] = useState("");
@@ -64,7 +66,7 @@ const LogisticsBooking = () => {
   return (
     <>
       <div className=" flex-col border-(--secondary)   items-center p-2   bg-(--primary) justify-center justify-items-center  bottom-0 top-0  m-0 me-0 ">
-        <Header />
+        <div className="mt-3 w-[95dvw]"><Navigation /></div>
         <select
           onChange={(e) => setSelectedName(e.target.value)}
           name="orders"
@@ -78,7 +80,7 @@ const LogisticsBooking = () => {
             </option>
           ))}
         </select>
-        <div className="h-[60dvh] mt-3 overflow-y-scroll">
+        <div className="h-[61dvh] mt-3 overflow-y-scroll">
           {logisticsData.map((logistics) => (
             <>
               <div className="font-inter font-bold  mt-2  mb-2">
@@ -161,8 +163,9 @@ const LogisticsBooking = () => {
         >
           Book Now <img src={delivery} alt="delivery" />
         </button>
-        <Footer />
+        
       </div>
+      <div className="flex justify-center mt-0.5">< BottomNavigation /></div>
     </>
   );
 };

@@ -5,8 +5,9 @@ import Frame from "../../assets/Frame.svg";
 import MinMaxPriceCalculation from "./MinMaxPriceCalculation";
 import { format, subDays } from "date-fns";
 import Footer from "./Footer";
-import Header from "./Header";
 import { toast } from "react-toastify";
+import Navigation from "./Navigation";
+import BottomNavigation from "./BottomNavigation";
 
 const FarmerProduceListing = () => {
   let produceDetails;
@@ -135,7 +136,7 @@ const FarmerProduceListing = () => {
   return (
     // <div className=' flex justify-center items-center h-dvh '>
     <div className="flex-col border-(--secondary)   items-center p-2   bg-(--primary) justify-center justify-items-center  bottom-0 top-0   m-0 me-0 ">
-      <Header />
+      <Navigation />
       <div className="flex-col justify-center justify-items-center gap-2 h-[13dvh] font-inknut mt-8 text-2xl">
         <div className="flex ">
           <h1>Add Your Produce </h1>
@@ -180,7 +181,7 @@ const FarmerProduceListing = () => {
         </div>
       </div>
       <div className="mt-10">
-        <Footer />
+        <BottomNavigation />
       </div>
     </div>
 
