@@ -3,24 +3,29 @@ import editBtn from "../../assets/editBtn.svg";
 import FarmerContext from "../context/FarmerContext";
 import { Link } from "react-router-dom";
 
+
 const Produce = () => {
-  const { produceList, setProduceList  } = useContext(FarmerContext);
-  // console.log("ProduceComponent:",produceList);
   
-  return produceList.map((produce) => (
+  const { produceList } = useContext(FarmerContext);
+  // console.log("ProduceComponent:",produceList);
+
+  return produceList.filter(Boolean).map((produce) => (
     <section
       className="flex w-full items-center justify-evenly mt-8 bg-(--green) rounded-md py-2  relative"
-      key={produce.listingId}
+      key={produce?.listingId}
     >
-      <div className="bg-(--primary) rounded-lg">
-        <img
-          src={produce.imageUrl}
-          alt={produce.commodity}
-          className="object-cover h-40 w-34 rounded-lg"
-          loading="lazy"
-        />
+      <div className="bg-(--primary) rounded-lg flex items-center justify-center h-40 w-34">
+        {produce?.imageUrl && (
+          <img
+            src={produce?.imageUrl}
+            alt={produce?.commodity}
+            className="object-cover h-40 w-34 rounded-lg"
+            loading="lazy"
+          />
+        )}
+        {!produce?.imageUrl && <p className="rounded-lg text-center font-bold">{produce?.commodity}</p>}
       </div>
-      <Link to={`/updateproduce/${produce.listingId}`}>
+      <Link to={`/updateproduce/${produce?.listingId}`}>
         <img
           src={editBtn}
           alt="edit"
@@ -29,18 +34,18 @@ const Produce = () => {
       </Link>
       <div className="mr-4">
         <p className="bg-(--primary) px-5 py-3 rounded-md font-inter font-bold text-center mr-2">
-          {produce.commodity}
+          {produce?.commodity}
         </p>
         <div className="flex items-center justify-around mt-4">
           <p className="bg-(--primary) px-5 py-2 rounded-lg font-inter font-bold text-center">
-            {produce.quantity + "KG"}
+            {produce?.quantity + "KG"}
           </p>
           <p className="bg-(--primary) px-5 py-2 rounded-lg font-inter font-bold text-center ml-2">
-            {produce.price + "/KG"}
+            {produce?.price + "/KG"}
           </p>
         </div>
         <p className="bg-(--primary) px-5 py-3 rounded-lg font-inter font-bold text-center  mt-3 text-green-600">
-          &#8377;{produce.minPrice} - &#8377;{produce.maxPrice}
+          &#8377;{produce?.minPrice} - &#8377;{produce?.maxPrice}
         </p>
       </div>
     </section>

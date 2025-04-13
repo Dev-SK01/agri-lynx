@@ -7,16 +7,16 @@ import human from "../../assets/Human.svg";
 import message from "../../assets/message.svg";
 import delivery from "../../assets/delivery.svg";
 import FarmerLogisticsContext from "../context/FarmerLogisticsContext";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import BottomNavigation from "./BottomNavigation";
 import Navigation from "./Navigation";
 import FarmerContext from "../context/FarmerContext";
-import UpdateProduce from "./UpdateProduce";
+import Toast from "@/utils/toast";
 
 const LogisticsBooking = () => {
-  let farmerOrdersDetails;
   const [selectedName, setSelectedName] = useState("");
+  const navigate = useNavigate();
   const { LogisticsDetails, setLogisticsDetails } = useContext(
     FarmerLogisticsContext
   );
@@ -62,21 +62,22 @@ const LogisticsBooking = () => {
     } else {
       try {
         // backend api
-        const res = fetch("", {
-          method: "POST",
-        });
+        const res = true;
+        if (res) {
+          // changing booking status
+          userSelectedOrder[0].bookingStatus = "booked";
+          const logisticsAddedData = { ...userSelectedOrder[0], logistics };
+          console.log(logisticsAddedData, logisticsUpdatedOrders);
+          logisticsUpdatedOrders.push(logisticsAddedData);
+          console.log(logisticsUpdatedOrders);
+          // updating farmer orders state
+          setFarmerOrders(logisticsUpdatedOrders);
+          Toast(toast.success,"booked Successfully");
+          navigate("/farmerOrders")
+        }
       } catch (err) {
-        console.log(err.message);
+       Toast(toast.error,err.message);
       }
-
-      // changing booking status
-      userSelectedOrder[0].bookingStatus = "booked";
-      const logisticsAddedData = { ...userSelectedOrder[0], logistics };
-      console.log(logisticsAddedData, logisticsUpdatedOrders);
-      logisticsUpdatedOrders.push(logisticsAddedData);
-      console.log(logisticsUpdatedOrders);
-      // updating farmer orders state
-      setFarmerOrders(logisticsUpdatedOrders);
     }
   }
 

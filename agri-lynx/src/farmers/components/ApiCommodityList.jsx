@@ -1,6 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { format, subDays } from "date-fns";
 
 const ApiCommodityList = ({ handleChange }) => {
+
+  const toDate = format(new Date(), "yyyy-MM-dd");
+  const fromDate = format(subDays(toDate, 10), "yyyy-MM-dd");
+
   async function getCommodityList() {
     try {
       const response = await fetch(
@@ -12,10 +17,10 @@ const ApiCommodityList = ({ handleChange }) => {
           },
           body: new URLSearchParams({
             language: "en",
-            stateName: "TAMIL NADU",
+            stateName: "-- All --",
             apmcName: "-- Select APMCs --",
-            fromDate: "2025-02-28",
-            toDate: "2025-02-28",
+            fromDate,
+            toDate
           }),
         }
       );
@@ -30,7 +35,7 @@ const ApiCommodityList = ({ handleChange }) => {
   // console.log(commodityList);
   useEffect(() => {
     getCommodityList();
-  }, [commodityList]);
+  }, []);
   // console.log(optionValue);
 
   return (

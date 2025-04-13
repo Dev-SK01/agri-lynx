@@ -9,7 +9,8 @@ export const FarmerContextProvider = ({ children }) => {
   // copying the farmer produce list
   const farmerProduces = farmerData?.produceList;
   // console.log("FarmerProduces :",farmerProduces);
-  const [produceList, setProduceList] = useState();
+  const [produceList, setProduceList] = useState([]);
+  const [produceDetails ,setProduceDetails] = useState();
   // console.log("ProduceList :" , produceList);
 
   // farmer orders states
@@ -34,15 +35,6 @@ export const FarmerContextProvider = ({ children }) => {
         taluk: "kalaiyarkovil",
         district: "Ramanathapuram",
         pincode: "630661",
-      },
-      logistics: {
-        name: "Sanjay Krishna",
-        phoneNumber: "7094493944",
-        email: "logistics@gamil.com",
-        address: "9870,Aranmanai,kenikarai",
-        taluk: "kenikarai",
-        district: "Ramanathapuram",
-        pincode: "623513",
       },
       customer: {
         name: "Elumalai Velu",
@@ -239,6 +231,8 @@ export const FarmerContextProvider = ({ children }) => {
         produceList,
         farmerProduces,
         setProduceList,
+        produceDetails,
+        setProduceDetails,
         isContentLoading,
         setIsContentLoading,
         farmerOrders,
