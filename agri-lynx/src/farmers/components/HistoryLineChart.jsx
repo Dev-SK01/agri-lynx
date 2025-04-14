@@ -21,10 +21,10 @@ const HistoryLineChart = ({analyticsData}) => {
           type="monotone"
           dataKey="orders"
           stroke="#82ca9d"
-          activeDot={{ r: 8 }}
+          activeDot={{ r: 7 }}
         />
-        <Line type="monotone" dataKey="delivered" stroke="#8884d8" />
-        <Line type="monotone" dataKey="cancelled" stroke="#27548A" />
+        <Line type="monotone" dataKey="delivered" stroke="#8884d8" activeDot={{ r: 6 }}/>
+        <Line type="monotone" dataKey="cancelled" stroke="#27548A" activeDot={{ r: 5 }}/>
         {/* <Line type="monotone" dataKey="cancelled" stroke="#261FB3" /> */}
       </LineChart>
     </div>

@@ -14,8 +14,8 @@ const UpdateProduce = () => {
   const { farmerData, produceList, setProduceList } = useContext(FarmerContext);
   const { listingId } = useParams();
   const navigate = useNavigate();
-
-  const produceData = produceList?.filter((produce) => {
+  
+  const produceData = produceList.filter(Boolean).filter((produce) => {
     if (listingId.toLowerCase() === produce.listingId.toLowerCase()) {
       return produce;
     }
@@ -28,8 +28,7 @@ const UpdateProduce = () => {
   });
   const [updatedQuantity, setUpdatedQuantity] = useState(produceData[0]?.quantity);
   const toDate = format(new Date(), "yyyy-MM-dd");
-  const fromDate = format(subDays(toDate, 10), "yyyy-MM-dd");
-  // console.log(produceData);
+  const fromDate = format(subDays(toDate, 15), "yyyy-MM-dd");
   // console.log({updatedPrice,updatedQuantity,updatedMarketPrice,});
 
   async function minMaxPriceCalculation(value) {
@@ -53,7 +52,7 @@ const UpdateProduce = () => {
         }
       );
       const response = await PriceDataUrl.json();
-      console.log(response);
+      // console.log(response);
       // minMax price calculation
       const priceCalculation = (marketPrice) => {
         let minPrice = 0;
@@ -115,7 +114,7 @@ const UpdateProduce = () => {
         <Select className="text-black text-center" disabled={true}>
           <SelectTrigger className="w-[150px] pb-3 pt-3 mt-5 bg-(--green) font-inter font-bold text-black  ">
             <SelectValue
-              placeholder={produceData[0].commodity}
+              placeholder={produceData[0]?.commodity}
               className="text-black text-center"
             />
           </SelectTrigger>

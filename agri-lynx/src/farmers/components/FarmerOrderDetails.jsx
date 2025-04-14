@@ -176,7 +176,7 @@ const FarmerOrderDetails = () => {
       <div
         className={
           !isContentLoading
-            ? "w-[95%] overflow-auto h-[64.5vh] rounded-md scrollbar"
+            ? "w-[95%] overflow-auto h-[64vh] rounded-md scrollbar"
             : "w-[95%] h-[64.5vh] flex items-center justify-center"
         }
       >

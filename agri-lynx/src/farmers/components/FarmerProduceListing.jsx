@@ -1,36 +1,38 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import ApiCommodityList from "./ApiCommodityList";
 import crops from "../../assets/crops.svg";
 import Frame from "../../assets/Frame.svg";
 import MinMaxPriceCalculation from "./MinMaxPriceCalculation";
 import { format, subDays } from "date-fns";
-import Footer from "./Footer";
 import { toast } from "react-toastify";
 import Navigation from "./Navigation";
 import BottomNavigation from "./BottomNavigation";
+import useUid from "@/hook/useUid";
+import Toast from "@/utils/toast";
+import FarmerContext from "../context/FarmerContext";
+import { useNavigate } from "react-router-dom";
 
 const FarmerProduceListing = () => {
-  let produceDetails;
+  
+  const{farmerData , produceList, setProduceList ,produceDetails ,setProduceDetails} = useContext(FarmerContext);
+  const navigate = useNavigate()
   const [optionValue, setOptionValue] = useState("");
-  const [marketPrice, setMarketPrice] = useState({
-    minPrice: 0.0,
-    maxPrice: 0.0,
-  });
+  const [marketPrice, setMarketPrice] = useState({minPrice: 0.0,maxPrice: 0.0,});
   const [inputPrice, setInputPrice] = useState("");
   const [inputQuantity, setInputQuantity] = useState("");
   const toDate = format(new Date(), "yyyy-MM-dd");
-  const fromDate = format(subDays(toDate, 10), "yyyy-MM-dd");
+  const fromDate = format(subDays(toDate, 15), "yyyy-MM-dd"); 
+ // console.log("Commodity Value :", optionValue);
 
-  // console.log("Commodity Value :", optionValue);
-
-  const handleChange = (e) => {
-    const commodityName = e.target.value;
+  const handleChange = (value) => {
+    const commodityName = value;
     setOptionValue(commodityName);
     if (commodityName) {
       // for market commodity price data
       marketPriceData(commodityName);
     }
   };
+
   async function marketPriceData(value) {
     try {
       const PriceDataUrl = await fetch(
@@ -42,7 +44,7 @@ const FarmerProduceListing = () => {
           },
           body: new URLSearchParams({
             language: "en",
-            stateName: "TAMIL NADU",
+            stateName: "-- All --",
             apmcName: "-- Select APMCs --",
             commodityName: value,
             fromDate,
@@ -52,12 +54,12 @@ const FarmerProduceListing = () => {
         }
       );
       const response = await PriceDataUrl.json();
-      console.log(response);
+      // console.log(response);
       // minMax price calculation
       const priceCalculation = (marketPrice) => {
         let minPrice = 0;
         let maxPrice = 0;
-        marketPrice.forEach((commodity) => {
+        marketPrice?.forEach((commodity) => {
           minPrice += Number(commodity.min_price);
           maxPrice += Number(commodity.max_price);
           // console.log("Min:", commodity?.min_price);
@@ -73,6 +75,7 @@ const FarmerProduceListing = () => {
       console.error(err);
     }
   }
+
   const fetchImage = async (commodity) => {
     const SECRET_KEY = "tZgxfcaCQfk66V1uKAGMIOwwUMmK-IH2qEniGtwDfTc";
     try {
@@ -83,14 +86,15 @@ const FarmerProduceListing = () => {
       // console.log(data);
       return data.results[0].urls.small;
     } catch (err) {
-      if (err) alert("Image not found!");
+      if (err) Toast(toast.error,"Image not found!");
     }
   };
-  // console.log(optionValue);
-  
+
   async function handleAddProduce() {
-    console.log(optionValue);
-    
+    // console.log(optionValue);
+    // console.log(produceDetails);
+    // resetting state
+    setProduceDetails();
     if (!optionValue) {
       toast.error("Please Select the commodity Name", {
         toastId: "toast",
@@ -106,36 +110,42 @@ const FarmerProduceListing = () => {
           toastId: "toast",
         });
       } else {
-        produceDetails = {
-          commoditity: optionValue,
+        let newProduceData = {
+          commodity: optionValue,
           minPrice: marketPrice.minPrice,
           maxPrice: marketPrice.maxPrice,
           price: inputPrice,
           quantity: inputQuantity,
           imageUrl: await fetchImage(optionValue),
-          listingId: "h2hf6rhr8bdfu6hf073",
-          farmerId: "u8hr63h8fe839fh384",
+          listingId: useUid(),
+          farmerId: farmerData.farmerId,
         };
-
+        setProduceDetails(newProduceData);
         try {
           // backend api
-          const res = await fetch("", {
-            method: "POST",
-            body: produceDetails,
-          });
+          const res = newProduceData;
+          if(res){
+            toast.success("Produce Added successFully", {
+              toastId: "toast",
+            });
+            setProduceList([...produceList,newProduceData]);
+            setTimeout(()=> navigate("/"),2000);
+            // console.log([...produceList,produceDetails]);
+          }
         } catch (err) {
-          console.log(err.message);
+          toast.error(err.message,{
+            toastId: "toast",
+          });
         }
-        toast.success("Produce Data Added Successfully ", {
-          toastId: "toast",
-        });
-        console.log("ProduceData : ", produceDetails);
+        
+        // console.log("ProduceData : ", produceDetails);
       }
     }
   }
   return (
-    // <div className=' flex justify-center items-center h-dvh '>
-    <div className="flex-col border-(--secondary)   items-center p-2   bg-(--primary) justify-center justify-items-center  bottom-0 top-0   m-0 me-0 ">
+    <>
+    <div className=' flex justify-center items-center flex-col'>
+    <div className="flex-col border-(--secondary)   items-center p-2   bg-(--primary) justify-center justify-items-center mt-2 ">
       <Navigation />
       <div className="flex-col justify-center justify-items-center gap-2 h-[13dvh] font-inknut mt-8 text-2xl">
         <div className="flex ">
@@ -147,7 +157,7 @@ const FarmerProduceListing = () => {
         <ApiCommodityList handleChange={handleChange} />
       </div>
       <div className=""></div>
-      <div className="h-[49dvh]">
+      <div className="h-[55dvh]">
         <MinMaxPriceCalculation marketPrice={marketPrice} />
         <div className="mt-5 ">
           <p className="font-bold font-inter text-lg">PRICE ₹</p>
@@ -180,12 +190,10 @@ const FarmerProduceListing = () => {
           </p>
         </div>
       </div>
-      <div className="mt-10">
-        <BottomNavigation />
-      </div>
     </div>
-
-    // </div>
+    <BottomNavigation />
+    </div>
+    </>
   );
 };
 

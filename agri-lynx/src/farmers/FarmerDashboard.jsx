@@ -20,6 +20,8 @@ const FarmerDashboard = () => {
     produceList,
     setProduceList,
     farmerProduces,
+    produceDetails,
+    setProduceDetails
   } = useContext(FarmerContext);
 
   const searchProduce = (e) => {
@@ -40,11 +42,15 @@ const FarmerDashboard = () => {
     }
   };
 
+
   useEffect(() => {
     // setting farmer produce after getting the user data
-    setProduceList(farmerProduces || []);
+    if (farmerProduces.length) {
+      setProduceList([...farmerProduces,produceDetails]);
+    }
     // registration and login state empty
     setOtp(""), setEmail(""), setCodeSent(false);
+    // clean up function
   }, []);
 
   return (
@@ -63,7 +69,7 @@ const FarmerDashboard = () => {
         >
           {!isContentLoading && (
             <>
-              {produceList?.length ? (
+              {produceList.length ? (
                 <Produce />
               ) : (
                 <img

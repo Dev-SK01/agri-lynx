@@ -6,17 +6,18 @@ import { BrowserRouter } from "react-router-dom";
 import { RegistrationContextProvider } from "./registration/context/RegistrationContext";
 import { FarmerContextProvider } from "./farmers/context/FarmerContext";
 import { FarmerLogisticsContextProvider } from "./farmers/context/FarmerLogisticsContext";
-import { LogisticContextProvider } from './logistics/context/LogisticContext'
+import { LogisticContextProvider } from "./logistics/context/LogisticContext";
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
-      <RegistrationContextProvider>
-        <FarmerContextProvider>
+      <FarmerContextProvider>
+        <RegistrationContextProvider>
           <FarmerLogisticsContextProvider>
             <App className="scroll-smooth" />
           </FarmerLogisticsContextProvider>
-        </FarmerContextProvider>
-      </RegistrationContextProvider>
+        </RegistrationContextProvider>
+      </FarmerContextProvider>
     </BrowserRouter>
   </StrictMode>
 );

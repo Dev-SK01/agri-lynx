@@ -4,7 +4,7 @@ import addBtn from "../../assets/addBtn.svg";
 import { SearchIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const Search = ({ searchFunction }) => {
+const Search = ({ searchFunction , isAddBtn }) => {
   return (
     <div className="flex w-full items-center justify-center mt-10">
       <SearchIcon className="absolute left-8" />

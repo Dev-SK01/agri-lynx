@@ -1,24 +1,31 @@
 import React, { useContext, useState } from "react";
-import avatar1 from "../../assets/avatar1.svg";
-import phone from "../../assets/phone.svg";
-import delivery from "../../assets/delivery.svg";
-import location from "../../assets/location.svg";
 import { Link } from "react-router-dom";
 import search from "../../assets/search.svg";
 import { useEffect } from "react";
 import FarmerLogisticsContext from "../context/FarmerLogisticsContext";
+import Toast from "@/utils/toast";
+import { toast } from "react-toastify";
+import FarmerContext from "../context/FarmerContext";
+import avatar1 from "../../assets/avatar1.svg";
+import phone from "../../assets/phone.svg";
+import delivery from "../../assets/delivery.svg";
+import location from "../../assets/location.svg";
+import logistics from "../../assets/logistic.svg";
+import { SearchIcon } from "lucide-react";
+import { Input } from "@/components/ui/input";
 
 const FarmerLogisticsDetails = () => {
   const { LogisticsDetails, setLogisticsDetails } = useContext(
     FarmerLogisticsContext
   );
+  const { isContentLoading, setIsContentLoading } = useContext(FarmerContext);
   const [searchItem, setSearchItem] = useState("");
   LogisticsDetails.filter((logis) =>
     logis.name.toLowerCase().includes(searchItem)
   );
 
-  console.log(searchItem);
-  //
+  // console.log(searchItem);
+
   useEffect(() => {
     setSearchItem;
   }, [searchItem]);
@@ -29,9 +36,12 @@ const FarmerLogisticsDetails = () => {
     try {
       const req = "";
       const res = LogisticsDetails;
-      setLogisticsDetails(res);
+      if (res) {
+        Toast(toast.success, "Partner's Fetched Successfully");
+        setLogisticsDetails(res);
+      }
     } catch (err) {
-      console.log(err.message);
+      Toast(toast.error, err.message);
     }
   }
 
@@ -43,29 +53,32 @@ const FarmerLogisticsDetails = () => {
     <>
       <>
         <div className="flex-col w-[100%] mt-3 h-[13.6dvh] justify-items-center pe-3  ">
-          <div className=" flex-col justify-items-center bg-(--green) mt-2 border-(--secondary) p-0.5 border-2 rounded-xl   w-40 ">
-            <p className="font-inter font-bold text-2xl">Logistics</p>
+          <div className=" flex-col justify-items-center bg-(--green) mt-2 border-none p-0.5 border-2 rounded-md py-2 px-4">
+            <p className="font-inter font-bold text-2xl">Logistics Partner's</p>
           </div>
-          <div className="flex justify-center h-10 bg-gray-200 p-1 rounded-2xl w-[80dvw] mt-3 font-inter pe-3 ">
-            <img
-              className="flex ms-4  pb-2 size-10"
-              src={search}
-              alt="search"
-            />
-            <input
-              className=" w-70  justify-items-center text-xl  font-inknut"
+          <div className="flex w-[95%] items-center justify-center mt-4 ml-2">
+            <SearchIcon className="absolute left-8" />
+            <Input
               type="text"
+              placeholder="Search Logistics partners"
+              className="bg-(--green) p-5.5 font-inknut rounded-[25px] w-[100%] text-center"
               onChange={(e) => setSearchItem(e.target.value)}
-              value={searchItem}
-              placeholder="      search logistics "
             />
           </div>
         </div>
-        <div className="flex-col justify-items-center h-[64dvh] overflow-y-scroll w-[95dvw] ">
+        <div
+          className={
+            LogisticsDetails.length
+              ? "flex-col h-[62dvh] overflow-auto w-[95dvw] scrollbar justify-items-center mt-4"
+              : "flex-col flex items-center justify-center h-[62dvh] overflow-auto w-[95dvw] scrollbar mt-4"
+          }
+        >
           {LogisticsDetails.filter((Logistics) => {
             return searchItem.toLowerCase() === ""
               ? Logistics
-              :   Logistics.name.toLowerCase().includes(searchItem.toLowerCase()) ||
+              : Logistics.name
+                  .toLowerCase()
+                  .includes(searchItem.toLowerCase()) ||
                   Logistics.phoneNumber.toLowerCase().includes(searchItem) ||
                   Logistics.address.toLowerCase().includes(searchItem) ||
                   Logistics.pincode
@@ -77,21 +90,28 @@ const FarmerLogisticsDetails = () => {
           }).map((Logistics) => (
             <div
               key={Logistics.logisticsPartnerId}
-              className="flex-col font-inter font-bold text-lg  border-s-10 border-(--secondary)  bg-(--green) rounded-xl w-[90dvw] p-2  mb-2"
+              className="flex-col font-inter font-bold text-lg  border-s-8 border-(--secondary)  bg-(--green) rounded-xl w-[90dvw] p-2  mb-2"
             >
-              <p className=" flex me-20 p-1.5 m-2 bg-(--primary) rounded gap-3 pt-1.5  shadow-[0px_11px_9px_-1px_rgba(0,_0,_0,_0.1)]">
+              <p className=" flex me-20 p-1.5 m-2 bg-(--primary) rounded gap-3 pt-1.5  ">
                 {" "}
                 <img src={avatar1} className="size-8" alt="avatar" />
                 {Logistics.name}
               </p>
-              <p className="flex  me-20 p-1.5 m-2 bg-(--primary) rounded  gap-3  shadow-[0px_11px_9px_-1px_rgba(0,_0,_0,_0.1)]">
+              <a 
+              className="flex  me-20 p-1.5 m-2 bg-(--primary) rounded  gap-3" 
+              href={`tel:+91${Logistics.phoneNumber}`}
+              >
                 {" "}
                 <img src={phone} alt="phone" />
-                {Logistics.phoneNumber}
-              </p>
-              <p className="flex p-1.5  m-2 bg-(--primary) rounded  gap-3 shadow-[0px_11px_9px_-1px_rgba(0,_0,_0,_0.1)]  ">
+                +91 {Logistics.phoneNumber}
+              </a>
+              <p className="flex p-1.5  m-2 bg-(--primary) rounded  gap-3   ">
                 {" "}
-                <img src={location} alt="location" />
+                <img
+                  src={location}
+                  alt="location"
+                  className="h-[30px] w-[30px]"
+                />
                 {Logistics.address +
                   Logistics.village +
                   "\n" +
@@ -109,6 +129,12 @@ const FarmerLogisticsDetails = () => {
               </div>
             </div>
           ))}
+          {!LogisticsDetails.length && (
+            <div className="flex flex-col items-center justify-center">
+              <img src={logistics} alt="delivery" className="h-50 w-55 mb-4" />
+              <p className="text-2xl font-bold">No Partner's Found...!</p>
+            </div>
+          )}
         </div>
       </>
     </>
