@@ -21,7 +21,8 @@ const FarmerDashboard = () => {
     setProduceList,
     farmerProduces,
     produceDetails,
-    setProduceDetails
+    setProduceDetails,
+    setIsContentLoading,
   } = useContext(FarmerContext);
 
   const searchProduce = (e) => {
@@ -42,17 +43,20 @@ const FarmerDashboard = () => {
     }
   };
 
-
   useEffect(() => {
     // setting farmer produce after getting the user data
-    if (farmerProduces?.length) {
-      setProduceList([...farmerProduces,produceDetails]);
-    }
+    // fetchFarmerDataById()
+    setProduceList(farmerProduces);
     // registration and login state empty
     setOtp(""), setEmail(""), setCodeSent(false);
     // clean up function
   }, []);
 
+  // reloading for fetching the data in the server app useEffect
+  if (window.location.pathname === "/farmerdashboard") {
+    window.location.reload();
+    console.log("Reloaded");
+  }
   return (
     <>
       <div className="flex items-center justify-center flex-col">

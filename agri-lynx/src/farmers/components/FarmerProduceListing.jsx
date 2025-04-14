@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 
 const FarmerProduceListing = () => {
   
-  const{farmerData , produceList, setProduceList ,produceDetails ,setProduceDetails} = useContext(FarmerContext);
+  const{farmerData , produceList, setProduceList ,produceDetails ,setProduceDetails ,setFarmerData} = useContext(FarmerContext);
   const navigate = useNavigate()
   const [optionValue, setOptionValue] = useState("");
   const [marketPrice, setMarketPrice] = useState({minPrice: 0.0,maxPrice: 0.0,});
@@ -89,7 +89,7 @@ const FarmerProduceListing = () => {
       if (err) Toast(toast.error,"Image not found!");
     }
   };
-
+ 
   async function handleAddProduce() {
     // console.log(optionValue);
     // console.log(produceDetails);
@@ -120,7 +120,9 @@ const FarmerProduceListing = () => {
           listingId: useUid(),
           farmerId: farmerData.farmerId,
         };
-        setProduceDetails(newProduceData);
+        const FarmerData = farmerData;
+        FarmerData.produceList.push(newProduceData);
+        setFarmerData(FarmerData);
         try {
           // backend api
           const res = newProduceData;
@@ -128,7 +130,7 @@ const FarmerProduceListing = () => {
             toast.success("Produce Added successFully", {
               toastId: "toast",
             });
-            setProduceList([...produceList,newProduceData]);
+            setProduceList(produceList);
             setTimeout(()=> navigate("/"),2000);
             // console.log([...produceList,produceDetails]);
           }
@@ -142,6 +144,7 @@ const FarmerProduceListing = () => {
       }
     }
   }
+  
   return (
     <>
     <div className=' flex justify-center items-center flex-col'>

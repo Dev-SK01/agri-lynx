@@ -39,7 +39,7 @@ const FarmerProfile = () => {
             className="font-inter bg-(--teritary) pt-5 pb-5"
             id="name"
             disabled={true}
-            value={farmerData.name}
+            value={farmerData?.name || "Name"}
           />
         </div>
         <div className="w-full max-w-sm mt-5">
@@ -53,7 +53,7 @@ const FarmerProfile = () => {
             className="font-inter  bg-(--teritary) pt-5 pb-5"
             id="number"
             disabled={true}
-            value={farmerData.phoneNumber}
+            value={farmerData?.phoneNumber || "Phone Number"}
           />
         </div>
         <div className="w-full max-w-sm mt-5">
@@ -70,7 +70,7 @@ const FarmerProfile = () => {
             className="font-inter  bg-(--teritary) pt-5 pb-5"
             id="alter-number"
             disabled={true}
-            value={farmerData.alternateNumber}
+            value={farmerData?.alternateNumber || "Alternate Number"}
           />
         </div>
         {/* Address Details */}
@@ -89,7 +89,7 @@ const FarmerProfile = () => {
             className="font-inter bg-(--teritary) pt-5 pb-5"
             id="address"
             disabled={true}
-            value={farmerData.address}
+            value={farmerData?.address || "Address"}
           />
         </div>
         <div className="w-full max-w-sm mt-5">
@@ -102,7 +102,7 @@ const FarmerProfile = () => {
             className="font-inter bg-(--teritary) pt-5 pb-5"
             id="taluk"
             disabled={true}
-            value={farmerData.taluk}
+            value={farmerData?.taluk || "Taluk"}
           />
         </div>
         <div className="w-full max-w-sm mt-5">
@@ -115,7 +115,7 @@ const FarmerProfile = () => {
             className="font-inter bg-(--teritary) pt-5 pb-5"
             id="district"
             disabled={true}
-            value={farmerData.district}
+            value={farmerData?.district || "District"}
           />
         </div>
         <div className="w-full max-w-sm mt-5">
@@ -128,7 +128,7 @@ const FarmerProfile = () => {
             className="font-inter bg-(--teritary) pt-5 pb-5"
             id="state"
             disabled={true}
-            value={farmerData.state}
+            value={farmerData?.state || "State"}
           />
         </div>
         <div className="w-full max-w-sm mt-5">
@@ -142,7 +142,7 @@ const FarmerProfile = () => {
             id="pincode"
             minLength={6}
             disabled={true}
-            value={farmerData.pincode}
+            value={farmerData?.pincode || "Pincode"}
           />
         </div>
         {/* bank details */}
@@ -162,7 +162,7 @@ const FarmerProfile = () => {
             id="ifsc-code"
             style={{ textTransform: "uppercase" }}
             disabled={true}
-            value={farmerData.ifscCode}
+            value={farmerData?.ifscCode || "IFSC CODE"}
           />
         </div>
         <div className="w-full max-w-sm mt-5">
@@ -175,7 +175,7 @@ const FarmerProfile = () => {
             className="font-inter bg-(--teritary) pt-5 pb-5"
             id="account-number"
             disabled={true}
-            value={farmerData.accountNumber}
+            value={farmerData?.accountNumber || "Account Number"}
           />
         </div>
         <div className="w-full max-w-sm mt-5">
@@ -188,7 +188,7 @@ const FarmerProfile = () => {
             className="font-inter bg-(--teritary) pt-5 pb-5"
             id="holder-name"
             disabled={true}
-            value={farmerData.accountHolderName}
+            value={farmerData?.accountHolderName || "Account Holder Name"}
           />
         </div>
         <div className="w-full max-w-sm mt-5">
@@ -202,7 +202,7 @@ const FarmerProfile = () => {
             id="upi"
             style={{ textTransform: "uppercase" }}
             disabled={true}
-            value={farmerData.upiId}
+            value={farmerData?.upiId || "UPI ID"}
           />
         </div>
         <div className="w-full max-w-sm mt-5">
@@ -217,7 +217,7 @@ const FarmerProfile = () => {
             style={{ textTransform: "uppercase" }}
             disabled={true}
             key={1}
-            value={farmerData.bankName}
+            value={farmerData?.bankName || "BANK"}
           />
         </div>
         <div className="w-full max-w-sm mt-5">
@@ -232,7 +232,7 @@ const FarmerProfile = () => {
             style={{ textTransform: "uppercase" }}
             disabled={true}
             key={2}
-            value={farmerData.bankBranch}
+            value={farmerData?.bankBranch || "BRANCH"}
           />
         </div>
       </section>

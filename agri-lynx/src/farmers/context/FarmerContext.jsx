@@ -56,7 +56,7 @@ export const FarmerContextProvider = ({ children }) => {
       commodityPrice: "2.5",
       orderDate: new Date().toUTCString(),
       orderStatus: "packed",
-      bookingStatus: "pending",
+      bookingStatus: "booked",
       commodity: "Bitter Guard",
       imageUrl:
         "https://images.unsplash.com/photo-1720680052575-e629a9eff73b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Yml0dGVyJTIwZ291cmR8ZW58MHwxfDB8fHwy",

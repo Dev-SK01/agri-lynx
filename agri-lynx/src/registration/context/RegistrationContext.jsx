@@ -179,7 +179,7 @@ export const RegistrationContextProvider = ({ children }) => {
         // setTimeout(() => setIsLoading(false), 2500);
         Toast(toast.success, "Logging In....");
         // get userType and userId from api
-        const response = { userId: "123456789", userType };
+        const response = { userId: "s63hdb38dyb9ae4", userType };
         setUserData(response);
         // localstorage for user data
         localStorage.setItem("userData", JSON.stringify(response));
