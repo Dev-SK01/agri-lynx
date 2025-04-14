@@ -42,10 +42,13 @@ const DashBoard = () => {
           )}
         </header> */}
         {/* Header */}
-        <header className='flex rounded-xl h-16 pt-2 bg-(--green) mt-5 w-100 text-xl'>
-          <h1 className='font-bold font-inter pt-1 ms-10 text-1xl'>
-            Welcome {LogisticData?.name}!
+        
+        <header className='flex rounded-xl h-16 pt-2 bg-(--green) mt-5 w-[95%] text-xl'>
+          <Link to="/logistic">
+          <h1 className='font-bold font-inknut pt-1 ms-10 items-center'>
+             {LogisticData?.name}!
           </h1>
+          </Link>
           <div className='ms-83 pb-1 fixed'>
             <img src={avatar} onClick={handleAvatarClick} alt="avatar" />
           </div>
@@ -60,7 +63,7 @@ const DashBoard = () => {
               <div className="flex items-center justify-center flex-col">
 
                 <div className="mt-5 w-full max-w-sm "><Label className="font-bold">Name</Label><Input className="text-black bg-gray-200" value={LogisticData.name} disabled={true} /></div>
-                <div className="mt-5 w-full max-w-sm "><Label className="font-bold">Shop Name</Label><Input className="text-black bg-gray-200" value={LogisticData.shopName} disabled={true} /></div>
+               
                 <div className="mt-5 w-full max-w-sm "><Label className="font-bold">Email</Label><Input className="text-black bg-gray-200" value={LogisticData.email} disabled={true} /></div>
                 <div className="mt-5 w-full max-w-sm "><Label className="font-bold">Phone Number<img className="h-[20px] w-[20px]" src={phone} alt="Assests" /></Label><Input className="text-black bg-gray-200" value={LogisticData.phoneNumber} disabled={true} /></div>
                 <div className="mt-5 w-full max-w-sm "><Label className="font-bold">Alternate Number<img className="h-[20px] w-[20px]" src={phone} alt="Assests" /></Label><Input className="text-black bg-gray-200" value={LogisticData.alternateNumber} disabled={true} /></div>
@@ -78,7 +81,20 @@ const DashBoard = () => {
                 <div className="mt-5 w-full max-w-sm "><Label className="font-bold">District</Label><Input className="text-black bg-gray-200" value={LogisticData.district} disabled={true} /></div>
                 <div className="mt-5 w-full max-w-sm "><Label className="font-bold">State</Label><Input className="text-black bg-gray-200" value={LogisticData.state} disabled={true} /></div>
                 <div className="mt-5 w-full max-w-sm "><Label className="font-bold">Pincode</Label><Input className="text-black bg-gray-200" value={LogisticData.pincode} disabled={true} /></div>
+               
               </div>
+              <div className=" flex items-center  flex-col  mt-5  font-bold ">
+                <div className="mr-60">
+                  <h1>VECHICLE DETAILS</h1>
+                </div>
+              </div>
+              <div className="flex items-center justify-center flex-col">
+              <div className="mt-5 w-full max-w-sm "><Label className="font-bold">Vechicle Type</Label><Input className="text-black bg-gray-200" value={LogisticData.vehicleType} disabled={true} /></div>
+              <div className="mt-5 w-full max-w-sm "><Label className="font-bold">Vechicle Number</Label><Input className="text-black bg-gray-200" value={LogisticData.vehicleNumber} disabled={true} /></div>
+              <div className="mt-5 w-full max-w-sm "><Label className="font-bold">Liecense Number</Label><Input className="text-black bg-gray-200" value={LogisticData.licenseNumber} disabled={true} /></div>
+                
+              </div>
+              
               <nav className='flex items-center justify-center flex-col'>
                 <div className=" flex items-center justify-center rounded-xl h-8  w-30  bg-(--green) mt-9 ">
                   <img src={log} alt="Assests" /> <h1 className=" font-bold  text-xl ml-1.5"> Logout</h1>
@@ -95,14 +111,14 @@ const DashBoard = () => {
             <img src={product} alt="product" />
           </div>
           <Link to="/logistic">
-            <div className="h-[50px] w-[50px] bg-(--primary) rounded-sm">
-              <img src={ordericon} alt="orderIcon" className="h-[50px] w-[50px]" />
+            <div className="ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1">
+              <img src={ordericon} alt="orderIcon"  />
             </div>
           </Link>
-          <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1.5'>
+          <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1'>
             <img src={logistic} alt="logistic" />
           </div>
-          <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-2'>
+          <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1'>
             <img src={analytics} alt="analytics" />
           </div>
         </footer>

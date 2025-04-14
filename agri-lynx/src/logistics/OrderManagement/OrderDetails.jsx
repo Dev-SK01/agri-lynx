@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import avatar from "../../Assest/avatar.svg"
 import analytics from '../../Assest/analytics.svg';
 import logistic from '../../Assest/logistic.svg';
@@ -25,15 +25,18 @@ const OrderDetails = () => {
         setOrderStatus,
         setShowOtpPopup,
     } = useContext(LogisticContext);
+    const [isStatusUpdated, setIsStatusUpdated] = useState(false);
+
     const handleStatusChange = (value) => {
         setOrderStatus(value);
+        setIsStatusUpdated(true); // prevent further changes
         if (value === 'Delivered' || value === 'In-Transit') {
             setShowOtpPopup(true);
         }
-    }
+    };
     return (
         <>
-            <div className="flex items-center justify-center flex-col ">
+            <div className="flex justify-center items-center flex-col ">
                 {/* Header */}
                 <header className='flex rounded-xl h-16 pt-2 bg-(--green) mt-5 w-100 text-xl '>
                     <h1 className='font-bold font-inter pt-1 ms-10 text-1xl'>
@@ -60,12 +63,9 @@ const OrderDetails = () => {
 
 
 
-                <Select onValueChange={(value) => {
-                    setOrderStatus(value);
-                    if (value === "Deliverd", "In-Transit") {
-                        setShowOtpPopup(true); // show popup only when Delivered
-                    }
-                }}>
+                <Select value={orderStatus}
+                    onValueChange={handleStatusChange}
+                    disabled={isStatusUpdated}>
                     <SelectTrigger className="flex justify-center items-center font-inter mt-2">Select Status</SelectTrigger>
                     <SelectContent>
                         <SelectItem value="Ordered">Ordered</SelectItem>
@@ -74,70 +74,64 @@ const OrderDetails = () => {
                     </SelectContent>
                 </Select>
                 {/* order details */}
-                <div className="pb-2 border-b-1  border-b-green-300 w-[30vw]">
-                    <div className="flex text-center items-center ">
-                        <img src={ordericon} alt="orderImg" />
-                        <h1 className="font-extrabold text-[1.4rem] mt-2 font-inter">
-                            ORDER DETAILS
-                        </h1>
+                <div className='items-start'>
+                    <div className="justify-items-start pb-2 border-b-1  border-b-green-300 ">
+                        <div className="flex ">
+                            <img src={ordericon} alt="orderImg" />
+                            <h1 className="font-extrabold text-[1.4rem] mt-2 font-inter">
+                                ORDER DETAILS
+                            </h1>
+                        </div>
+                        <div className="ml-12  " >
+                            <div className=''>
+                                <span className="font-[600] font-inter">COMMODITY : <span>{LogisticOrders[0]?.commodity}</span></span>
+                            </div>
+
+                            <div><span className="font-[600] font-inter">QUANTITY : <span>{LogisticOrders[0]?.quantity}.KG</span></span></div>
+
+                            <div><span className="font-[600] font-inter">PRICE : &#8377; <span>{LogisticOrders[0]?.price}</span></span></div>
+
+                            <div> <span className="font-[600] font-inter">COMMODITY PRICE : &#8377;{" "}<span>{LogisticOrders[0]?.commodityPrice}</span></span></div>
+
+                        </div>
                     </div>
-                    <div className="ml-12">
-                        <span className="font-[600] font-inter">
-                            COMMODITY : <span>{LogisticOrders[0]?.commodity}</span>
-                        </span>
-                        <br />
-                        <span className="font-[600] font-inter">
-                            QUANTITY : <span>{LogisticOrders[0]?.quantity}.KG</span>
-                        </span>
-                        <br />
-                        <span className="font-[600] font-inter">
-                            PRICE : &#8377; <span>{LogisticOrders[0]?.price}</span>
-                        </span>
-                        <br />
-                        <span className="font-[600] font-inter">
-                            COMMODITY PRICE : &#8377;{" "}
-                            <span>{LogisticOrders[0]?.commodityPrice}</span>
-                        </span>
-                        <br />
+                    {/* customer details */}
+                    <div className=" pb-2 border-b-1 border-b-green-300  ">
+                        <div className="flex">
+                            <img src={avatar} alt="avatar" />
+                            <h1 className="font-extrabold text-[1.4rem] mt-2 font-inter">
+                                CUSTOMER
+                            </h1>
+                        </div>
+                        <div className="ml-12">
+                            <span className="font-[600] font-inter">
+                                NAME : <span>{LogisticOrders[0]?.customer?.name}</span>
+                            </span>
+                            <br />
+                            <span className="font-[600] font-inter">
+                                NUMBER :{" "}
+                                <a href={`tel:+91${LogisticOrders[0]?.customer?.phoneNumber}`}>
+                                    +91<span>{LogisticOrders[0]?.customer?.phoneNumber}</span>
+                                </a>
+                            </span>
+                            <br />
+                            <span className="font-[600] font-inter">
+                                EMAIL : <span>{LogisticOrders[0]?.customer?.email}</span>
+                            </span>
+                            <br />
+                        </div>
                     </div>
-                </div>
-                {/* customer details */}
-                <div className="pb-2 border-b-1 border-b-green-300 w-[30vw]">
-                    <div className="flex text-center items-center ">
-                        <img src={avatar} alt="avatar" />
-                        <h1 className="font-extrabold text-[1.4rem] mt-2 font-inter">
-                            CUSTOMER
-                        </h1>
-                    </div>
-                    <div className="ml-12">
-                        <span className="font-[600] font-inter">
-                            NAME : <span>{LogisticOrders[0]?.customer?.name}</span>
-                        </span>
-                        <br />
-                        <span className="font-[600] font-inter">
-                            NUMBER :{" "}
-                            <a href={`tel:+91${LogisticOrders[0]?.customer?.phoneNumber}`}>
-                                +91<span>{LogisticOrders[0]?.customer?.phoneNumber}</span>
-                            </a>
-                        </span>
-                        <br />
-                        <span className="font-[600] font-inter">
-                            EMAIL : <span>{LogisticOrders[0]?.customer?.email}</span>
-                        </span>
-                        <br />
-                    </div>
-                </div>
-                {/* logistics details */}
-                {LogisticOrders[0]?.logistics && (
-                    <div className="mt-4 pb-2 border-b-1 border-b-green-300 w-[30vw]">
-                        <div className="mt-4 ml-2">
-                            <div className="flex text-center items-center ">
+                    {/* logistics details */}
+                    {LogisticOrders[0]?.logistics && (
+                        <div className=" pb-2 border-b-1 border-b-green-300 ">
+                            <div className="flex     ">
                                 <img src={avatar} alt="avatar" />
                                 <h1 className="font-extrabold text-[1.4rem] mt-2 font-inter ml-2">
                                     From
                                 </h1>
                             </div>
                             <div className="ml-12">
+
                                 <span className="font-[600] font-inter">
                                     NAME : <span>{LogisticOrders[0]?.logistics?.name}</span>
                                 </span>
@@ -155,31 +149,34 @@ const OrderDetails = () => {
                                     EMAIL : <span>{LogisticOrders[0]?.logistics?.email}</span>
                                 </span>
                                 <br />
+
                             </div>
                         </div>
-                    </div>
-                )}
-                {/* address details */}
-                <div className="mt-4 pb-2 border-b-1 border-b-green-300 w-[30vw]">
-                    <div className="flex text-center items-center ">
-                        <img src={logistic} alt="avatar" />
-                        <h1 className="font-extrabold text-[1.4rem] mt-2 font-inter ml-2">
-                            DELIVER TO
-                        </h1>
-                    </div>
-                    <div className="ml-12">
-                        <span className="font-[600] font-inter">
-                            ADDRESS : <span>{LogisticOrders[0]?.customer?.address}</span>
-                        </span>
-                        <br />
-                        <span className="font-[600] font-inter">
-                            DISTRICT : <span>{LogisticOrders[0]?.customer?.district}</span>
-                        </span>
-                        <br />
-                        <span className="font-[600] font-inter">
-                            PINCODE : <span>{LogisticOrders[0]?.customer?.pincode}</span>
-                        </span>
-                        <br />
+
+
+                    )}
+                    {/* address details */}
+                    <div className=" pb-2 border-b-1 border-b-green-300 ">
+                        <div className="flex     ">
+                            <img src={logistic} alt="avatar" />
+                            <h1 className="font-extrabold text-[1.4rem] mt-2 font-inter ml-2">
+                                DELIVER TO
+                            </h1>
+                        </div>
+                        <div className="ml-12">
+                            <span className="font-[600] font-inter">
+                                ADDRESS : <span>{LogisticOrders[0]?.customer?.address}</span>
+                            </span>
+                            <br />
+                            <span className="font-[600] font-inter">
+                                DISTRICT : <span>{LogisticOrders[0]?.customer?.district}</span>
+                            </span>
+                            <br />
+                            <span className="font-[600] font-inter">
+                                PINCODE : <span>{LogisticOrders[0]?.customer?.pincode}</span>
+                            </span>
+                            <br />
+                        </div>
                     </div>
                 </div>
                 {/* footer */}

@@ -1,3 +1,4 @@
+import VehicleDetails from "@/registration/components/VehicleDetails";
 import { createContext, useState } from "react";
 
 const LogisticContext = createContext({});
@@ -21,6 +22,10 @@ export const LogisticContextProvider = ({ children }) => {
     bankName: "State Bank of India",
     bankBranch: "Madurai",
     upiId: "rajesh@upi",
+    vehicleNumber:"TN-09-AQ-2004",
+    vehicleType:"Van",
+    licenseNumber:"DL-1420110012345"
+
   });
 
   const [isContentLoading, setIsContentLoading] = useState(true);
@@ -60,7 +65,7 @@ export const LogisticContextProvider = ({ children }) => {
         name: "Elumalai Velu",
         phoneNumber: "7654324578",
         email: "eleumalaivelu@gmail.com",
-        address: "1271, maran poratta kadai, kazhukumalai",
+        address: "1271, maran poratta kadai",
         taluk: "kalaiyarkovil",
         district: "Ramanathapuram",
         pincode: "623513",
