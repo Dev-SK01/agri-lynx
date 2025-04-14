@@ -6,15 +6,28 @@ import ordericon from '../../Assest/ordericon.svg';
 import product from '../../Assest/product.svg';
 import LogisticContext from '../context/LogisticContext';
 import { Button } from '@/components/ui/button';
-
+import { Link } from "react-router-dom";
 const LogisticHome = () => {
     const { LogisticOrders, LogisticData, } = useContext(LogisticContext)
     const { setCurrentPage } = useContext(LogisticContext);
+    const handleAvatarClick = () => {
+        setShowDetails(true);
+    };
     return (
         <>
             <div className="flex items-center justify-center flex-col ">
+                {/* Header
+                <header className='flex rounded-xl h-16 pt-2 bg-(--green) mt-5 w-100 text-xl'>
+                    <h1 className='font-bold font-inter pt-1 ms-10 text-1xl'>
+                        Welcome {LogisticData?.name}!
+                    </h1>
+                    <div className='ms-83 pb-1 fixed'>
+                        <img src={avatar} onClick={handleAvatarClick} alt="avatar" />
+                    </div>
+
+                </header> */}
                 {/* Header */}
-                <header className='flex rounded-xl h-16 pt-2 bg-(--green) mt-5 w-100 text-xl '>
+                <header className='flex rounded-xl h-16 pt-2 bg-(--green) mt-5 w-100 text-xl'>
                     <h1 className='font-bold font-inter pt-1 ms-10 text-1xl'>
                         Welcome {LogisticData?.name}!
                     </h1>
@@ -23,7 +36,7 @@ const LogisticHome = () => {
                     </div>
 
                 </header>
-                <div className='bg-[var(--green)] flex mt-4 h-48 rounded-2xl w-100 py-1'><div>
+                <div className='bg-[var(--green)] flex mt-4 h-48 rounded-2xl w-100 py-1 relative border-l-8 border-l-green-600   ' ><div>
                     <h1 className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-60 items-center text-center font-bold font-inter'>
                         {LogisticOrders[0].farmer.name}
                     </h1>
@@ -46,9 +59,11 @@ const LogisticHome = () => {
                     <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1'>
                         <img src={product} alt="product" />
                     </div>
-                    <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-0.5'>
-                        <img src={ordericon} alt="ordericon" />
-                    </div>
+                    <Link to="/logistic">
+                        <div className="h-[50px] w-[50px] bg-(--primary) rounded-sm">
+                            <img src={ordericon} alt="orderIcon" className="h-[50px] w-[50px]" />
+                        </div>
+                    </Link>
                     <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1.5'>
                         <img src={logistic} alt="logistic" />
                     </div>

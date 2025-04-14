@@ -12,7 +12,7 @@ import LogisticContext from '../context/LogisticContext';
 import calandar from "../../Assest/calendar.svg";
 
 const VerificationOTP = () => {
-    const { LogisticOrders } = useContext(LogisticContext);
+    const { LogisticOrders,LogisticData } = useContext(LogisticContext);
     const [otp, setOtp] = useState("");
     const [email, setEmail] = useState(LogisticOrders[0]?.LogisticOrders?.email || "");
     const { setShowOtpPopup, setOrderStatus } = useContext(LogisticContext);
@@ -66,7 +66,7 @@ const VerificationOTP = () => {
                             <Input
                                 type="email"
                                 placeholder="Email"
-                                value={email}
+                                value={LogisticOrders[0]?.logistics?.email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 className="font-inter font-semibold bg-(--primary) py-3 text-sm"
                             />

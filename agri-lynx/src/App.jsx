@@ -182,8 +182,12 @@ function App() {
             <Route path="localmarketdashboard" element={<FarmerDashboard />} />
 
             {/* Loginstics Routes */}
-            <Route path="logisticdashboard" element={<FarmerDashboard />} />
+            <Route path="logisticdashboard" element={<DashBoard />} />
           </Route>
+          <Route path="logistic" element={<Logistic />}>
+
+          </Route>
+          
         </Routes>
       </LogisticContextProvider>
       

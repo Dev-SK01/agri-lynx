@@ -8,7 +8,7 @@ import product from '../../Assest/product.svg';
 import LogisticContext from '../context/LogisticContext';
 import OrderDetails from './OrderDetails'; // Importing the component
 import calendar from "../../Assest/calendar.svg";
-
+import { Link } from "react-router-dom";
 const OrderCheckOutPage = () => {
   const {
     LogisticOrders,
@@ -72,7 +72,7 @@ const OrderCheckOutPage = () => {
             <div
               key={index}
               onClick={() => handleOrderClick(order)}
-              className='cursor-pointer bg-[var(--green)] flex mt-4 h-35 rounded-2xl w-100 py-1'
+              className='cursor-pointer bg-[var(--green)] flex mt-4 h-35 rounded-2xl w-100 py-1 relative border-l-8 border-l-green-600 '
             >
               <div>
                 <h1 className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-60 items-center text-center font-bold font-inter'>
@@ -108,9 +108,11 @@ const OrderCheckOutPage = () => {
         <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1'>
           <img src={product} alt="product" />
         </div>
-        <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-0.5'>
-          <img src={ordericon} alt="ordericon" />
-        </div>
+        <Link to="/logistic">
+            <div className="h-[50px] w-[50px] bg-(--primary) rounded-sm">
+              <img src={ordericon} alt="orderIcon" className="h-[50px] w-[50px]" />
+            </div>
+          </Link>
         <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1.5'>
           <img src={logistic} alt="logistic" />
         </div>
