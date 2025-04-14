@@ -45,7 +45,7 @@ const FarmerDashboard = () => {
 
   useEffect(() => {
     // setting farmer produce after getting the user data
-    if (farmerProduces.length) {
+    if (farmerProduces?.length) {
       setProduceList([...farmerProduces,produceDetails]);
     }
     // registration and login state empty
@@ -69,7 +69,7 @@ const FarmerDashboard = () => {
         >
           {!isContentLoading && (
             <>
-              {produceList.length ? (
+              {produceList?.length ? (
                 <Produce />
               ) : (
                 <img
