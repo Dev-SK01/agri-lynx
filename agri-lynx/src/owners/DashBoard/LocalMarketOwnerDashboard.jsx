@@ -13,17 +13,19 @@ const LocalMarketOwnerDashboard = () => {
   return (
     <>
     
-        <div className="flex items-center justify-center flex-col ">
-         {/* Header */}
-                    <header className='flex rounded-xl h-16 pt-2 bg-(--green) mt-5 w-100 text-xl '>
-                        <h1 className='font-bold font-inter mt-3 ms-10 text-1xl'>Luffy</h1>
-                        <div className='ml-40'>
-                            <img src={Avatar} alt="avatar" />
-                        </div>
-                        </header>
-                        </div>
+               <div className="flex items-center justify-between flex-col ">
+                {/* Header */}
+                <header className='flex rounded-xl justify-between h-16 pt-2 bg-(--green) mt-5 w-100 text-xl fixed top-2 z-auto  '>
+                <div className='max-w-[80%]'>
+                <h1 className='font-bold font-inter  mt-3 ms-10 text-1xl'>luffy</h1>
+                </div>
+                <div className='fixed ml-80 '>
+                <img className="object-cover" src={Avatar} alt="Assests" />
+                </div>
+                </header>
+                </div>
                     
-                  <div className="flex items-center justify-center flex-col">  
+                  <div className="flex items-center justify-center flex-col mt-25">  
                   <div className="mt-5 w-full max-w-sm "><Label className="font-bold">Name</Label><Input className="text-black bg-gray-200" value={OwnerData.name}disabled={true} /></div>
                   <div className="mt-5 w-full max-w-sm "><Label className="font-bold">Shop Name</Label><Input className="text-black bg-gray-200" value={OwnerData.shopName}disabled={true} /></div>
                   <div className="mt-5 w-full max-w-sm "><Label className="font-bold">Email</Label><Input className="text-black bg-gray-200" value={OwnerData.email}disabled={true} /></div>
