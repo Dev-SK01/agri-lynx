@@ -8,12 +8,14 @@ import Vector1 from '../../Assests/Vector1.svg'
 const LocalMarketOwnerAnalytics = () => {
   return (
     <>
-     <div className="flex items-center justify-center flex-col ">
+     <div className="flex items-center justify-between flex-col ">
                 {/* Header */}
-                           <header className='flex rounded-xl h-16 pt-2 bg-(--green) mt-5 w-100 text-xl fixed top-2 z-auto  '>
-                               <h1 className='font-bold font-inter mt-3 ms-10 text-1xl'> luffy</h1>
-                               <div className='bg-fixed ml-60'>
-                                   <img className="" src={Avatar} alt="Assests" />
+                           <header className='flex rounded-xl justify-between h-16 pt-2 bg-(--green) mt-5 w-100 text-xl fixed top-2 z-auto  '>
+                            <div className='max-w-[80%]'>
+                               <h1 className='font-bold font-inter  mt-3 ms-10 text-1xl'>luffy</h1>
+                               </div>
+                               <div className='fixed ml-80 '>
+                                   <img className="object-cover" src={Avatar} alt="Assests" />
                                </div>
                                </header>
                 {/* Footer */}
