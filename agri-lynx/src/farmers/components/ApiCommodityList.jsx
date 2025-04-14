@@ -1,10 +1,21 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { format, subDays } from "date-fns";
+import { toast } from "react-toastify";
+import Toast from "@/utils/toast";
 
 const ApiCommodityList = ({ handleChange }) => {
 
   const toDate = format(new Date(), "yyyy-MM-dd");
-  const fromDate = format(subDays(toDate, 10), "yyyy-MM-dd");
+  const fromDate = format(subDays(toDate, 15), "yyyy-MM-dd");
 
   async function getCommodityList() {
     try {
@@ -28,11 +39,13 @@ const ApiCommodityList = ({ handleChange }) => {
       // console.log(apiCommodityList);
       setCommodityList(apiCommodityList.data);
     } catch (err) {
-      console.log(err.message);
+      Toast(toast.error,err.message);
     }
   }
+  
   const [commodityList, setCommodityList] = useState([]);
   // console.log(commodityList);
+
   useEffect(() => {
     getCommodityList();
   }, []);
@@ -40,21 +53,22 @@ const ApiCommodityList = ({ handleChange }) => {
 
   return (
     <>
-      <select
-        onChange={handleChange}
-        name="commodity-list"
-        id="commodity-list "
-        className="bg-(--green) rounded-2xl p-1 text-xl font-inter font-bold ps-3 mt-6 h-[5.5dvh] w-60 border-e-4 border-b-4 border-(--secondary)"
-      >
-        <option value="">Select Commodity</option>
-        {commodityList.map((data, index) => (
-          <>
-            <option value={data.commodity} key={index}>
+      {/* select dropdown for user selection disabled={isOtpVerified?true:false} */}
+      <Select onValueChange={(value) => handleChange(value)}>
+        <SelectTrigger className="w-[80%] pb-3 pt-3 mt-5 bg-(--green) font-inter font-bold text-black shadow-[3px_3px_0px_0px_var(--secondary)] ">
+          <SelectValue placeholder="Select Commodity" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup className="font-inter font-bold">
+            <SelectLabel>Commodity</SelectLabel>
+            {commodityList.map((data, index) => (
+            <SelectItem value={data.commodity} key={index}>
               {data.commodity}
-            </option>
-          </>
+            </SelectItem>
         ))}
-      </select>
+          </SelectGroup>
+        </SelectContent>
+      </Select>
     </>
   );
 };

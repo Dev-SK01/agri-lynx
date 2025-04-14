@@ -28,7 +28,7 @@ const UpdateProduce = () => {
   });
   const [updatedQuantity, setUpdatedQuantity] = useState(produceData[0]?.quantity);
   const toDate = format(new Date(), "yyyy-MM-dd");
-  const fromDate = format(subDays(toDate, 10), "yyyy-MM-dd");
+  const fromDate = format(subDays(toDate, 15), "yyyy-MM-dd");
   // console.log({updatedPrice,updatedQuantity,updatedMarketPrice,});
 
   async function minMaxPriceCalculation(value) {

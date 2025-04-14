@@ -1,6 +1,12 @@
 import React, { useContext, useState } from "react";
-import Header from "./Header";
-import Footer from "./Footer";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import location from "../../assets/location.svg";
 import phone from "../../assets/phone.svg";
 import human from "../../assets/Human.svg";
@@ -17,12 +23,14 @@ import Toast from "@/utils/toast";
 const LogisticsBooking = () => {
   const [selectedName, setSelectedName] = useState("");
   const navigate = useNavigate();
+
   const { LogisticsDetails, setLogisticsDetails } = useContext(
     FarmerLogisticsContext
   );
   const { farmerOrders, setFarmerOrders } = useContext(FarmerContext);
 
   const { partnerId } = useParams();
+
   const logisticsData = LogisticsDetails.filter((logistics) => {
     if (
       logistics.logisticsPartnerId.toLowerCase() === partnerId.toLowerCase()
@@ -30,11 +38,6 @@ const LogisticsBooking = () => {
       return logistics;
     }
   });
-  // const farmerOrderData = farmerOrders.filter((farmerData)=>{
-  //   if(farmerData.orderStatus === "ordered"){
-  //     return farmerData;
-  //   }
-  // })
 
   function handleBookLogisticsPartner(e) {
     const userSelectedOrder = farmerOrders.filter((farmerOrders) => {
@@ -56,7 +59,7 @@ const LogisticsBooking = () => {
       selectedName === "" ||
       selectedName === "Select Orders"
     ) {
-      toast.error("Please Select Name", {
+      toast.error("Please Select Customer!", {
         toastId: "toast",
       });
     } else {
@@ -68,15 +71,16 @@ const LogisticsBooking = () => {
           userSelectedOrder[0].bookingStatus = "booked";
           const logisticsAddedData = { ...userSelectedOrder[0], logistics };
           console.log(logisticsAddedData, logisticsUpdatedOrders);
+          // adding the logistics added data to state.
           logisticsUpdatedOrders.push(logisticsAddedData);
-          console.log(logisticsUpdatedOrders);
+          // console.log(logisticsUpdatedOrders);
           // updating farmer orders state
           setFarmerOrders(logisticsUpdatedOrders);
-          Toast(toast.success,"booked Successfully");
-          navigate("/farmerOrders")
+          Toast(toast.success, "booked Successfully");
+          navigate("/farmerOrders");
         }
       } catch (err) {
-       Toast(toast.error,err.message);
+        Toast(toast.error, err.message);
       }
     }
   }
@@ -87,22 +91,28 @@ const LogisticsBooking = () => {
         <div className="mt-3 w-[95dvw]">
           <Navigation />
         </div>
-        <select
-          onChange={(e) => setSelectedName(e.target.value)}
-          name="orders"
-          id="orders"
-          className="flex-row justify-items-center bg-(--green) rounded-2xl p-1 pe-5 ps-9 text-xl font-inter font-bold  mt-6 h-[6dvh] w-60 border-e-4 border-b-4 border-(--secondary)"
-        >
-          <option value="Select Orders">Select Orders</option>
-          {farmerOrders.map((farmerOrder) => (
-            <option key={farmerOrder.orderId} value={farmerOrder.customer.name}>
-              {farmerOrder.customer.name}
-            </option>
-          ))}
-        </select>
+        {/* select dropdown for user selection disabled={isOtpVerified?true:false} */}
+        <Select onValueChange={(value) => setSelectedName(value)}>
+          <SelectTrigger className="w-[200px] pb-3 pt-3 mt-5 bg-(--green) font-inter font-bold text-black  ">
+            <SelectValue placeholder="Select Customer" />
+          </SelectTrigger>
+          <SelectContent className="font-inter font-bold">
+            <SelectGroup>
+              {farmerOrders.map((farmerOrder) => (
+                <SelectItem
+                  key={farmerOrder.orderId}
+                  value={farmerOrder.customer.name}
+                >
+                  {farmerOrder.customer.name}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        
         <div className="h-[61dvh] mt-3 overflow-y-scroll">
-          {logisticsData.map((logistics) => (
-            <>
+          {logisticsData.map((logistics, index) => (
+            <div key={index}>
               <div className="font-inter font-bold  mt-2  mb-2">
                 <p>Partner Name</p>
                 <div className="flex justify-between mt-2  p-1 ps-3 bg-(--teritary) h-10  text-lg text-gray-500 w-90 rounded border-2 border-gray-300">
@@ -112,10 +122,13 @@ const LogisticsBooking = () => {
               </div>
               <div className="font-inter font-bold  mt-2  mb-2">
                 <p>Phone Number</p>
-                <div className="flex justify-between mt-2  p-1 ps-3 bg-(--teritary) h-10  text-lg text-gray-500 w-90 rounded border-2 border-gray-300">
+                <a
+                  className="flex justify-between mt-2  p-1 ps-3 bg-(--teritary) h-10  text-lg text-gray-500 w-90 rounded border-2 border-gray-300"
+                  href={`tel:+91${logistics.phoneNumber}`}
+                >
                   {logistics.phoneNumber}{" "}
                   <img src={phone} alt="phone" className="me-4" />
-                </div>
+                </a>
               </div>
               <div className="font-inter font-bold  mt-2  mb-2">
                 <p>Email</p>
@@ -173,7 +186,7 @@ const LogisticsBooking = () => {
                   <img src={location} alt="location" className="me-4" />
                 </div>
               </div>
-            </>
+            </div>
           ))}
         </div>
         <button

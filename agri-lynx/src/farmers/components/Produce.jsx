@@ -37,10 +37,10 @@ const Produce = () => {
           {produce?.commodity}
         </p>
         <div className="flex items-center justify-around mt-4">
-          <p className="bg-(--primary) px-5 py-2 rounded-lg font-inter font-bold text-center">
+          <p className="bg-(--primary) px-5 py-2 rounded-lg font-inter font-bold text-center text-violet-400">
             {produce?.quantity + "KG"}
           </p>
-          <p className="bg-(--primary) px-5 py-2 rounded-lg font-inter font-bold text-center ml-2">
+          <p className="bg-(--primary) px-5 py-2 rounded-lg font-inter font-bold text-center ml-2 text-orange-400">
             {produce?.price + "/KG"}
           </p>
         </div>

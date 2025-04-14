@@ -21,13 +21,13 @@ const Orders = ({ orderData }) => {
               </p>
             </div>
             <div className="rounded-sm mr-12  mt-2">
-              <p className="bg-(--primary) rounded-sm font-inter font-bold text-center px-6 py-1 mb-4">
+              <p className="bg-(--primary) rounded-sm font-inter font-bold text-center px-6 py-1 mb-4 text-violet-400">
                 {order.quantity}.KG
               </p>
-              <p className="bg-(--primary) rounded-sm font-inter font-bold text-center px-6 py-1 mb-4">
+              <p className="bg-(--primary) rounded-sm font-inter font-bold text-center px-6 py-1 mb-4 text-orange-400">
                 &#8377; {order.commodityPrice}
               </p>
-              <p className="bg-(--primary) rounded-sm font-inter font-bold text-center px-6 py-1 mb-4">
+              <p className="bg-(--primary) rounded-sm font-inter font-bold text-center px-6 py-1 mb-4 text-green-600">
                 &#8377; {order.price}
               </p>
               {/* <img

@@ -15,7 +15,8 @@ import { toast } from "react-toastify";
 
 
 const AnalyticsHistory = () => {
-  const { farmerProduces,farmerData } = useContext(FarmerContext);
+  
+  const { farmerProduces,farmerData , produceList} = useContext(FarmerContext);
   const [analyticsData,setAnalyticsData] = useState([]);
   
   const dummyData = [
@@ -100,7 +101,7 @@ const AnalyticsHistory = () => {
     const req = `${farmerId}/${commodityName}`;
     const res = dummyData;
     if(res){
-      setAnalyticsData(dummyData);
+      setAnalyticsData(res);
       Toast(toast.success,"fetched Successfully");
     }else{
       Toast(toast.error,"Error In fetching Data!");
@@ -131,9 +132,9 @@ const AnalyticsHistory = () => {
           <SelectContent>
             <SelectGroup className="font-inter font-bold">
               <SelectLabel>Your Commodity's</SelectLabel>
-              {farmerProduces?.map((produce,index) => (
-                <SelectItem value={produce.commodity.toLowerCase()} key={index}>
-                  {produce.commodity}
+              {produceList?.map((produce,index) => (
+                <SelectItem value={produce?.commodity.toLowerCase()} key={index}>
+                  {produce?.commodity}
                 </SelectItem>
               ))}
             </SelectGroup>

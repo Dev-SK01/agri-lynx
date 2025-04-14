@@ -20,7 +20,8 @@ const FarmerDashboard = () => {
     produceList,
     setProduceList,
     farmerProduces,
-    produceDetails
+    produceDetails,
+    setProduceDetails
   } = useContext(FarmerContext);
 
   const searchProduce = (e) => {
@@ -49,6 +50,7 @@ const FarmerDashboard = () => {
     }
     // registration and login state empty
     setOtp(""), setEmail(""), setCodeSent(false);
+    // clean up function
   }, []);
 
   return (

@@ -33,10 +33,62 @@ import { LogisticContextProvider } from "./logistics/context/LogisticContext";
 
 function App() {
   // context
-  const { userData, isOtpVerified, isLoading, setUserData } = useContext(RegistrationContext);
+  const { userData, isOtpVerified, isLoading, setUserData } =
+    useContext(RegistrationContext);
 
   const { setFarmerData, setIsContentLoading } = useContext(FarmerContext);
-
+  
+  const fetchFarmerDataById = async () => {
+    // here used user data from the registration context to fetch user data by id
+    try {
+      setIsContentLoading(true);
+      // backend api
+      const response = {
+        farmerId: "s63hdb38dyb9ae4",
+        name: "Prasanth Muthusamy",
+        email: "prasanthfarmer@gmail.com",
+        phoneNumber: "8760254168",
+        alternateNumber: "7094295944",
+        address: "123,ucer shop,ucer street",
+        village: "MettuPatti",
+        postOffice: "Pullangudi",
+        taluk: "kalaiyarkovil",
+        district: "Ramanathapuram",
+        pincode: "630661",
+        state: "TAMIL NADU",
+        ifscCode: "IOBA0000876",
+        accountNumber: "187200023992",
+        accountHolderName: "Prasanth",
+        bankName: "Indian Overseas Bank",
+        bankBranch: "Ramanathapuram",
+        upiId: "prasanth@okaxis",
+        produceList: [
+          // {
+          //   commodity: "Tomato",
+          //   quantity: "1000",
+          //   price: "120",
+          //   listingId: "u7g6b52bd7dn9n3b",
+          //   farmerId: "s63hdb38dyb9ae4",
+          //   imageUrl:
+          //     "https://media.istockphoto.com/id/1459115525/photo/tomato-vegetables-isolated-on-white-background.webp?a=1&b=1&s=612x612&w=0&k=20&c=q6pG5xZ_dEVlzwCvvURp1wNcT7xFYh4IQq_Hlk1bI3k=",
+          //   minPrice: "200",
+          //   maxPrice: "230",
+          // }
+        ],
+      };
+      if (response) {
+        Toast(toast.success, "Data Fectched Successfully");
+        // farmer data state
+        setFarmerData(response);
+      } else {
+        Toast(toast.error, "Failed to Fetch Data");
+      }
+    } catch (err) {
+      Toast(toast.error, err.message);
+    } finally {
+      setTimeout(() => setIsContentLoading(false), 2000);
+    }
+  };
   useEffect(() => {
     // localStorage userData for every time app loads.
     const localUserData = JSON.parse(localStorage.getItem("userData"));
@@ -44,57 +96,6 @@ function App() {
     setUserData(localUserData);
     console.log(localUserData && "Oned.");
     if (localUserData?.userType == "farmer") {
-      const fetchFarmerDataById = async () => {
-        // here used user data from the registration context to fetch user data by id
-        try {
-          setIsContentLoading(true);
-          // backend api
-          const response = {
-            farmerId: "s63hdb38dyb9ae4",
-            name: "Prasanth Muthusamy",
-            email: "prasanthfarmer@gmail.com",
-            phoneNumber: "8760254168",
-            alternateNumber: "7094295944",
-            address: "123,ucer shop,ucer street",
-            village: "MettuPatti",
-            postOffice: "Pullangudi",
-            taluk: "kalaiyarkovil",
-            district: "Ramanathapuram",
-            pincode: "630661",
-            state: "TAMIL NADU",
-            ifscCode: "IOBA0000876",
-            accountNumber: "187200023992",
-            accountHolderName: "Prasanth",
-            bankName: "Indian Overseas Bank",
-            bankBranch: "Ramanathapuram",
-            upiId: "prasanth@okaxis",
-            produceList: [
-              // {
-              //   commodity: "Tomato",
-              //   quantity: "1000",
-              //   price: "120",
-              //   listingId: "u7g6b52bd7dn9n3b",
-              //   farmerId: "s63hdb38dyb9ae4",
-              //   imageUrl:
-              //     "https://media.istockphoto.com/id/1459115525/photo/tomato-vegetables-isolated-on-white-background.webp?a=1&b=1&s=612x612&w=0&k=20&c=q6pG5xZ_dEVlzwCvvURp1wNcT7xFYh4IQq_Hlk1bI3k=",
-              //   minPrice: "200",
-              //   maxPrice: "230",
-              // }
-            ]
-          };
-          if (response) {
-            Toast(toast.success, "Data Fectched Successfully");
-            // farmer data state
-            setFarmerData(response);
-          } else {
-            Toast(toast.error, "Failed to Fetch Data");
-          }
-        } catch (err) {
-          Toast(toast.error, err.message);
-        } finally {
-          setTimeout(() => setIsContentLoading(false), 2000);
-        }
-      };
       fetchFarmerDataById();
     }
     // clean up fucntion
@@ -125,7 +126,7 @@ function App() {
             <Route path="farmerorders" element={<FarmerOrders />} />
             <Route path="farmerorderdetails">
               <Route path=":orderId" element={<FarmerOrderDetails />} />
-            </Route> 
+            </Route>
             <Route
               path="farmerlogistics"
               element={<FarmerLogisticInformation />}
@@ -143,7 +144,7 @@ function App() {
           </Route>
         </Routes>
       </LogisticContextProvider>
-      
+
       {/* loader */}
       {isLoading && <Loader />}
 

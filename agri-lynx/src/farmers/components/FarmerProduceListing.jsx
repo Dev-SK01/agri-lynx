@@ -13,6 +13,7 @@ import FarmerContext from "../context/FarmerContext";
 import { useNavigate } from "react-router-dom";
 
 const FarmerProduceListing = () => {
+  
   const{farmerData , produceList, setProduceList ,produceDetails ,setProduceDetails} = useContext(FarmerContext);
   const navigate = useNavigate()
   const [optionValue, setOptionValue] = useState("");
@@ -20,11 +21,11 @@ const FarmerProduceListing = () => {
   const [inputPrice, setInputPrice] = useState("");
   const [inputQuantity, setInputQuantity] = useState("");
   const toDate = format(new Date(), "yyyy-MM-dd");
-  const fromDate = format(subDays(toDate, 10), "yyyy-MM-dd"); 
+  const fromDate = format(subDays(toDate, 15), "yyyy-MM-dd"); 
  // console.log("Commodity Value :", optionValue);
 
-  const handleChange = (e) => {
-    const commodityName = e.target.value;
+  const handleChange = (value) => {
+    const commodityName = value;
     setOptionValue(commodityName);
     if (commodityName) {
       // for market commodity price data
@@ -58,7 +59,7 @@ const FarmerProduceListing = () => {
       const priceCalculation = (marketPrice) => {
         let minPrice = 0;
         let maxPrice = 0;
-        marketPrice.forEach((commodity) => {
+        marketPrice?.forEach((commodity) => {
           minPrice += Number(commodity.min_price);
           maxPrice += Number(commodity.max_price);
           // console.log("Min:", commodity?.min_price);
@@ -88,12 +89,12 @@ const FarmerProduceListing = () => {
       if (err) Toast(toast.error,"Image not found!");
     }
   };
-  
-  // console.log(optionValue);
 
   async function handleAddProduce() {
     // console.log(optionValue);
-
+    // console.log(produceDetails);
+    // resetting state
+    setProduceDetails();
     if (!optionValue) {
       toast.error("Please Select the commodity Name", {
         toastId: "toast",
@@ -122,13 +123,13 @@ const FarmerProduceListing = () => {
         setProduceDetails(newProduceData);
         try {
           // backend api
-          const res = produceDetails
+          const res = newProduceData;
           if(res){
             toast.success("Produce Added successFully", {
               toastId: "toast",
             });
-            setProduceList([...produceList,produceDetails]);
-            navigate("/");
+            setProduceList([...produceList,newProduceData]);
+            setTimeout(()=> navigate("/"),2000);
             // console.log([...produceList,produceDetails]);
           }
         } catch (err) {
