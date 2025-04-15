@@ -52,13 +52,11 @@ const FarmerDashboard = () => {
     // clean up function
   }, []);
 
-  // reloading for fetching the data in the server app useEffect
+  // replacing url for fetching the data in the server app useEffect
   if (window.location.pathname === "/farmerdashboard") {
     window.location.replace(window.location.origin);
-    // window.location.reload();
-    console.log("Reloaded");
-    console.log(window.location.origin);
   }
+
   return (
     <>
       <div className="flex items-center justify-center flex-col">
