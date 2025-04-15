@@ -9,7 +9,7 @@ const Produce = () => {
   const { produceList } = useContext(FarmerContext);
   // console.log("ProduceComponent:",produceList);
 
-  return produceList.filter(Boolean).map((produce) => (
+  return produceList.map((produce) => (
     <section
       className="flex w-full items-center justify-evenly mt-8 bg-(--green) rounded-md py-2  relative"
       key={produce?.listingId}

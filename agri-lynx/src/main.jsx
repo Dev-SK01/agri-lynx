@@ -11,13 +11,13 @@ import { LogisticContextProvider } from "./logistics/context/LogisticContext";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
-      <FarmerContextProvider>
-        <RegistrationContextProvider>
+      <RegistrationContextProvider>
+        <FarmerContextProvider>
           <FarmerLogisticsContextProvider>
             <App className="scroll-smooth" />
           </FarmerLogisticsContextProvider>
-        </RegistrationContextProvider>
-      </FarmerContextProvider>
+        </FarmerContextProvider>
+      </RegistrationContextProvider>
     </BrowserRouter>
   </StrictMode>
 );

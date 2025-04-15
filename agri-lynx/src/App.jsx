@@ -38,12 +38,15 @@ function App() {
     useContext(RegistrationContext);
 
   const { setFarmerData, setIsContentLoading } = useContext(FarmerContext);
-  
-  const fetchFarmerDataById = async () => {
+  // localStorage userData for every time app loads.
+  const localUserData = JSON.parse(localStorage.getItem("userData"));
+
+  const fetchFarmerDataById = async (farmerId) => {
     // here used user data from the registration context to fetch user data by id
     try {
       setIsContentLoading(true);
       // backend api
+      console.log("FarmerID:", farmerId);
       const response = {
         farmerId: "s63hdb38dyb9ae4",
         name: "Prasanth Muthusamy",
@@ -90,19 +93,14 @@ function App() {
       setTimeout(() => setIsContentLoading(false), 2000);
     }
   };
+
   useEffect(() => {
-    // localStorage userData for every time app loads.
-    const localUserData = JSON.parse(localStorage.getItem("userData"));
     // user data state
     setUserData(localUserData);
     console.log(localUserData && "Oned.");
-    if (localUserData?.userType == "farmer") {
-      fetchFarmerDataById();
+    if (localUserData?.userType === "farmer") {
+      fetchFarmerDataById(localUserData?.userId);
     }
-    // clean up fucntion
-    return () => {
-      setUserData({});
-    };
   }, []);
 
   return (
@@ -143,10 +141,7 @@ function App() {
             {/* Loginstics Routes */}
             <Route path="logisticdashboard" element={<DashBoard />} />
           </Route>
-          <Route path="logistic" element={<Logistic />}>
-
-          </Route>
-          
+          <Route path="logistic" element={<Logistic />}></Route>
         </Routes>
       </LogisticContextProvider>
 

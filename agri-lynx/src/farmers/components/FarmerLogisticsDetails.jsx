@@ -1,11 +1,9 @@
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import search from "../../assets/search.svg";
 import { useEffect } from "react";
 import FarmerLogisticsContext from "../context/FarmerLogisticsContext";
 import Toast from "@/utils/toast";
 import { toast } from "react-toastify";
-import FarmerContext from "../context/FarmerContext";
 import avatar1 from "../../assets/avatar1.svg";
 import phone from "../../assets/phone.svg";
 import delivery from "../../assets/delivery.svg";
@@ -18,7 +16,7 @@ const FarmerLogisticsDetails = () => {
   const { LogisticsDetails, setLogisticsDetails } = useContext(
     FarmerLogisticsContext
   );
-  const { isContentLoading, setIsContentLoading } = useContext(FarmerContext);
+
   const [searchItem, setSearchItem] = useState("");
   LogisticsDetails.filter((logis) =>
     logis.name.toLowerCase().includes(searchItem)
@@ -79,14 +77,14 @@ const FarmerLogisticsDetails = () => {
               : Logistics.name
                   .toLowerCase()
                   .includes(searchItem.toLowerCase()) ||
-                  Logistics.phoneNumber.toLowerCase().includes(searchItem) ||
-                  Logistics.address.toLowerCase().includes(searchItem) ||
+                  Logistics.phoneNumber.toLowerCase().includes(searchItem.toLowerCase()) ||
+                  Logistics.address.toLowerCase().includes(searchItem.toLowerCase()) ||
                   Logistics.pincode
                     .toString()
                     .toLowerCase()
-                    .includes(searchItem) ||
-                  Logistics.village.toLowerCase().includes(searchItem) ||
-                  Logistics.district.toLowerCase().includes(searchItem);
+                    .includes(searchItem.toLowerCase()) ||
+                  Logistics.village.toLowerCase().includes(searchItem.toLowerCase()) ||
+                  Logistics.district.toLowerCase().includes(searchItem.toLowerCase());
           }).map((Logistics) => (
             <div
               key={Logistics.logisticsPartnerId}

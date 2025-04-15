@@ -9,7 +9,7 @@ const Navigation = () => {
     <>
       <div className="flex items-center justify-around w-[95%] bg-(--green) rounded-md mx-3 py-2">
         <Link to="/" className="font-inknut font-bold w-[80%] ml-4 text-center">
-          {farmerData?.name}
+          {farmerData?.name || "Farmer Name"}
         </Link>
         <Link
           to="/farmerprofile"
