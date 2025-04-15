@@ -54,9 +54,10 @@ const FarmerDashboard = () => {
 
   // reloading for fetching the data in the server app useEffect
   if (window.location.pathname === "/farmerdashboard") {
-    window.location.href = "/";
-    window.location.reload();
+    window.location.replace(window.location.origin);
+    // window.location.reload();
     console.log("Reloaded");
+    console.log(window.location.origin);
   }
   return (
     <>
