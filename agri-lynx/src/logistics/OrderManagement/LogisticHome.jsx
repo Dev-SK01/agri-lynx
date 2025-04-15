@@ -60,14 +60,14 @@ const LogisticHome = () => {
                         <img src={product} alt="product" />
                     </div>
                     <Link to="/logistic">
-                        <div className="h-[50px] w-[50px] bg-(--primary) rounded-sm">
-                            <img src={ordericon} alt="orderIcon" className="h-[50px] w-[50px]" />
+                        <div className="ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1">
+                            <img src={ordericon} alt="orderIcon" />
                         </div>
                     </Link>
-                    <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1.5'>
+                    <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1'>
                         <img src={logistic} alt="logistic" />
                     </div>
-                    <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-2'>
+                    <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1'>
                         <img src={analytics} alt="analytics" />
                     </div>
                 </footer>

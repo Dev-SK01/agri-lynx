@@ -18,7 +18,14 @@ const DashBoard = () => {
   const handleAvatarClick = () => {
     setShowDetails(true);
   };
-
+  const logOut = () => {
+    if (confirm("Are you Sure !")) {
+      localStorage.removeItem("userData");
+      Toast(toast.success, "Logged Out!...");
+      // setting for userData state
+      setUserData("");
+    }
+  };
   return (
 
     <>
@@ -43,7 +50,7 @@ const DashBoard = () => {
         </header> */}
         {/* Header */}
         
-        <header className='flex rounded-xl h-16 pt-2 bg-(--green) mt-5 w-[95%] text-xl'>
+        <header className='flex rounded-xl h-16 pt-2 bg-(--green) mt-5 w-100 text-xl'>
           <Link to="/logistic">
           <h1 className='font-bold font-inknut pt-1 ms-10 items-center'>
              {LogisticData?.name}!
@@ -96,7 +103,7 @@ const DashBoard = () => {
               </div>
               
               <nav className='flex items-center justify-center flex-col'>
-                <div className=" flex items-center justify-center rounded-xl h-8  w-30  bg-(--green) mt-9 ">
+                <div className=" flex items-center justify-center rounded-xl h-8  w-30  bg-(--green) mt-9 " onClick={logOut}>
                   <img src={log} alt="Assests" /> <h1 className=" font-bold  text-xl ml-1.5"> Logout</h1>
 
                 </div>

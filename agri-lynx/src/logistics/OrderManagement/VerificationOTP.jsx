@@ -42,10 +42,10 @@ const VerificationOTP = () => {
     return (
         <>
             <ToastContainer />
-            <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-80 px-4">
-                <div className="flex flex-col items-center justify-center bg-(--green) rounded-xl w-full max-w-md shadow-lg p-4">
+            <div className="absolute flex ps-5 justify-items-center items-center   h-[100vh] backdrop-blur-[5px] top-0.5 ">
+                <div className="flex-col items-center justify-center  bg-(--green) rounded-md w-[90dvw]">
                     {/* Order ID and Date */}
-                    <div className="w-full text-center bg-(--primary) rounded-md py-3 px-2">
+                    <div className="w-full text-center   bg-(--green) rounded-md py-3 px-2">
                         <h1 className="font-bold text-lg font-inter truncate">
                             #{LogisticOrders[0]?.orderId.toUpperCase()}
                         </h1>
@@ -62,7 +62,7 @@ const VerificationOTP = () => {
                         <label htmlFor="email" className="font-bold font-inter block mb-1">
                             {LogisticOrders[0]?.LogisticOrders?.name}
                         </label>
-                        <div className="flex flex-col sm:flex-row items-stretch sm:items-center sm:space-x-3 space-y-2 sm:space-y-0">
+                        <div className="flex px-5 flex-row gap-8 sm:flex-row items-stretch sm:items-center sm:space-x-3 space-y-2 sm:space-y-0">
                             <Input
                                 type="email"
                                 placeholder="Email"
@@ -100,7 +100,7 @@ const VerificationOTP = () => {
                         </InputOTP>
                         <Button
                             type="button"
-                            className="text-white bg-(--secondary) font-bold text-base mt-4 px-6 py-2 w-full sm:w-auto"
+                            className="text-white  bg-(--secondary) font-bold text-base mt-4 px-6 py-2  sm:w-auto"
                             onClick={verifyOtp}
                         >
                             Verify

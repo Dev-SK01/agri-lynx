@@ -82,7 +82,7 @@ const OrderCheckOutPage = () => {
                   {order.farmer.name}
                 </h1>
                 <h1 className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-60 items-center font-bold font-inter'>
-                  {order.farmer.phoneNumber}
+                 +91 {order.farmer.phoneNumber}
                 </h1>
               </div>
               <div>
@@ -105,21 +105,21 @@ const OrderCheckOutPage = () => {
 
       {/* Footer */}
       <footer className="bg-(--green) h-[8vh] rounded-[30px] mt-4 flex items-center justify-evenly py-4 fixed bottom-3">
-        <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1'>
-          <img src={product} alt="product" />
-        </div>
-        <Link to="/logistic">
-            <div className="h-[50px] w-[50px] bg-(--primary) rounded-sm">
-              <img src={ordericon} alt="orderIcon" className="h-[50px] w-[50px]" />
-            </div>
-          </Link>
-        <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1.5'>
-          <img src={logistic} alt="logistic" />
-        </div>
-        <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-2'>
-          <img src={analytics} alt="analytics" />
-        </div>
-      </footer>
+                <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1'>
+                  <img src={product} alt="product" />
+                </div>
+                <Link to="/logistic">
+                  <div className="ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1">
+                    <img src={ordericon} alt="orderIcon"  />
+                  </div>
+                </Link>
+                <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1'>
+                  <img src={logistic} alt="logistic" />
+                </div>
+                <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1'>
+                  <img src={analytics} alt="analytics" />
+                </div>
+              </footer>
     </div>
   );
 };

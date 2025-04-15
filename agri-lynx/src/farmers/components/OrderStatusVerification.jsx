@@ -65,7 +65,7 @@ const OrderStatusVerification = ({ orderData, setOtpView, orderId,orderStatus })
   };
 
   return (
-    <div className="absolute flex items-center justify-center h-[80vh] backdrop-blur-[5px]">
+    <div className="absolute flex items-center justify-center h-[80vh] backdrop-blur-[5px] ">
       <div className="flex items-center justify-center flex-col  bg-(--green) rounded-md w-[95dvw]">
         {/* order id and date section */}
         <div className="w-[95%] mt-4 text-center bg-(--primary) rounded-sm">

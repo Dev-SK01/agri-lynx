@@ -8,6 +8,7 @@ import LogisticContext from '../context/LogisticContext';
 import { Button } from '@/components/ui/button';
 import calendar from "../../Assest/calendar.svg";
 import { Link } from "react-router-dom";
+import Logistic from '../Logistic';
 import {
     Select,
     SelectContent,
@@ -34,19 +35,24 @@ const OrderDetails = () => {
             setShowOtpPopup(true);
         }
     };
+    const handleAvatarClick = () => {
+        setShowDetails(true);
+      };
     return (
         <>
             <div className="flex justify-center items-center flex-col ">
                 {/* Header */}
-                <header className='flex rounded-xl h-16 pt-2 bg-(--green) mt-5 w-100 text-xl '>
-                    <h1 className='font-bold font-inter pt-1 ms-10 text-1xl'>
-                        Welcome {LogisticData.name} !
-                    </h1>
-                    <div className='ms-83 pb-1 fixed'>
-                        <img src={avatar} alt="avatar" />
-                    </div>
-
-                </header>
+                <header className='flex rounded-xl h-16 pt-2 bg-(--green) mt-5 w-100 text-xl'>
+                          <Link to="/logistic">
+                          <h1 className='font-bold font-inknut pt-1 ms-10 items-center'>
+                             {LogisticData?.name}!
+                          </h1>
+                          </Link>
+                          <div className='ms-83 pb-1 fixed'>
+                            <img src={avatar} onClick={handleAvatarClick} alt="avatar" />
+                          </div>
+                
+                        </header>
                 <div className="w-80 mt-4 text-center bg-(--green) rounded-sm">
                     <h1 className="font-bold text-[1.2rem] font-inter">
                         #{LogisticOrders[0].orderId.toUpperCase()}
@@ -185,14 +191,14 @@ const OrderDetails = () => {
                         <img src={product} alt="product" />
                     </div>
                     <Link to="/logistic">
-                        <div className="h-[50px] w-[50px] bg-(--primary) rounded-sm">
-                            <img src={ordericon} alt="orderIcon" className="h-[50px] w-[50px]" />
+                        <div className="ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1">
+                            <img src={ordericon} alt="orderIcon" />
                         </div>
                     </Link>
-                    <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1.5'>
+                    <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1'>
                         <img src={logistic} alt="logistic" />
                     </div>
-                    <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-2'>
+                    <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1'>
                         <img src={analytics} alt="analytics" />
                     </div>
                 </footer>

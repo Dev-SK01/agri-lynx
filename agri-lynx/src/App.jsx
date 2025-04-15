@@ -30,6 +30,7 @@ import LocalMarketOwnerProductList from "./owners/LocalMarketOwnerProductList";
 import LocalMarketOwnerMyOrder from "./owners/LocalMarketOwnerMyOrder";
 import Logistic from "./logistics/Logistic";
 import { LogisticContextProvider } from "./logistics/context/LogisticContext";
+import ProductHeader from "./owners/ProductList/ProductHeader";
 
 function App() {
   // context
@@ -137,7 +138,7 @@ function App() {
             <Route path="farmeranalytics" element={<FarmerAnalytics />} />
 
             {/* local market Routes */}
-            <Route path="localmarketdashboard" element={<FarmerDashboard />} />
+            <Route path="localmarketdashboard" element={<ProductHeader/>} />
 
             {/* Loginstics Routes */}
             <Route path="logisticdashboard" element={<DashBoard />} />
