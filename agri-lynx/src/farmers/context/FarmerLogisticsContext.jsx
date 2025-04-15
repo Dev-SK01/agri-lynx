@@ -46,8 +46,7 @@ export const FarmerLogisticsContextProvider = ({children}) => {
         address:`210,south street,`,
         logisticsPartnerId: "w36ft8ndy3y26hget5"
       }
-    ])
-
+    ]);
   return (
       <FarmerLogisticsContext value={{
          LogisticsDetails,setLogisticsDetails

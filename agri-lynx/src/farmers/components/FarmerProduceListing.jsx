@@ -13,16 +13,25 @@ import FarmerContext from "../context/FarmerContext";
 import { useNavigate } from "react-router-dom";
 
 const FarmerProduceListing = () => {
-  
-  const{farmerData , produceList, setProduceList ,produceDetails ,setProduceDetails ,setFarmerData} = useContext(FarmerContext);
-  const navigate = useNavigate()
+  const {
+    farmerData,
+    produceList,
+    setProduceList,
+    produceDetails,
+    setProduceDetails,
+    setFarmerData,
+  } = useContext(FarmerContext);
+  const navigate = useNavigate();
   const [optionValue, setOptionValue] = useState("");
-  const [marketPrice, setMarketPrice] = useState({minPrice: 0.0,maxPrice: 0.0,});
+  const [marketPrice, setMarketPrice] = useState({
+    minPrice: 0.0,
+    maxPrice: 0.0,
+  });
   const [inputPrice, setInputPrice] = useState("");
   const [inputQuantity, setInputQuantity] = useState("");
   const toDate = format(new Date(), "yyyy-MM-dd");
-  const fromDate = format(subDays(toDate, 15), "yyyy-MM-dd"); 
- // console.log("Commodity Value :", optionValue);
+  const fromDate = format(subDays(toDate, 15), "yyyy-MM-dd");
+  // console.log("Commodity Value :", optionValue);
 
   const handleChange = (value) => {
     const commodityName = value;
@@ -86,10 +95,10 @@ const FarmerProduceListing = () => {
       // console.log(data);
       return data.results[0].urls.small;
     } catch (err) {
-      if (err) Toast(toast.error,"Image not found!");
+      if (err) Toast(toast.error, "Image not found!");
     }
   };
- 
+
   async function handleAddProduce() {
     // console.log(optionValue);
     // console.log(produceDetails);
@@ -100,17 +109,12 @@ const FarmerProduceListing = () => {
         toastId: "toast",
       });
     } else {
-      if (
-        inputPrice === null ||
-        inputPrice === "" ||
-        inputQuantity === null ||
-        inputQuantity === ""
-      ) {
+      if (!inputPrice || !inputQuantity) {
         toast.error("Please Enter Correct Details..", {
           toastId: "toast",
         });
       } else {
-        let newProduceData = {
+        let __newProduceData = {
           commodity: optionValue,
           minPrice: marketPrice.minPrice,
           maxPrice: marketPrice.maxPrice,
@@ -118,84 +122,97 @@ const FarmerProduceListing = () => {
           quantity: inputQuantity,
           imageUrl: await fetchImage(optionValue),
           listingId: useUid(),
-          farmerId: farmerData.farmerId,
+          farmer: {
+            farmerId: farmerData.farmerId,
+            name: farmerData.name,
+            phoneNumber: farmerData.phoneNumber,
+            address: farmerData.address,
+            village: farmerData.village,
+            postOffice: farmerData.postOffice,
+            taluk: farmerData.taluk,
+            district: farmerData.district,
+            pincode: farmerData.pincode,
+            upiId: farmerData.upiId,
+          },
         };
-        const FarmerData = farmerData;
-        FarmerData.produceList.push(newProduceData);
-        setFarmerData(FarmerData);
+        console.log(__newProduceData);
+        // copying the farmer data
+        const __FarmerData = farmerData;
+        __FarmerData.produceList.push(__newProduceData);
+        setFarmerData(__FarmerData);
         try {
           // backend api
-          const res = newProduceData;
-          if(res){
+          const res = __newProduceData;
+          if (res) {
             toast.success("Produce Added successFully", {
               toastId: "toast",
             });
+            // new update state
             setProduceList(produceList);
-            setTimeout(()=> navigate("/"),2000);
+            setTimeout(() => navigate("/"), 2000);
             // console.log([...produceList,produceDetails]);
           }
         } catch (err) {
-          toast.error(err.message,{
+          toast.error(err.message, {
             toastId: "toast",
           });
         }
-        
         // console.log("ProduceData : ", produceDetails);
       }
     }
   }
-  
+
   return (
     <>
-    <div className=' flex justify-center items-center flex-col'>
-    <div className="flex-col border-(--secondary)   items-center p-2   bg-(--primary) justify-center justify-items-center mt-2 ">
-      <Navigation />
-      <div className="flex-col justify-center justify-items-center gap-2 h-[13dvh] font-inknut mt-8 text-2xl">
-        <div className="flex ">
-          <h1>Add Your Produce </h1>
-          <div>
-            <img src={crops} alt="crops" />
+      <div className=" flex justify-center items-center flex-col">
+        <div className="flex-col border-(--secondary)   items-center p-2   bg-(--primary) justify-center justify-items-center mt-2 ">
+          <Navigation />
+          <div className="flex-col justify-center justify-items-center gap-2 h-[13dvh] font-inknut mt-8 text-2xl">
+            <div className="flex ">
+              <h1>Add Your Produce </h1>
+              <div>
+                <img src={crops} alt="crops" />
+              </div>
+            </div>
+            <ApiCommodityList handleChange={handleChange} />
+          </div>
+          <div className=""></div>
+          <div className="h-[55dvh]">
+            <MinMaxPriceCalculation marketPrice={marketPrice} />
+            <div className="mt-5 ">
+              <p className="font-bold font-inter text-lg">PRICE ₹</p>
+              <input
+                type="number"
+                onChange={(e) => setInputPrice(e.target.value)}
+                value={inputPrice}
+                placeholder="Enter Price"
+                className=" mt-2 h-10 p-2 bg-(--teritary) w-90 text-lg"
+              />
+            </div>
+            <div className="mt-5 ">
+              <p className="font-bold font-inter text-lg">QUANTITY (KG)</p>
+              <input
+                type="number"
+                onChange={(e) => setInputQuantity(e.target.value)}
+                value={inputQuantity}
+                placeholder="Enter Quantity (KG)"
+                className=" mt-2 h-10 p-2 bg-(--teritary) w-90 text-lg"
+              />
+            </div>
+
+            <div
+              onClick={handleAddProduce}
+              className="font-bold font-inter text-2xl w-25 ms-70 mt-10 rounded-xl p-1 bg-(--green) justify-items-center"
+            >
+              <p className="flex gap-0.5">
+                <img src={Frame} alt="frame" />
+                Add
+              </p>
+            </div>
           </div>
         </div>
-        <ApiCommodityList handleChange={handleChange} />
+        <BottomNavigation />
       </div>
-      <div className=""></div>
-      <div className="h-[55dvh]">
-        <MinMaxPriceCalculation marketPrice={marketPrice} />
-        <div className="mt-5 ">
-          <p className="font-bold font-inter text-lg">PRICE ₹</p>
-          <input
-            type="number"
-            onChange={(e) => setInputPrice(e.target.value)}
-            value={inputPrice}
-            placeholder="Enter Price"
-            className=" mt-2 h-10 p-2 bg-(--teritary) w-90 text-lg"
-          />
-        </div>
-        <div className="mt-5 ">
-          <p className="font-bold font-inter text-lg">QUANTITY (KG)</p>
-          <input
-            type="number"
-            onChange={(e) => setInputQuantity(e.target.value)}
-            value={inputQuantity}
-            placeholder="Enter Quantity (KG)"
-            className=" mt-2 h-10 p-2 bg-(--teritary) w-90 text-lg"
-          />
-        </div>
-
-        <div
-          onClick={handleAddProduce}
-          className="font-bold font-inter text-2xl w-25 ms-70 mt-10 rounded-xl p-1 bg-(--green) justify-items-center"
-        >
-          <p className="flex gap-0.5">
-            <img src={Frame} alt="frame" />
-            Add
-          </p>
-        </div>
-      </div>
-    </div>
-    <BottomNavigation />
-    </div>
     </>
   );
 };

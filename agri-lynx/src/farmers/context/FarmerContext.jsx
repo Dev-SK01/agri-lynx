@@ -28,6 +28,8 @@ export const FarmerContextProvider = ({ children }) => {
       imageUrl:
         "https://images.unsplash.com/photo-1720680052575-e629a9eff73b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Yml0dGVyJTIwZ291cmR8ZW58MHwxfDB8fHwy",
       farmer: {
+        farmerId:"s63hdb38dyb9ae4",
+        name:"Prasanth Muthusamy",
         phoneNumber: "8760254168",
         address: "123,ucer shop,ucer street",
         village: "MettuPatti",
@@ -35,8 +37,10 @@ export const FarmerContextProvider = ({ children }) => {
         taluk: "kalaiyarkovil",
         district: "Ramanathapuram",
         pincode: "630661",
+        upiId:"prasanth@okaxis"
       },
       customer: {
+        customerId:"s63hdb38dyb9ae4",
         name: "Elumalai Velu",
         phoneNumber: "7654324578",
         email: "eleumalaivelu@gmail.com",
