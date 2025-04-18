@@ -31,13 +31,13 @@ const OrderDetails = () => {
     const handleStatusChange = (value) => {
         setOrderStatus(value);
         setIsStatusUpdated(true); // prevent further changes
-        if (value === 'Delivered' || value === 'In-Transit') {
+        if (value === 'Delivered' ) {
             setShowOtpPopup(true);
         }
     };
     const handleAvatarClick = () => {
-        setShowDetails(true);
-      };
+    navigate('/DashBoard')
+};
     return (
         <>
             <div className="flex justify-center items-center flex-col ">
@@ -187,21 +187,23 @@ const OrderDetails = () => {
                 </div>
                 {/* footer */}
                 <footer className="bg-(--green) h-[8vh] rounded-[30px] mt-4 flex items-center justify-evenly py-4 fixed bottom-3">
-                    <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1'>
-                        <img src={product} alt="product" />
-                    </div>
-                    <Link to="/logistic">
-                        <div className="ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1">
-                            <img src={ordericon} alt="orderIcon" />
-                        </div>
-                    </Link>
-                    <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1'>
-                        <img src={logistic} alt="logistic" />
-                    </div>
-                    <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1'>
-                        <img src={analytics} alt="analytics" />
-                    </div>
-                </footer>
+                                        <Link to="/logisticHome">
+                                        <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1'>
+                                            <img src={product} alt="product" />
+                                        </div>
+                                        </Link>
+                                        <Link to="/logistic">
+                                            <div className="ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1">
+                                                <img src={ordericon} alt="orderIcon" />
+                                            </div>
+                                        </Link>
+                                        <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1 pt-1'>
+                                            <img src={logistic} alt="logistic" />
+                                        </div>
+                                        <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1 pt-1'>
+                                            <img src={analytics} alt="analytics" />
+                                        </div>
+                                    </footer>
             </div>
 
         </>

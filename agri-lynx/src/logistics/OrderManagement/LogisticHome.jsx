@@ -7,11 +7,14 @@ import product from '../../Assest/product.svg';
 import LogisticContext from '../context/LogisticContext';
 import { Button } from '@/components/ui/button';
 import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 const LogisticHome = () => {
     const { LogisticOrders, LogisticData, } = useContext(LogisticContext)
     const { setCurrentPage } = useContext(LogisticContext);
+
+    const navigate = useNavigate();
     const handleAvatarClick = () => {
-        setShowDetails(true);
+        navigate("/dashboard");
     };
     return (
         <>
@@ -28,11 +31,11 @@ const LogisticHome = () => {
                 </header> */}
                 {/* Header */}
                 <header className='flex rounded-xl h-16 pt-2 bg-(--green) mt-5 w-100 text-xl'>
-                    <h1 className='font-bold font-inter pt-1 ms-10 text-1xl'>
-                        Welcome {LogisticData?.name}!
+                    <h1 className='font-bold font-inknut pt-1 ms-10  items-center'>
+                        {LogisticData?.name}!
                     </h1>
                     <div className='ms-83 pb-1 fixed'>
-                        <img src={avatar} alt="avatar" />
+                        <img src={avatar} onClick={handleAvatarClick} alt="avatar" />
                     </div>
 
                 </header>
@@ -56,18 +59,20 @@ const LogisticHome = () => {
                 </div>
 
                 <footer className="bg-(--green) h-[8vh] rounded-[30px] mt-4 flex items-center justify-evenly py-4 fixed bottom-3">
-                    <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1'>
-                        <img src={product} alt="product" />
-                    </div>
+                    <Link to="/logisticHome">
+                        <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1'>
+                            <img src={product} alt="product" />
+                        </div>
+                    </Link>
                     <Link to="/logistic">
-                        <div className="ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1">
+                        <div className="ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1">
                             <img src={ordericon} alt="orderIcon" />
                         </div>
                     </Link>
-                    <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1'>
+                    <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1 pt-1'>
                         <img src={logistic} alt="logistic" />
                     </div>
-                    <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1'>
+                    <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1 pt-1'>
                         <img src={analytics} alt="analytics" />
                     </div>
                 </footer>

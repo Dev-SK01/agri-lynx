@@ -9,6 +9,15 @@ import LogisticContext from '../context/LogisticContext';
 import OrderDetails from './OrderDetails'; // Importing the component
 import calendar from "../../Assest/calendar.svg";
 import { Link } from "react-router-dom";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 const OrderCheckOutPage = () => {
   const {
     LogisticOrders,
@@ -17,6 +26,10 @@ const OrderCheckOutPage = () => {
     setOrderStatus,
     setShowOtpPopup,
   } = useContext(LogisticContext);
+  const navigate = useNavigate();
+  const handleAvatarClick = () => {
+    navigate('/DashBoard')
+};
 
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [viewDetails, setViewDetails] = useState(false);
@@ -33,16 +46,16 @@ const OrderCheckOutPage = () => {
   if (viewDetails && selectedOrder) {
     return <OrderDetails order={selectedOrder} goBack={() => setViewDetails(false)} />;
   }
-
+  
   return (
     <div className="flex items-center justify-center flex-col">
       {/* Header */}
       <header className='flex rounded-xl h-16 pt-2 bg-(--green) mt-5 w-100 text-xl '>
-        <h1 className='font-bold font-inter pt-1 ms-10 text-1xl'>
-          Welcome {LogisticData.name} !
+        <h1 className='font-bold font-inknut pt-1 ms-10 text-1xl'>
+          {LogisticData.name} !
         </h1>
         <div className='ms-83 pb-1 fixed'>
-          <img src={avatar} alt="avatar" />
+          <img src={avatar} onClick={handleAvatarClick} alt="avatar" />
         </div>
       </header>
 
@@ -53,9 +66,9 @@ const OrderCheckOutPage = () => {
             <button
               key={status}
               onClick={() => setOrderStatus(status)}
-              className={`rounded-xl h-6 px-4 font-medium font-inter ${
+              className={`rounded  h-7 px-4 font-medium font-inter ${
                 status.toLowerCase() === orderStatus.toLowerCase()
-                  ? 'bg-white text-black'
+                  ? 'bg-white border-2  border-(--secondary) text-black pb-1.5'
                   : ''
               }`}
             >
@@ -104,22 +117,24 @@ const OrderCheckOutPage = () => {
       </div>
 
       {/* Footer */}
-      <footer className="bg-(--green) h-[8vh] rounded-[30px] mt-4 flex items-center justify-evenly py-4 fixed bottom-3">
-                <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1'>
-                  <img src={product} alt="product" />
-                </div>
-                <Link to="/logistic">
-                  <div className="ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1">
-                    <img src={ordericon} alt="orderIcon"  />
-                  </div>
-                </Link>
-                <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1'>
-                  <img src={logistic} alt="logistic" />
-                </div>
-                <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1'>
-                  <img src={analytics} alt="analytics" />
-                </div>
-              </footer>
+       <footer className="bg-(--green) h-[8vh] rounded-[30px] mt-4 flex items-center justify-evenly py-4 fixed bottom-3">
+                       <Link to="/logisticHome">
+                       <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1'>
+                           <img src={product} alt="product" />
+                       </div>
+                       </Link>
+                       <Link to="/logistic">
+                           <div className="ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1">
+                               <img src={ordericon} alt="orderIcon" />
+                           </div>
+                       </Link>
+                       <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1 pt-1'>
+                           <img src={logistic} alt="logistic" />
+                       </div>
+                       <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1 pt-1'>
+                           <img src={analytics} alt="analytics" />
+                       </div>
+                   </footer>
     </div>
   );
 };
