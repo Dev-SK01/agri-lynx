@@ -36,6 +36,7 @@ const OrderDetails = () => {
             setShowOtpPopup(true);
         }
     };
+    const navigate = useNavigate();
     const handleAvatarClick = () => {
     navigate('/DashBoard')
 };
