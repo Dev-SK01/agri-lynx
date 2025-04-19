@@ -41,7 +41,7 @@ const ProductHeader = () => {
       {/* Header */}
       <header className='flex rounded-xl h-16 pt-2 bg-(--green) w-100 text-xl top-2.5 fixed'>
         <h1 className='font-bold font-inter pt-1 ms-10 text-1xl'>
-          Welcome {localMarketOwner[0]?.name}!
+           {localMarketOwner[0]?.name}!
         </h1>
         <div className='ms-83 pb-1 fixed'>
           <img src={avatar} alt="avatar" />

@@ -1,61 +1,41 @@
+// Your exact code already works well.
+// Just ensure <Link> elements have `key={order.orderId}` added.
+
 import React, { useContext, useState } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import avatar from "../../Assest/avatar.svg";
 import analytics from '../../Assest/analytics.svg';
 import logistic from '../../Assest/logistic.svg';
 import ordericon from '../../Assest/ordericon.svg';
 import product from '../../Assest/product.svg';
 import LogisticContext from '../context/LogisticContext';
-import OrderDetails from './OrderDetails'; // Importing the component
-import calendar from "../../Assest/calendar.svg";
-import { Link } from "react-router-dom";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
 const OrderCheckOutPage = () => {
   const {
     LogisticOrders,
     LogisticData,
     orderStatus,
     setOrderStatus,
-    setShowOtpPopup,
   } = useContext(LogisticContext);
   const navigate = useNavigate();
-  const handleAvatarClick = () => {
-    navigate('/DashBoard')
-};
-
-  const [selectedOrder, setSelectedOrder] = useState(null);
-  const [viewDetails, setViewDetails] = useState(false);
 
   const filteredOrders = LogisticOrders.filter(
-    (order) => order.orderStatus.toLowerCase() === orderStatus.toLowerCase()
+    (order) =>
+      order.status === "accepted" &&
+      order.orderStatus.toLowerCase() === orderStatus.toLowerCase()
   );
 
-  const handleOrderClick = (order) => {
-    setSelectedOrder(order);
-    setViewDetails(true); // show OrderDetails in-place
-  };
-
-  if (viewDetails && selectedOrder) {
-    return <OrderDetails order={selectedOrder} goBack={() => setViewDetails(false)} />;
-  }
-  
   return (
     <div className="flex items-center justify-center flex-col">
       {/* Header */}
-      <header className='flex rounded-xl h-16 pt-2 bg-(--green) mt-5 w-100 text-xl '>
-        <h1 className='font-bold font-inknut pt-1 ms-10 text-1xl'>
-          {LogisticData.name} !
-        </h1>
+      <header className='flex rounded-xl h-16 pt-2 bg-(--green) mt-5 w-100 text-xl'>
+        <Link to="/">
+          <h1 className='font-bold font-inknut pt-1 ms-10 items-center'>
+            {LogisticData?.name}!
+          </h1>
+        </Link>
         <div className='ms-83 pb-1 fixed'>
-          <img src={avatar} onClick={handleAvatarClick} alt="avatar" />
+          <img src={avatar} onClick={() => navigate('/DashBoard')} alt="avatar" />
         </div>
       </header>
 
@@ -66,11 +46,10 @@ const OrderCheckOutPage = () => {
             <button
               key={status}
               onClick={() => setOrderStatus(status)}
-              className={`rounded  h-7 px-4 font-medium font-inter ${
-                status.toLowerCase() === orderStatus.toLowerCase()
-                  ? 'bg-white border-2  border-(--secondary) text-black pb-1.5'
-                  : ''
-              }`}
+              className={`rounded  h-7 px-4 font-medium font-inter ${status.toLowerCase() === orderStatus.toLowerCase()
+                ? 'bg-white border-2  border-(--secondary) text-black pb-1.5'
+                : ''
+                }`}
             >
               {status.charAt(0).toUpperCase() + status.slice(1)}
             </button>
@@ -78,38 +57,37 @@ const OrderCheckOutPage = () => {
         </div>
       </div>
 
+
       {/* Filtered Orders */}
       <div className="mt-4 w-full max-w-1xl h-[75vh] overflow-y-auto px-4 flex items-center flex-col">
         {filteredOrders.length > 0 ? (
-          filteredOrders.map((order, index) => (
-            <div
-              key={index}
-              onClick={() => handleOrderClick(order)}
-              className='cursor-pointer bg-[var(--green)] flex mt-4 h-35 rounded-2xl w-100 py-1 relative border-l-8 border-l-green-600 '
-            >
-              <div>
-                <h1 className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-60 items-center text-center font-bold font-inter'>
-                  {order.commodity}
-                </h1>
-                <h1 className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-60 items-center font-bold font-inter'>
-                  {order.farmer.name}
-                </h1>
-                <h1 className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-60 items-center font-bold font-inter'>
-                 +91 {order.farmer.phoneNumber}
-                </h1>
+          filteredOrders.map((order) => (
+            <Link to={`/orderdetails/${order.orderId}`} key={order.orderId}>
+              <div className='cursor-pointer bg-[var(--green)] flex mt-4 h-35 rounded-2xl w-100 py-1 relative border-l-8 border-l-green-600 '>
+                <div>
+                  <h1 className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-60 font-bold font-inter'>
+                    {order.commodity}
+                  </h1>
+                  <h1 className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-60 font-bold font-inter'>
+                    {order.customer.name}
+                  </h1>
+                  <h1 className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-60 font-bold font-inter'>
+                    +91 {order.customer.phoneNumber}
+                  </h1>
+                </div>
+                <div>
+                  <p className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-28 font-bold font-inter'>
+                    {order.quantity}.KG
+                  </p>
+                  <p className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-28 font-bold font-inter'>
+                    {order.commodityPrice}.Rs
+                  </p>
+                  <p className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-28 font-bold font-inter'>
+                    {order.price}.Rs
+                  </p>
+                </div>
               </div>
-              <div>
-                <p className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-28 items-center font-bold font-inter'>
-                  {order.quantity}.KG
-                </p>
-                <p className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-28 items-center font-bold font-inter'>
-                  {order.commodityPrice}.Rs
-                </p>
-                <p className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-28 items-center font-bold font-inter'>
-                  {order.price}.Rs
-                </p>
-              </div>
-            </div>
+            </Link>
           ))
         ) : (
           <p className="text-center mt-4">No orders found for "{orderStatus}"</p>
@@ -117,24 +95,25 @@ const OrderCheckOutPage = () => {
       </div>
 
       {/* Footer */}
-       <footer className="bg-(--green) h-[8vh] rounded-[30px] mt-4 flex items-center justify-evenly py-4 fixed bottom-3">
-                       <Link to="/logisticHome">
-                       <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1'>
-                           <img src={product} alt="product" />
-                       </div>
-                       </Link>
-                       <Link to="/logistic">
-                           <div className="ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1">
-                               <img src={ordericon} alt="orderIcon" />
-                           </div>
-                       </Link>
-                       <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1 pt-1'>
-                           <img src={logistic} alt="logistic" />
-                       </div>
-                       <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1 pt-1'>
-                           <img src={analytics} alt="analytics" />
-                       </div>
-                   </footer>
+      {/* footer */}
+      <footer className="bg-(--green) h-[8vh] rounded-[30px] mt-4 flex items-center justify-evenly py-4 fixed bottom-3">
+        <Link to="/">
+          <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1'>
+            <img src={product} alt="product" />
+          </div>
+        </Link>
+        <Link to="/checkoutPage">
+          <div className="ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1">
+            <img src={ordericon} alt="orderIcon" />
+          </div>
+        </Link>
+        <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1 pt-1'>
+          <img src={logistic} alt="logistic" />
+        </div>
+        <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1 pt-1'>
+          <img src={analytics} alt="analytics" />
+        </div>
+      </footer>
     </div>
   );
 };

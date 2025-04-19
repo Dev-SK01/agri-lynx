@@ -33,7 +33,7 @@ const VerificationOTP = () => {
         if (otp === "123456") {
             toast.success("OTP verified!");
             setOrderStatus("Deliverd");
-            setShowOtpPopup(false); // close modal
+            setShowOtpPopup(true); // close modal
           } else {
             toast.error("Invalid OTP");
         }

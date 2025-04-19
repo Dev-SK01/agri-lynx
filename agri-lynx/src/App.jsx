@@ -33,6 +33,7 @@ import { LogisticContextProvider } from "./logistics/context/LogisticContext";
 import ProductHeader from "./owners/ProductList/ProductHeader";
 import OrderCheckOutPage from "./logistics/OrderManagement/OrderCheckOutPage";
 import LogisticHome from "./logistics/OrderManagement/LogisticHome";
+import OrderDetails from "./logistics/OrderManagement/OrderDetails";
 function App() {
   // context
   const { userData, isOtpVerified, isLoading, setUserData } =
@@ -137,18 +138,19 @@ function App() {
             <Route path="farmeranalytics" element={<FarmerAnalytics />} />
 
             {/* local market Routes */}
-            <Route path="localmarketdashboard" element={<LocalMarketOwnerProductList></LocalMarketOwnerProductList>} />
-            
-            {/* Loginstics Routes */}
-            <Route path="logisticdashboard" element={<Logistic/>} />
-          </Route>
-          
-          <Route path="DashBoard" element={<DashBoard />} />
+            <Route path="localmarketdashboard" element={<ProductHeader />} />
 
-          <Route path="/logistic" element={<Logistic />} />
-          <Route path="/dashboard" element={<DashBoard />} />
-          <Route path="/checkoutPage" element={<OrderCheckOutPage/>}/>
-          <Route path="/logisticHome" element={<LogisticHome/>}/>
+            {/* Loginstics Routes */}
+            <Route path="logisticdashboard" element={<LogisticHome />} />
+            <Route path="DashBoard" element={<DashBoard />} />
+            <Route path="checkoutPage" element={<OrderCheckOutPage />}/>
+            <Route path="/checkoutPage/:orderId" element={<OrderCheckOutPage />} />
+
+            <Route path="orderdetails">
+            <Route path=":orderId"  element={<OrderDetails />}/>
+            </Route>
+
+          </Route>
 
         </Routes>
       </LogisticContextProvider>

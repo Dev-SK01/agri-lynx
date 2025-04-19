@@ -1,6 +1,6 @@
-import React, { useContext, useState } from 'react'
-import { Routes, Route, useNavigate } from 'react-router-dom';
-import avatar from "../../Assest/avatar.svg"
+import React, { useContext, useState } from 'react';
+import { Routes, Route, useNavigate, useParams } from 'react-router-dom';
+import avatar from "../../Assest/avatar.svg";
 import analytics from '../../Assest/analytics.svg';
 import logistic from '../../Assest/logistic.svg';
 import ordericon from '../../Assest/ordericon.svg';
@@ -19,6 +19,8 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import VerificationOTP from './VerificationOTP'; // Import the OTP verification component
+
 const OrderDetails = () => {
     const {
         LogisticOrders,
@@ -26,38 +28,51 @@ const OrderDetails = () => {
         orderStatus,
         setOrderStatus,
         setShowOtpPopup,
+        showOtpPopup,
+        updateOrderStatus
     } = useContext(LogisticContext);
     const [isStatusUpdated, setIsStatusUpdated] = useState(false);
+    const { orderId } = useParams();
+    const currentOrder = LogisticOrders.find(order => order.orderId === orderId);
+    console.log(orderId);
+    console.log(currentOrder)
 
     const handleStatusChange = (value) => {
-        setOrderStatus(value);
-        setIsStatusUpdated(true); // prevent further changes
-        if (value === 'Delivered' ) {
+        if (value === 'Delivered') {
             setShowOtpPopup(true);
+        } else {
+            updateOrderStatus(orderId, value);
+            setOrderStatus(value); // Update local order status immediately
         }
     };
+
+
+    
+    
+
     const navigate = useNavigate();
     const handleAvatarClick = () => {
-    navigate('/DashBoard')
-};
+        navigate('/DashBoard');
+    };
+    
+
     return (
         <>
             <div className="flex justify-center items-center flex-col ">
                 {/* Header */}
                 <header className='flex rounded-xl h-16 pt-2 bg-(--green) mt-5 w-100 text-xl'>
-                          <Link to="/logistic">
-                          <h1 className='font-bold font-inknut pt-1 ms-10 items-center'>
-                             {LogisticData?.name}!
-                          </h1>
-                          </Link>
-                          <div className='ms-83 pb-1 fixed'>
-                            <img src={avatar} onClick={handleAvatarClick} alt="avatar" />
-                          </div>
-                
-                        </header>
+                    <Link to="/">
+                        <h1 className='font-bold font-inknut pt-1 ms-10 items-center'>
+                            {LogisticData?.name}!
+                        </h1>
+                    </Link>
+                    <div className='ms-83 pb-1 fixed'>
+                        <img src={avatar} onClick={handleAvatarClick} alt="avatar" />
+                    </div>
+                </header>
                 <div className="w-80 mt-4 text-center bg-(--green) rounded-sm">
                     <h1 className="font-bold text-[1.2rem] font-inter">
-                        #{LogisticOrders[0].orderId.toUpperCase()}
+                        #{currentOrder?.orderId?.toUpperCase()}
                     </h1>
                     <div className="text-center flex items-center justify-center">
                         <img
@@ -65,22 +80,26 @@ const OrderDetails = () => {
                             alt="calander"
                             className="h-[25px] w-[25px]"
                         />
-                        <span className="font-inter ml-2">{LogisticOrders[0]?.orderDate}</span>
+                        <span className="font-inter ml-2">{currentOrder?.orderDate}</span>
                     </div>
                 </div>
 
+                <Select
+                    value={currentOrder?.status}
+                    onValueChange={(value) => handleStatusChange(value)}
+                    disabled={isStatusUpdated}
+                >
 
-
-                <Select value={orderStatus}
-                    onValueChange={handleStatusChange}
-                    disabled={isStatusUpdated}>
-                    <SelectTrigger className="flex justify-center items-center font-inter mt-2">Select Status</SelectTrigger>
+                    <SelectTrigger className="flex justify-center items-center font-inter mt-2">
+                        Select Status
+                    </SelectTrigger>
                     <SelectContent>
                         <SelectItem value="Ordered">Ordered</SelectItem>
                         <SelectItem value="In-Transit">In-Transit</SelectItem>
-                        <SelectItem value="Deliverd">Delivered</SelectItem>
+                        <SelectItem value="Delivered">Delivered</SelectItem>
                     </SelectContent>
                 </Select>
+
                 {/* order details */}
                 <div className='items-start'>
                     <div className="justify-items-start pb-2 border-b-1  border-b-green-300 ">
@@ -92,14 +111,14 @@ const OrderDetails = () => {
                         </div>
                         <div className="ml-12  " >
                             <div className=''>
-                                <span className="font-[600] font-inter">COMMODITY : <span>{LogisticOrders[0]?.commodity}</span></span>
+                                <span className="font-[600] font-inter">COMMODITY : <span>{currentOrder?.commodity}</span></span>
                             </div>
 
-                            <div><span className="font-[600] font-inter">QUANTITY : <span>{LogisticOrders[0]?.quantity}.KG</span></span></div>
+                            <div><span className="font-[600] font-inter">QUANTITY : <span>{currentOrder?.quantity}.KG</span></span></div>
 
-                            <div><span className="font-[600] font-inter">PRICE : &#8377; <span>{LogisticOrders[0]?.price}</span></span></div>
+                            <div><span className="font-[600] font-inter">PRICE : &#8377; <span>{currentOrder?.price}</span></span></div>
 
-                            <div> <span className="font-[600] font-inter">COMMODITY PRICE : &#8377;{" "}<span>{LogisticOrders[0]?.commodityPrice}</span></span></div>
+                            <div> <span className="font-[600] font-inter">COMMODITY PRICE : &#8377;{" "}<span>{currentOrder?.commodityPrice}</span></span></div>
 
                         </div>
                     </div>
@@ -113,24 +132,24 @@ const OrderDetails = () => {
                         </div>
                         <div className="ml-12">
                             <span className="font-[600] font-inter">
-                                NAME : <span>{LogisticOrders[0]?.customer?.name}</span>
+                                NAME : <span>{currentOrder?.customer?.name}</span>
                             </span>
                             <br />
                             <span className="font-[600] font-inter">
                                 NUMBER :{" "}
-                                <a href={`tel:+91${LogisticOrders[0]?.customer?.phoneNumber}`}>
-                                    +91<span>{LogisticOrders[0]?.customer?.phoneNumber}</span>
+                                <a href={`tel:+91${currentOrder?.customer?.phoneNumber}`}>
+                                    +91<span>{currentOrder?.customer?.phoneNumber}</span>
                                 </a>
                             </span>
                             <br />
                             <span className="font-[600] font-inter">
-                                EMAIL : <span>{LogisticOrders[0]?.customer?.email}</span>
+                                EMAIL : <span>{currentOrder?.customer?.email}</span>
                             </span>
                             <br />
                         </div>
                     </div>
                     {/* logistics details */}
-                    {LogisticOrders[0]?.logistics && (
+                    {currentOrder?.logistics && (
                         <div className=" pb-2 border-b-1 border-b-green-300 ">
                             <div className="flex     ">
                                 <img src={avatar} alt="avatar" />
@@ -141,27 +160,25 @@ const OrderDetails = () => {
                             <div className="ml-12">
 
                                 <span className="font-[600] font-inter">
-                                    NAME : <span>{LogisticOrders[0]?.logistics?.name}</span>
+                                    NAME : <span>{currentOrder?.logistics?.name}</span>
                                 </span>
                                 <br />
                                 <span className="font-[600] font-inter">
                                     NUMBER :{" "}
                                     <a
-                                        href={`tel:+91${LogisticOrders[0]?.logistics?.phoneNumber}`}
+                                        href={`tel:+91${currentOrder?.logistics?.phoneNumber}`}
                                     >
-                                        +91<span>{LogisticOrders[0]?.logistics?.phoneNumber}</span>
+                                        +91<span>{currentOrder?.logistics?.phoneNumber}</span>
                                     </a>
                                 </span>
                                 <br />
                                 <span className="font-[600] font-inter">
-                                    EMAIL : <span>{LogisticOrders[0]?.logistics?.email}</span>
+                                    EMAIL : <span>{currentOrder?.logistics?.email}</span>
                                 </span>
                                 <br />
 
                             </div>
                         </div>
-
-
                     )}
                     {/* address details */}
                     <div className=" pb-2 border-b-1 border-b-green-300 ">
@@ -173,15 +190,15 @@ const OrderDetails = () => {
                         </div>
                         <div className="ml-12">
                             <span className="font-[600] font-inter">
-                                ADDRESS : <span>{LogisticOrders[0]?.customer?.address}</span>
+                                ADDRESS : <span>{currentOrder?.customer?.address}</span>
                             </span>
                             <br />
                             <span className="font-[600] font-inter">
-                                DISTRICT : <span>{LogisticOrders[0]?.customer?.district}</span>
+                                DISTRICT : <span>{currentOrder?.customer?.district}</span>
                             </span>
                             <br />
                             <span className="font-[600] font-inter">
-                                PINCODE : <span>{LogisticOrders[0]?.customer?.pincode}</span>
+                                PINCODE : <span>{currentOrder?.customer?.pincode}</span>
                             </span>
                             <br />
                         </div>
@@ -189,27 +206,41 @@ const OrderDetails = () => {
                 </div>
                 {/* footer */}
                 <footer className="bg-(--green) h-[8vh] rounded-[30px] mt-4 flex items-center justify-evenly py-4 fixed bottom-3">
-                                        <Link to="/logisticHome">
-                                        <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1'>
-                                            <img src={product} alt="product" />
-                                        </div>
-                                        </Link>
-                                        <Link to="/logistic">
-                                            <div className="ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1">
-                                                <img src={ordericon} alt="orderIcon" />
-                                            </div>
-                                        </Link>
-                                        <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1 pt-1'>
-                                            <img src={logistic} alt="logistic" />
-                                        </div>
-                                        <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1 pt-1'>
-                                            <img src={analytics} alt="analytics" />
-                                        </div>
-                                    </footer>
-            </div>
+                    <Link to="/">
+                        <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1'>
+                            <img src={product} alt="product" />
+                        </div>
+                    </Link>
+                    <Link to="/checkoutPage">
+                        <div className="ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1">
+                            <img src={ordericon} alt="orderIcon" />
+                        </div>
+                    </Link>
+                    <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1 pt-1'>
+                        <img src={logistic} alt="logistic" />
+                    </div>
+                    <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1 pt-1'>
+                        <img src={analytics} alt="analytics" />
+                    </div>
 
+                </footer>
+                {showOtpPopup && orderStatus === 'Delivered' && (
+                    <VerificationOTP
+                        orderId={orderId}
+                        onVerified={() => {
+                            updateOrderStatus(orderId, "Delivered");
+                            setOrderStatus("Delivered");
+                            setShowOtpPopup(false); // Close the OTP popup after successful verification
+                        }}
+                        onCancel={() => setShowOtpPopup(false)} // Close the OTP popup on cancel
+                    />
+
+                )}
+
+
+            </div>
         </>
     )
 }
 
-export default OrderDetails
+export default OrderDetails;

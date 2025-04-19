@@ -56,7 +56,7 @@ const DashBoard = () => {
         {/* Header */}
 
         <header className='flex rounded-xl h-16 pt-2 bg-(--green) mt-5 w-100 text-xl'>
-          <Link to="/logistic">
+          <Link to="/">
             <h1 className='font-bold font-inknut pt-1 ms-10 items-center'>
               {LogisticData?.name}!
             </h1>
@@ -145,12 +145,12 @@ const DashBoard = () => {
 
         {/* Footer*/}
         <footer className="bg-(--green) h-[8vh] rounded-[30px] mt-4 flex items-center justify-evenly py-4 fixed bottom-3">
-                        <Link to="/logisticHome">
+                        <Link to="/">
                         <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1'>
                             <img src={product} alt="product" />
                         </div>
                         </Link>
-                        <Link to="/logistic">
+                        <Link to="/checkoutPage">
                             <div className="ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1">
                                 <img src={ordericon} alt="orderIcon" />
                             </div>

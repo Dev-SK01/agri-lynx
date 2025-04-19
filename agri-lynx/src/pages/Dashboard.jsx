@@ -2,6 +2,7 @@ import FarmerDashboard from "@/farmers/FarmerDashboard";
 import RegistrationContext from "@/registration/context/RegistrationContext";
 import React, { useContext } from "react";
 import DashBoard from "@/logistics/DashBoard/DashBoard";
+import LogisticHome from "@/logistics/OrderManagement/LogisticHome";
 
 
 const Dashboard = () => {
@@ -14,7 +15,7 @@ const Dashboard = () => {
       ) : userData?.userType === "market" ? (
         <FarmerDashboard />
       ) : (
-        <DashBoard />
+        <LogisticHome /> 
       )}
     </>
   );
