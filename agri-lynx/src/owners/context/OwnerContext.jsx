@@ -22,45 +22,7 @@ export const OwnerContextProvider = ({ children }) => {
     bankName: "Canara Bank",
     bankBranch: "Chennai",
     upiId: "luffy12@upi",
-    purchasedList: [
-      {
-        
-        commodity: "Tomato",
-        quantity: 500,
-        price: 140,
-        listingId: "purch123xyz",
-        farmerId: "s63hdb38dyb9ae4",
-        imageUrl: "https://media.istockphoto.com/id/1459115525/photo/tomato-vegetables-isolated-on-white-background.webp",
-        purchaseDate: new Date().toUTCString(),
-        status: "delivered",
-        minPrice: "2000",
-        maxPrice: "2300",
-      },
-      {
-        commodity: "Potato",
-        quantity: "200",
-        price: "15",
-        listingId: "purch124xyz",
-        farmerId: "s63hdb38dyb9ae4",
-        imageUrl: "https://media.istockphoto.com/id/157430678/photo/three-potatoes.webp",
-        purchaseDate: new Date().toUTCString(),
-        status: "shipped",
-        minPrice: "2000",
-        maxPrice: "2300",
-      },
-      {
-        commodity: "Brinjal",
-        quantity: "350",
-        price: "22",
-        listingId: "purch125xyz",
-        farmerId: "s63hdb38dyb9ae4",
-        imageUrl: "https://images.unsplash.com/photo-1639428134238-b548770d4b77",
-        purchaseDate: new Date().toUTCString(),
-        status: "ordered",
-        minPrice: "2000",
-        maxPrice: "2300",
-      },
-    ],
+    
   });
 
   const [isContentLoading, setIsContentLoading] = useState(true);

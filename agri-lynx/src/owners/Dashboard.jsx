@@ -8,10 +8,10 @@ const Dashboard = () => {
   return (
     <>
     <OwnerContextProvider>
-        <LocalMarketOwnerDashboard></LocalMarketOwnerDashboard> 
-      {/* <OrderCheckOut/> */}
+        {/* <LocalMarketOwnerDashboard></LocalMarketOwnerDashboard>  */}
+       <OrderCheckOut/> 
       {/*<Analytics/>*/}
-    </OwnerContextProvider>
+     </OwnerContextProvider> 
     </>
     
   )
