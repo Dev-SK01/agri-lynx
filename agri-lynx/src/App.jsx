@@ -138,7 +138,8 @@ function App() {
             <Route path="farmeranalytics" element={<FarmerAnalytics />} />
 
             {/* local market Routes */}
-            <Route path="localmarketdashboard" element={<ProductHeader />} />
+            <Route path="localmarketdashboard" element={<LocalMarketOwnerProductList />} />
+            <Route path="myorder" element={<LocalMarketOwnerMyOrder/>}/>
 
             {/* Loginstics Routes */}
             <Route path="logisticdashboard" element={<LogisticHome />} />

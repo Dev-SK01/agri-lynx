@@ -7,7 +7,7 @@ import ordericon from '../../Assest/ordericon.svg';
 import product from '../../Assest/product.svg';
 import { Button } from '@/components/ui/button';
 
-
+import { Link } from "react-router-dom";
 
 const accessKey = "ngZx_O2HxOkiG9ML_VctB1Z2ImTU5OsYXNK_Jivcq2E";
 
@@ -89,13 +89,13 @@ const MyOrders = () => {
                                 </p>
                                 {item.orderStatus !== "delivered" && item.orderStatus !== "canceled" && (
                                     <Button
-                                    onClick={() => {
-                                        const confirmCancel = window.confirm("Are you sure you want to cancel this order?");
-                                        if (confirmCancel) {
-                                          cancelOrder(item.orderId);
-                                          alert("Your order has been cancelled successfully.");
-                                        }
-                                      }}
+                                        onClick={() => {
+                                            const confirmCancel = window.confirm("Are you sure you want to cancel this order?");
+                                            if (confirmCancel) {
+                                                cancelOrder(item.orderId);
+                                                alert("Your order has been cancelled successfully.");
+                                            }
+                                        }}
                                         className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--secondary)] mt-2 ms-2 w-28 items-center font-bold font-inter text-black'
                                     >
                                         Cancel
@@ -114,16 +114,20 @@ const MyOrders = () => {
 
                 {/* Footer*/}
                 <footer className="bg-(--green) h-[8vh] rounded-[30px] mt-4 flex items-center justify-evenly py-4 fixed bottom-3">
-                    <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1'>
-                        <img src={product} alt="product" />
-                    </div>
-                    <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-0.5'>
-                        <img src={ordericon} alt="ordericon" />
-                    </div>
-                    <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1.5'>
+                    <Link to="/">
+                        <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1'>
+                            <img src={product} alt="product" />
+                        </div>
+                    </Link>
+                    <Link to="/myorder">
+                        <div className="ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1">
+                            <img src={ordericon} alt="orderIcon" />
+                        </div>
+                    </Link>
+                    <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1'>
                         <img src={logistic} alt="logistic" />
                     </div>
-                    <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-2'>
+                    <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1'>
                         <img src={analytics} alt="analytics" />
                     </div>
                 </footer>

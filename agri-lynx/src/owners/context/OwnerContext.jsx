@@ -6,7 +6,7 @@ const OwnerContext = createContext({});
 export const OwnerContextProvider = ({ children }) => {
   // Market owner data from server   
   const [marketOwnerData, setMarketOwnerData] = useState({
-    ownerId: "mkt123abc987xyz",
+    customerId: "mkt123abc987xyz",
     name: "Rajesh Kumar",
     email: "rajeshmarket@gmail.com",
     phoneNumber: "9876543210",
@@ -23,46 +23,50 @@ export const OwnerContextProvider = ({ children }) => {
     bankName: "State Bank of India",
     bankBranch: "Madurai",
     upiId: "rajesh@upi",
-    purchasedList: [
+    
+  });
+  const [purchasedList,setPurcahsedList]=useState([
+   
       {
         commodity: "Tomato",
         quantity: "500",
         price: "140",
         listingId: "purch123xyz",
-        farmerId: "s63hdb38dyb9ae4",
+        farmerId: "s63hdb38dyb9ae3",
         imageUrl: "https://media.istockphoto.com/id/1459115525/photo/tomato-vegetables-isolated-on-white-background.webp",
         purchaseDate: new Date().toUTCString(),
         status: "delivered",
         minPrice: "2000",
         maxPrice: "2300",
+        district: "Madurai",
       },
       {
         commodity: "Potato",
         quantity: "200",
         price: "15",
-        listingId: "purch124xyz",
+        listingId: "purch124x",
         farmerId: "s63hdb38dyb9ae4",
         imageUrl: "https://media.istockphoto.com/id/157430678/photo/three-potatoes.webp",
         purchaseDate: new Date().toUTCString(),
         status: "shipped",
         minPrice: "2000",
         maxPrice: "2300",
+        district: "Madurai",
       },
       {
         commodity: "Brinjal",
         quantity: "350",
         price: "22",
-        listingId: "purch125xyz",
-        farmerId: "s63hdb38dyb9ae4",
+        listingId: "purchxyz",
+        farmerId: "s63hdb38dyb9ae5",
         imageUrl: "https://images.unsplash.com/photo-1639428134238-b548770d4b77",
         purchaseDate: new Date().toUTCString(),
         status: "ordered",
         minPrice: "2000",
         maxPrice: "2300",
+        district: "Chennai",
       },
-    ],
-  });
-
+    ])
   const [isContentLoading, setIsContentLoading] = useState(true);
 
   const [marketOrders, setMarketOrders] = useState([
@@ -202,6 +206,8 @@ export const OwnerContextProvider = ({ children }) => {
         cancelOrders,
         setcancelOrders,
         deliveredOrders,
+        purchasedList,
+        setPurcahsedList,
         setDeliveredOrders,
         selectedStatus,
         setSelectedStatus,
