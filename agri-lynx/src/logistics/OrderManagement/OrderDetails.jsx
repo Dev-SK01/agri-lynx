@@ -38,23 +38,24 @@ const OrderDetails = () => {
     console.log(currentOrder)
 
     const handleStatusChange = (value) => {
+
         if (value === 'Delivered') {
             setShowOtpPopup(true);
         } else {
             updateOrderStatus(orderId, value);
-            setOrderStatus(value); // Update local order status immediately
+            setOrderStatus(value);
         }
     };
 
 
-    
-    
+
+
 
     const navigate = useNavigate();
     const handleAvatarClick = () => {
         navigate('/DashBoard');
     };
-    
+
 
     return (
         <>
@@ -85,13 +86,12 @@ const OrderDetails = () => {
                 </div>
 
                 <Select
-                    value={currentOrder?.status}
                     onValueChange={(value) => handleStatusChange(value)}
                     disabled={isStatusUpdated}
                 >
 
                     <SelectTrigger className="flex justify-center items-center font-inter mt-2">
-                        Select Status
+                        <SelectValue placeholder={currentOrder.orderStatus} />
                     </SelectTrigger>
                     <SelectContent>
                         <SelectItem value="Ordered">Ordered</SelectItem>
@@ -224,18 +224,7 @@ const OrderDetails = () => {
                     </div>
 
                 </footer>
-                {showOtpPopup && orderStatus === 'Delivered' && (
-                    <VerificationOTP
-                        orderId={orderId}
-                        onVerified={() => {
-                            updateOrderStatus(orderId, "Delivered");
-                            setOrderStatus("Delivered");
-                            setShowOtpPopup(false); // Close the OTP popup after successful verification
-                        }}
-                        onCancel={() => setShowOtpPopup(false)} // Close the OTP popup on cancel
-                    />
-
-                )}
+                {showOtpPopup && ( <VerificationOTP orderId={orderId}/>)}
 
 
             </div>

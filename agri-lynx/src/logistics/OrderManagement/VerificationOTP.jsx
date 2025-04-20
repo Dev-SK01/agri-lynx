@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -11,11 +11,24 @@ import 'react-toastify/dist/ReactToastify.css';
 import LogisticContext from '../context/LogisticContext';
 import calandar from "../../Assest/calendar.svg";
 
-const VerificationOTP = () => {
-    const { LogisticOrders,LogisticData } = useContext(LogisticContext);
+const VerificationOTP = ({ orderId }) => {
+    const {
+        LogisticOrders,
+        LogisticData,
+        setShowOtpPopup,
+        setOrderStatus,updateOrderStatus
+    } = useContext(LogisticContext);
+
+    const currentOrder = LogisticOrders.find(order => order.orderId === orderId);
     const [otp, setOtp] = useState("");
-    const [email, setEmail] = useState(LogisticOrders[0]?.LogisticOrders?.email || "");
-    const { setShowOtpPopup, setOrderStatus } = useContext(LogisticContext);
+    const [email, setEmail] = useState("");
+
+    useEffect(() => {
+        if (currentOrder?.logistics?.email) {
+            setEmail(currentOrder.logistics.email);
+        }
+    }, [currentOrder]);
+
     const sendOtp = () => {
         try {
             const res = true;
@@ -32,27 +45,31 @@ const VerificationOTP = () => {
     const verifyOtp = () => {
         if (otp === "123456") {
             toast.success("OTP verified!");
-            setOrderStatus("Deliverd");
-            setShowOtpPopup(true); // close modal
-          } else {
+            setOrderStatus("Delivered");
+            setTimeout(() => setShowOtpPopup(false), 2000);
+            updateOrderStatus(orderId,"Delivered")
+        } else {
             toast.error("Invalid OTP");
         }
     };
 
+    // Prevent rendering until currentOrder is ready
+    if (!currentOrder) return null;
+
     return (
         <>
             <ToastContainer />
-            <div className="absolute flex ps-5 justify-items-center items-center   h-[100vh] backdrop-blur-[5px] top-0.5 ">
-                <div className="flex-col items-center justify-center  bg-(--green) rounded-md w-[90dvw]">
+            <div className="absolute flex ps-5 justify-items-center items-center h-[100vh] backdrop-blur-[5px] top-0.5">
+                <div className="flex-col items-center justify-center bg-(--green) rounded-md w-[90dvw]">
                     {/* Order ID and Date */}
-                    <div className="w-full text-center   bg-(--green) rounded-md py-3 px-2">
+                    <div className="w-full text-center bg-(--green) rounded-md py-3 px-2">
                         <h1 className="font-bold text-lg font-inter truncate">
-                            #{LogisticOrders[0]?.orderId.toUpperCase()}
+                            #{currentOrder.orderId.toUpperCase()}
                         </h1>
                         <div className="flex justify-center items-center mt-2">
                             <img src={calandar} alt="calendar" className="h-5 w-5" />
                             <span className="ml-2 font-inter text-sm">
-                                {LogisticOrders[0]?.orderDate}
+                                {currentOrder.orderDate}
                             </span>
                         </div>
                     </div>
@@ -60,13 +77,13 @@ const VerificationOTP = () => {
                     {/* Email section */}
                     <div className="mt-4 w-full">
                         <label htmlFor="email" className="font-bold font-inter block mb-1">
-                            {LogisticOrders[0]?.LogisticOrders?.name}
+                            {currentOrder.logistics?.name}
                         </label>
                         <div className="flex px-5 flex-row gap-8 sm:flex-row items-stretch sm:items-center sm:space-x-3 space-y-2 sm:space-y-0">
                             <Input
                                 type="email"
                                 placeholder="Email"
-                                value={LogisticOrders[0]?.logistics?.email}
+                                value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 className="font-inter font-semibold bg-(--primary) py-3 text-sm"
                             />
@@ -100,7 +117,7 @@ const VerificationOTP = () => {
                         </InputOTP>
                         <Button
                             type="button"
-                            className="text-white  bg-(--secondary) font-bold text-base mt-4 px-6 py-2  sm:w-auto"
+                            className="text-white bg-(--secondary) font-bold text-base mt-4 px-6 py-2 sm:w-auto"
                             onClick={verifyOtp}
                         >
                             Verify

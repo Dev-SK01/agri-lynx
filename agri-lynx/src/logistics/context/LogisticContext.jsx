@@ -22,24 +22,11 @@ export const LogisticContextProvider = ({ children }) => {
     bankName: "State Bank of India",
     bankBranch: "Madurai",
     upiId: "rajesh@upi",
-    vehicleNumber:"TN-09-AQ-2004",
-    vehicleType:"Van",
-    licenseNumber:"DL-1420110012345"
+    vehicleNumber: "TN-09-AQ-2004",
+    vehicleType: "Van",
+    licenseNumber: "DL-1420110012345"
 
   });
-  const updateOrderStatus = (orderId, newStatus) => {
-    setLogisticOrders(prevOrders =>
-      prevOrders.map(order =>
-        order.orderId === orderId
-          ? { ...order, orderStatus: newStatus }
-          : order
-      )
-    );
-  };
-const deleteOrder = (orderId) => {
-  setLogisticOrders(prevOrders => prevOrders.filter(order => order.orderId !== orderId));
-};
-  const [isContentLoading, setIsContentLoading] = useState(true);
 
   const [LogisticOrders, setLogisticOrders] = useState([
     {
@@ -83,7 +70,7 @@ const deleteOrder = (orderId) => {
       },
     },
     {
-      orderId: "12567890",
+      orderId: "012347859955885669987455",
       listingId: "u7g6b52bd7dn9n3b",
       quantity: "100",
       price: "250",
@@ -125,7 +112,7 @@ const deleteOrder = (orderId) => {
   ]);
 
   const [currentPage, setCurrentPage] = useState("home");
-  const [showOtpPopup, setShowOtpPopup] = useState(true);
+  const [showOtpPopup, setShowOtpPopup] = useState(false);
   const [orderStatus, setOrderStatus] = useState("Ordered");
 
   // OTP verification states
@@ -158,7 +145,20 @@ const deleteOrder = (orderId) => {
       )
     );
   };
-  
+  const updateOrderStatus = (orderId, newStatus) => {
+    setLogisticOrders(prevOrders =>
+      prevOrders.map(order =>
+        order.orderId === orderId
+          ? { ...order, orderStatus: newStatus }
+          : order
+      )
+    );
+  };
+  const deleteOrder = (orderId) => {
+    setLogisticOrders(prevOrders => prevOrders.filter(order => order.orderId !== orderId));
+  };
+  const [isContentLoading, setIsContentLoading] = useState(true);
+
 
   return (
     <LogisticContext.Provider
@@ -188,7 +188,7 @@ const deleteOrder = (orderId) => {
         verifyOtpAndChangeStatus,
         updateOrderStatus,
         acceptOrder
-        
+
       }}
     >
       {children}
