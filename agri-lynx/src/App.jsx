@@ -1,3 +1,12 @@
+
+import React from 'react'
+// import { useState } from 'react'
+import LocalMarketOwnerRegistration from './owners/LocalMarketOwnerRegistration'
+import LocalMarketOwnerDashboard from './owners/DashBoard/LocalMarketOwnerDashboard'
+import Dashboard from './owners/Dashboard'
+import { ToastContainer, toast } from 'react-toastify';
+import {BrowserRouter,Routes,Route} from "react-router-dom"
+
 import React, { useContext, useEffect, useState } from "react";
 import Registration from "./pages/Registration";
 import RegistrationContext from "./registration/context/RegistrationContext";
@@ -105,8 +114,12 @@ function App() {
     }
   }, []);
 
-  return (
-    <>
+
+
+
+export default App
+
+
       <LogisticContextProvider>
         <Routes>
           <Route
@@ -189,3 +202,4 @@ function App() {
   );
 }
 export default App;
+

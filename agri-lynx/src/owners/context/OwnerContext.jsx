@@ -1,5 +1,6 @@
 import { createContext, useState } from "react";
 
+
 const OwnerContext = createContext({});
 
 export const OwnerContextProvider = ({ children }) => {
@@ -143,7 +144,7 @@ export const OwnerContextProvider = ({ children }) => {
   district: "Ramanathapuram",
   pincode: "630661",
   upiId:"prasanth@upi"
- })
+ });
 
  const [purchasedList,setPurchasedList] = useState([
   {
@@ -184,7 +185,6 @@ export const OwnerContextProvider = ({ children }) => {
     orderDate: new Date().toUTCString(),
     orderStatus: "ordered",
     bookingStatus: "pending",
-
     minPrice: "2000",
     maxPrice: "2300",
     district: "Madurai",
