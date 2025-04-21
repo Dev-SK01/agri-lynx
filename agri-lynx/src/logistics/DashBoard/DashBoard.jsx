@@ -20,7 +20,7 @@ const DashBoard = () => {
   const { LogisticData } = useContext(LogisticContext);
   const [showDetails, setShowDetails] = useState(false);
   const handleAvatarClick = () => {
-    setShowDetails(true);
+    setShowDetails(true);   
   };
   const {setUserData} = useContext(RegistrationContext);
   const logOut = () => {

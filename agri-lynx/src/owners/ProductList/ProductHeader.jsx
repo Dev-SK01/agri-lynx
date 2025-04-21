@@ -6,9 +6,9 @@ import logistic from '../../Assest/logistic.svg';
 import ordericon from '../../Assest/ordericon.svg';
 import product from '../../Assest/product.svg';
 import { Input } from "@/components/ui/input";
-import { Link } from "react-router-dom";
-import OwnerContext from '../context/OwnerContext';
 
+import OwnerContext from '../context/OwnerContext';
+import { Link, useNavigate } from "react-router-dom";
 const ProductHeader = () => {
   const { OwnerData, purchasedList } = useContext(OwnerContext);
   const [searchTerm, setSearchTerm] = useState("");
@@ -24,20 +24,27 @@ const ProductHeader = () => {
     // Show only local matching items if checkbox is unchecked
     return matchesSearch && (checked || isLocal);
   });
+  const navigate = useNavigate();
+
+  const handleAvatarClick = () => {
+    navigate("/OwnerDashBoard");
+  };
 
   return (
     <div className="flex items-center justify-center flex-col">
       {/* Header */}
-      <header className='flex rounded-xl h-16 pt-2 bg-(--green) w-100 text-xl top-2.5 fixed'>
-        <h1 className='font-bold font-inter pt-1 ms-10 text-1xl'>
-          {OwnerData?.name} 
-        </h1>
-        <div className='ms-83 pb-1 fixed'>
-          <img src={avatar} alt="avatar" />
-        </div>
-      </header>
+      <header className='flex rounded-xl h-16 pt-2 bg-(--green) mt-5 w-100 text-xl'>
+              <Link to="/">
+                <h1 className='font-bold font-inknut pt-1 ms-10 items-center'>
+                  {OwnerData?.name}!
+                </h1>
+              </Link>
+              <div className='ms-83 pb-1 fixed'>
+                <img src={avatar} onClick={handleAvatarClick} alt="avatar" />
+              </div>
+            </header>
 
-      <div className="w-[100%] overflow-auto h-[80vh] rounded-md scrollbar mt-19">
+      <div className="w-[100%] overflow-auto h-[80vh] rounded-md scrollbar ">
         {/* Search Bar */}
         <div className='items-center bg-(--teritary) flex rounded-xl h-10 pt-2 mt-5 w-100'>
           <Input
@@ -93,7 +100,7 @@ const ProductHeader = () => {
 
       {/* Footer */}
       <footer className="bg-(--green) h-[8vh] rounded-[30px] mt-4 flex items-center justify-evenly py-4 fixed bottom-3">
-        <Link to="/">
+        <Link to="/localmarketdashboard">
         <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1'>
           <img src={product} alt="product" />
         </div>
@@ -106,9 +113,12 @@ const ProductHeader = () => {
         <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1'>
           <img src={logistic} alt="logistic" />
         </div>
+        <Link to="/OwnerAnalytics">
+        
         <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1'>
           <img src={analytics} alt="analytics" />
         </div>
+        </Link>
       </footer> 
     </div>
   );

@@ -209,7 +209,7 @@ export const OwnerContextProvider = ({ children }) => {
   };
 
   return (
-    <OwnerContext 
+    <OwnerContext.Provider
       value={{
         OwnerData,
         setOwnerData,
@@ -236,7 +236,7 @@ export const OwnerContextProvider = ({ children }) => {
       
     }}>
       {children}
-    </OwnerContext>
+    </OwnerContext.Provider>
   );
 };
 

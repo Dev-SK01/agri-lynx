@@ -34,6 +34,11 @@ import ProductHeader from "./owners/ProductList/ProductHeader";
 import OrderCheckOutPage from "./logistics/OrderManagement/OrderCheckOutPage";
 import LogisticHome from "./logistics/OrderManagement/LogisticHome";
 import OrderDetails from "./logistics/OrderManagement/OrderDetails";
+import LocalMarketOwnerDashboard from "./owners/DashBoard/LocalMarketOwnerDashboard";
+import OwnerDashBoard from "./owners/OwnerDashBoard";
+import LocalMarketOwnerAnalytics from "./owners/Analytics/LocalMarketOwnerAnalytics";
+import Analytics from "./owners/Analytics";
+
 function App() {
   // context
   const { userData, isOtpVerified, isLoading, setUserData } =
@@ -106,12 +111,11 @@ function App() {
             <Route path="farmeranalytics" element={<FarmerAnalytics />} />
 
             {/* local market routes */}
-            <Route
-              path="localmarketdashboard"
-              element={<LocalMarketOwnerProductList />}
-            />
+            <Route path="localmarketdashboard"element={<LocalMarketOwnerProductList/>}/>
             <Route path="myorder" element={<LocalMarketOwnerMyOrder />} />
-
+            <Route path="OwnerDashBoard" element={<OwnerDashBoard/>}></Route>
+            <Route path="OwnerAnalytics"element={<Analytics/>}></Route>
+            
             {/* logistics routes */}
             <Route path="logisticdashboard" element={<LogisticHome />} />
             <Route path="DashBoard" element={<DashBoard />} />

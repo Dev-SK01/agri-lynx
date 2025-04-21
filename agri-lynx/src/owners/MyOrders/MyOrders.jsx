@@ -6,7 +6,7 @@ import logistic from '../../Assest/logistic.svg';
 import ordericon from '../../Assest/ordericon.svg';
 import product from '../../Assest/product.svg';
 import { Button } from '@/components/ui/button';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const accessKey = "ngZx_O2HxOkiG9ML_VctB1Z2ImTU5OsYXNK_Jivcq2E";
 
@@ -32,7 +32,11 @@ const MyOrders = () => {
         };
         fetchImages();
     }, [allOrders]);
+    const navigate = useNavigate();
 
+    const handleAvatarClick = () => {
+        navigate("/OwnerDashBoard");
+    };
 
 
     return (
@@ -40,13 +44,14 @@ const MyOrders = () => {
             <div className="flex items-center justify-center flex-col">
                 {/* Header */}
                 <header className='flex rounded-xl h-16 pt-2 bg-(--green) mt-5 w-100 text-xl'>
-                    <h1 className='font-bold font-inter pt-1 ms-10 text-1xl'>
-                    {OwnerData?.name}!
-                    </h1>
+                    <Link to="/">
+                        <h1 className='font-bold font-inknut pt-1 ms-10 items-center'>
+                            {OwnerData?.name}!
+                        </h1>
+                    </Link>
                     <div className='ms-83 pb-1 fixed'>
-                        <img src={avatar} alt="avatar" />
+                        <img src={avatar} onClick={handleAvatarClick} alt="avatar" />
                     </div>
-
                 </header>
                 <div className='flex rounded-xl h-10 pt-2 bg-(--green) mt-5 w-100 text-xl justify-center'>
                     <div className="flex rounded-xl h-10 bg-[--green] w-full overflow-x-scroll px-0 space-x-2 py-0 justify-center">
@@ -113,24 +118,25 @@ const MyOrders = () => {
 
                 {/* Footer*/}
                 <footer className="bg-(--green) h-[8vh] rounded-[30px] mt-4 flex items-center justify-evenly py-4 fixed bottom-3">
-                    <Link to="/">
+                        <Link to="/localmarketdashboard">
                         <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1'>
-                            <img src={product} alt="product" />
+                          <img src={product} alt="product" />
                         </div>
-                    </Link>
-                    <Link to="/myorder">
-                        <div className="ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1">
+                        </Link>
+                        <Link to="/myorder">
+                          <div className="ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1">
                             <img src={ordericon} alt="orderIcon" />
+                          </div>
+                        </Link>
+                        <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1'>
+                          <img src={logistic} alt="logistic" />
                         </div>
-                    </Link>
-                    <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1'>
-                        <img src={logistic} alt="logistic" />
-                    </div>
-                    <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1'>
-                        <img src={analytics} alt="analytics" />
-                    </div>
-                </footer>
-
+                        <Link to="/OwnerAnalytics">                        
+                        <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1'>
+                          <img src={analytics} alt="analytics" />
+                        </div>
+                        </Link>
+                      </footer> 
             </div>
         </>
 

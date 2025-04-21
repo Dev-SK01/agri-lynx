@@ -6,6 +6,7 @@ import LogisticHome from "@/logistics/OrderManagement/LogisticHome";
 import ProductHeader from "@/owners/ProductList/ProductHeader";
 import LocalMarketOwnerProductList from "@/owners/LocalMarketOwnerProductList";
 import LocalMarketOwnerMyOrder from "@/owners/LocalMarketOwnerMyOrder";
+import LocalMarketOwnerDashboard from "@/owners/DashBoard/LocalMarketOwnerDashboard";
 
 const Dashboard = () => {
 
