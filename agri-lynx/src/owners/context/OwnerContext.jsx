@@ -1,9 +1,38 @@
+
+import { createContext, useState } from "react";
+
 import { createContext, useContext, useState } from "react";
+
 
 
 const OwnerContext = createContext({});
 
 export const OwnerContextProvider = ({ children }) => {
+
+  // Market owner data from server
+  const [OwnerData, setOwnerData] = useState({
+    customerId: "fuc1258539",
+    orderId: "mkt9g3h572h5823",
+    name: "luffy",
+    email: "luffy12@gmail.com",
+    phoneNumber: "8456254895",
+    alternateNumber: "9021547863",
+    shopName: "luffy Veg Market",
+    address: "5220,nethaji street,Chennai",
+    taluk: "Erode",
+    district: "Chennai",
+    state: "TAMIL NADU",
+    pincode: "625331",
+    ifscCode: "CBNR0000123",
+    accountNumber: "15247896465731",
+    accountHolderName: "luffy",
+    bankName: "Canara Bank",
+    bankBranch: "Chennai",
+    upiId: "luffy12@upi",
+    
+  });
+
+
   // Market owner data from server   
   const [marketOwnerData, setMarketOwnerData] = useState({
     customerId: "mkt123abc987xyz",
@@ -67,6 +96,7 @@ export const OwnerContextProvider = ({ children }) => {
         district: "Chennai",
       },
     ])
+
   const [isContentLoading, setIsContentLoading] = useState(true);
 
   const [marketOrders, setMarketOrders] = useState([
@@ -174,6 +204,60 @@ export const OwnerContextProvider = ({ children }) => {
     },
   ]);
 
+ const [ farmerData, setFarmerData] = useState({
+  farmerId: "s63hdb38dyb9ae4",
+  name: "prasanth",
+  phonenumber: "8898812345",
+  address: "123,ucer shop,ucer street",
+  village: "MettuPatti",
+  postOffice: "Pullangudi",
+  taluk: "kalaiyarkovil",
+  district: "Ramanathapuram",
+  pincode: "630661",
+  upiId:"prasanth@upi"
+ })
+
+ const [purchasedList,setPurchasedList] = useState([
+  {
+    commodity: "Tomato",
+    quantity: 500,
+    price: 140,
+    listingId: "purch123xyz",
+    farmerId: "s63hdb38dyb9ae4",
+    imageUrl: "https://media.istockphoto.com/id/1459115525/photo/tomato-vegetables-isolated-on-white-background.webp",
+    orderDate: new Date().toUTCString(),
+    orderStatus: "ordered",
+    bookingStatus: "pending",
+    minPrice: "2000",
+    maxPrice: "2300",
+  },
+  {
+    commodity: "Potato",
+    quantity: 200,
+    price: 15,
+    listingId: "purch124xyz",
+    farmerId: "s63hdb38dyb9ae4",
+    imageUrl: "https://media.istockphoto.com/id/157430678/photo/three-potatoes.webp",
+    orderDate: new Date().toUTCString(),
+    orderStatus: "ordered",
+      bookingStatus: "pending",
+    minPrice: "2000",
+    maxPrice: "2300",
+  },
+  {
+    commodity: "Brinjal",
+    quantity: 350,
+    price: 22,
+    listingId: "purchxyz",
+    farmerId: "s63hdb38dyb9ae4",
+    imageUrl: "https://images.unsplash.com/photo-1639428134238-b548770d4b77",
+    orderDate: new Date().toUTCString(),
+    orderStatus: "ordered",
+    bookingStatus: "pending",
+    minPrice: "2000",
+    maxPrice: "2300",
+  },
+ ]) 
 
 
   const [selectedStatus, setSelectedStatus] = useState("ordered");
@@ -192,6 +276,11 @@ export const OwnerContextProvider = ({ children }) => {
       ]);
     }
   };
+
+
+
+        
+
   
   
   return (
@@ -199,6 +288,9 @@ export const OwnerContextProvider = ({ children }) => {
       value={{
         marketOwnerData,
         setMarketOwnerData,
+         OwnerData,
+        setOwnerData,
+
         isContentLoading,
         setIsContentLoading,
         marketOrders,
@@ -206,19 +298,31 @@ export const OwnerContextProvider = ({ children }) => {
         cancelOrders,
         setcancelOrders,
         deliveredOrders,
-        purchasedList,
-        setPurcahsedList,
+
         setDeliveredOrders,
+        farmerData, 
+        setFarmerData,
         selectedStatus,
         setSelectedStatus,
         allOrders,
-        cancelOrder
+        cancelOrder,
+        purchasedList,
+        setPurchasedList,
+        
+       
+
+        
+      
+   
+
         
       }}
     >
+
       {children}
     </OwnerContext>
   );
 };
+
 
 export default OwnerContext;
