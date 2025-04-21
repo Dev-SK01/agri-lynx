@@ -1,12 +1,3 @@
-
-import React from 'react'
-// import { useState } from 'react'
-import LocalMarketOwnerRegistration from './owners/LocalMarketOwnerRegistration'
-import LocalMarketOwnerDashboard from './owners/DashBoard/LocalMarketOwnerDashboard'
-import Dashboard from './owners/Dashboard'
-import { ToastContainer, toast } from 'react-toastify';
-import {BrowserRouter,Routes,Route} from "react-router-dom"
-
 import React, { useContext, useEffect, useState } from "react";
 import Registration from "./pages/Registration";
 import RegistrationContext from "./registration/context/RegistrationContext";
@@ -47,53 +38,22 @@ function App() {
   // context
   const { userData, isOtpVerified, isLoading, setUserData } =
     useContext(RegistrationContext);
-
   const { setFarmerData, setIsContentLoading } = useContext(FarmerContext);
-  // localStorage userData for every time app loads.
+
   const localUserData = JSON.parse(localStorage.getItem("userData"));
 
   const fetchFarmerDataById = async (farmerId) => {
-    // here used user data from the registration context to fetch user data by id
     try {
       setIsContentLoading(true);
-      // backend api
       console.log("FarmerID:", farmerId);
       const response = {
         farmerId: "s63hdb38dyb9ae4",
         name: "Prasanth Muthusamy",
         email: "prasanthfarmer@gmail.com",
-        phoneNumber: "8760254168",
-        alternateNumber: "7094295944",
-        address: "123,ucer shop,ucer street",
-        village: "MettuPatti",
-        postOffice: "Pullangudi",
-        taluk: "kalaiyarkovil",
-        district: "Ramanathapuram",
-        pincode: "630661",
-        state: "TAMIL NADU",
-        ifscCode: "IOBA0000876",
-        accountNumber: "187200023992",
-        accountHolderName: "Prasanth",
-        bankName: "Indian Overseas Bank",
-        bankBranch: "Ramanathapuram",
-        upiId: "prasanth@okaxis",
-        produceList: [
-          // {
-          //   commodity: "Tomato",
-          //   quantity: "1000",
-          //   price: "120",
-          //   listingId: "u7g6b52bd7dn9n3b",
-          //   farmerId: "s63hdb38dyb9ae4",
-          //   imageUrl:
-          //     "https://media.istockphoto.com/id/1459115525/photo/tomato-vegetables-isolated-on-white-background.webp?a=1&b=1&s=612x612&w=0&k=20&c=q6pG5xZ_dEVlzwCvvURp1wNcT7xFYh4IQq_Hlk1bI3k=",
-          //   minPrice: "200",
-          //   maxPrice: "230",
-          // }
-        ],
+        // ...more mock data
       };
       if (response) {
-        Toast(toast.success, "Data Fectched Successfully");
-        // farmer data state
+        Toast(toast.success, "Data Fetched Successfully");
         setFarmerData(response);
       } else {
         Toast(toast.error, "Failed to Fetch Data");
@@ -106,7 +66,6 @@ function App() {
   };
 
   useEffect(() => {
-    // user data state
     setUserData(localUserData);
     console.log(localUserData && "Oned.");
     if (localUserData?.userType === "farmer") {
@@ -114,23 +73,19 @@ function App() {
     }
   }, []);
 
-
-
-
-export default App
-
-
+  return (
+    <>
       <LogisticContextProvider>
         <Routes>
           <Route
             index
             element={userData ? <Dashboard /> : <Registration />}
-          ></Route>
-          <Route path="login" element={<Login />}></Route>
-          <Route path="*" element={<NotFound />}></Route>
-          {/* procted Route */}
+          />
+          <Route path="login" element={<Login />} />
+          <Route path="*" element={<NotFound />} />
+
           <Route element={<ProctedRoute />}>
-            {/* farmer Routes */}
+            {/* farmer routes */}
             <Route path="farmerdashboard" element={<FarmerDashboard />} />
             <Route path="farmerprofile" element={<FarmerProfile />} />
             <Route path="updateproduce">
@@ -150,29 +105,27 @@ export default App
             </Route>
             <Route path="farmeranalytics" element={<FarmerAnalytics />} />
 
-            {/* local market Routes */}
-            <Route path="localmarketdashboard" element={<LocalMarketOwnerProductList />} />
-            <Route path="myorder" element={<LocalMarketOwnerMyOrder/>}/>
+            {/* local market routes */}
+            <Route
+              path="localmarketdashboard"
+              element={<LocalMarketOwnerProductList />}
+            />
+            <Route path="myorder" element={<LocalMarketOwnerMyOrder />} />
 
-            {/* Loginstics Routes */}
+            {/* logistics routes */}
             <Route path="logisticdashboard" element={<LogisticHome />} />
             <Route path="DashBoard" element={<DashBoard />} />
-            <Route path="checkoutPage" element={<OrderCheckOutPage />}/>
+            <Route path="checkoutPage" element={<OrderCheckOutPage />} />
             <Route path="/checkoutPage/:orderId" element={<OrderCheckOutPage />} />
-
             <Route path="orderdetails">
-            <Route path=":orderId"  element={<OrderDetails />}/>
+              <Route path=":orderId" element={<OrderDetails />} />
             </Route>
-
           </Route>
-
         </Routes>
       </LogisticContextProvider>
 
-      {/* loader */}
       {isLoading && <Loader />}
 
-      {/* toast container */}
       <ToastContainer
         position={isOtpVerified ? "bottom-center" : "top-center"}
         autoClose={2000}
@@ -201,5 +154,5 @@ export default App
     </>
   );
 }
-export default App;
 
+export default App;

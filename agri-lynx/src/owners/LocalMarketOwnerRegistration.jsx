@@ -22,6 +22,7 @@ const LocalMarketOwnerRegistration = () => {
       <Personal/>
 
     </div>
+    </div>
 
   )
 }
