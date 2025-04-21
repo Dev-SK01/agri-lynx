@@ -10,11 +10,11 @@ import { Link } from "react-router-dom";
 import OwnerContext from '../context/OwnerContext';
 
 const ProductHeader = () => {
-  const { marketOwnerData, purchasedList } = useContext(OwnerContext);
+  const { OwnerData, purchasedList } = useContext(OwnerContext);
   const [searchTerm, setSearchTerm] = useState("");
   const [checked, setChecked] = useState(false);
 
-  const localDistrict = marketOwnerData?.district?.toLowerCase() || "";
+  const localDistrict = OwnerData?.district?.toLowerCase() || "";
 
   const filteredCommodities = (purchasedList || []).filter((item) => {
     const matchesSearch = item.commodity?.toLowerCase().includes(searchTerm.toLowerCase());
@@ -30,7 +30,7 @@ const ProductHeader = () => {
       {/* Header */}
       <header className='flex rounded-xl h-16 pt-2 bg-(--green) w-100 text-xl top-2.5 fixed'>
         <h1 className='font-bold font-inter pt-1 ms-10 text-1xl'>
-          {marketOwnerData?.name} 
+          {OwnerData?.name} 
         </h1>
         <div className='ms-83 pb-1 fixed'>
           <img src={avatar} alt="avatar" />
@@ -68,10 +68,10 @@ const ProductHeader = () => {
                   {item.commodity}
                 </h1>
                 <h1 className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--teritary)] mt-2 ms-2 w-60 items-center font-bold font-inter'>
-                  {marketOwnerData.name}
+                  {OwnerData.name}
                 </h1>
                 <h1 className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--teritary)] mt-2 ms-2 w-60 items-center font-bold font-inter'>
-                  +91-{marketOwnerData.phoneNumber}
+                  +91-{OwnerData.phoneNumber}
                 </h1>
               </div>
               <div>
@@ -81,7 +81,7 @@ const ProductHeader = () => {
                 <img
                   src={item.imageUrl}
                   alt={item.commodity}
-                  className='h-20 w-20 mt-3 rounded-2xl object-cover'
+                  className='h-20 w-20 mt-3 rounded-2xl object-cover ml-7 '
                 />
               </div>
             </div>

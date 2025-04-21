@@ -1,72 +1,31 @@
-import { createContext, useContext, useState } from "react";
-
+import { createContext, useState } from "react";
 
 const OwnerContext = createContext({});
 
 export const OwnerContextProvider = ({ children }) => {
-  // Market owner data from server   
-  const [marketOwnerData, setMarketOwnerData] = useState({
-    customerId: "mkt123abc987xyz",
-    name: "Rajesh Kumar",
-    email: "rajeshmarket@gmail.com",
-    phoneNumber: "9876543210",
-    alternateNumber: "9012345678",
-    shopName: "Rajesh Fresh Market",
-    address: "45, Anna Market, Gandhi Road",
-    city: "Madurai",
-    district: "Madurai",
+  // Market owner data from server
+  const [OwnerData, setOwnerData] = useState({
+    customerId: "fuc1258539",
+    orderId: "mkt9g3h572h5823",
+    name: "RishiKesavan",
+    email: "luffy12@gmail.com",
+    phoneNumber: "8456254895",
+    alternateNumber: "9021547863",
+    shopName: "luffy Veg Market",
+    address: "5220,nethaji street,Chennai",
+    taluk: "Erode",
+    district: "Chennai",
     state: "TAMIL NADU",
-    pincode: "625001",
-    ifscCode: "SBI0000123",
-    accountNumber: "123456789012",
-    accountHolderName: "Rajesh Kumar",
-    bankName: "State Bank of India",
-    bankBranch: "Madurai",
-    upiId: "rajesh@upi",
+    pincode: "625331",
+    ifscCode: "CBNR0000123",
+    accountNumber: "15247896465731",
+    accountHolderName: "luffy",
+    bankName: "Canara Bank",
+    bankBranch: "Chennai",
+    upiId: "luffy12@upi",
     
   });
-  const [purchasedList,setPurcahsedList]=useState([
-   
-      {
-        commodity: "Tomato",
-        quantity: "500",
-        price: "140",
-        listingId: "purch123xyz",
-        farmerId: "s63hdb38dyb9ae3",
-        imageUrl: "https://media.istockphoto.com/id/1459115525/photo/tomato-vegetables-isolated-on-white-background.webp",
-        purchaseDate: new Date().toUTCString(),
-        status: "delivered",
-        minPrice: "2000",
-        maxPrice: "2300",
-        district: "Madurai",
-      },
-      {
-        commodity: "Potato",
-        quantity: "200",
-        price: "15",
-        listingId: "purch124x",
-        farmerId: "s63hdb38dyb9ae4",
-        imageUrl: "https://media.istockphoto.com/id/157430678/photo/three-potatoes.webp",
-        purchaseDate: new Date().toUTCString(),
-        status: "shipped",
-        minPrice: "2000",
-        maxPrice: "2300",
-        district: "Madurai",
-      },
-      {
-        commodity: "Brinjal",
-        quantity: "350",
-        price: "22",
-        listingId: "purchxyz",
-        farmerId: "s63hdb38dyb9ae5",
-        imageUrl: "https://images.unsplash.com/photo-1639428134238-b548770d4b77",
-        purchaseDate: new Date().toUTCString(),
-        status: "ordered",
-        minPrice: "2000",
-        maxPrice: "2300",
-        district: "Chennai",
-      },
-    ])
+
   const [isContentLoading, setIsContentLoading] = useState(true);
 
   const [marketOrders, setMarketOrders] = useState([
@@ -173,8 +132,64 @@ export const OwnerContextProvider = ({ children }) => {
       },
     },
   ]);
+ const [ farmerData, setFarmerData] = useState({
+  farmerId: "s63hdb38dyb9ae4",
+  name: "prasanth",
+  phonenumber: "8898812345",
+  address: "123,ucer shop,ucer street",
+  village: "MettuPatti",
+  postOffice: "Pullangudi",
+  taluk: "kalaiyarkovil",
+  district: "Ramanathapuram",
+  pincode: "630661",
+  upiId:"prasanth@upi"
+ })
 
+ const [purchasedList,setPurchasedList] = useState([
+  {
+    commodity: "Tomato",
+    quantity: 500,
+    price: 140,
+    listingId: "purch123xyz",
+    farmerId: "s63hdb38dyb9ae4",
+    imageUrl: "https://media.istockphoto.com/id/1459115525/photo/tomato-vegetables-isolated-on-white-background.webp",
+    orderDate: new Date().toUTCString(),
+    orderStatus: "ordered",
+    bookingStatus: "pending",
+    minPrice: "2000",
+    maxPrice: "2300",
+    district: "Chennai",
+  },
+  {
+    commodity: "Potato",
+    quantity: 200,
+    price: 15,
+    listingId: "purch124xyz",
+    farmerId: "s63hdb38dyb9ae4",
+    imageUrl: "https://media.istockphoto.com/id/157430678/photo/three-potatoes.webp",
+    orderDate: new Date().toUTCString(),
+    orderStatus: "ordered",
+      bookingStatus: "pending",
+    minPrice: "2000",
+    maxPrice: "2300",
+    district: "Chennai",
+  },
+  {
+    commodity: "Brinjal",
+    quantity: 350,
+    price: 22,
+    listingId: "purchxyz",
+    farmerId: "s63hdb38dyb9ae4",
+    imageUrl: "https://images.unsplash.com/photo-1639428134238-b548770d4b77",
+    orderDate: new Date().toUTCString(),
+    orderStatus: "ordered",
+    bookingStatus: "pending",
 
+    minPrice: "2000",
+    maxPrice: "2300",
+    district: "Madurai",
+  },
+ ]) 
 
   const [selectedStatus, setSelectedStatus] = useState("ordered");
 
@@ -192,13 +207,12 @@ export const OwnerContextProvider = ({ children }) => {
       ]);
     }
   };
-  
-  
+
   return (
-    <OwnerContext
+    <OwnerContext 
       value={{
-        marketOwnerData,
-        setMarketOwnerData,
+        OwnerData,
+        setOwnerData,
         isContentLoading,
         setIsContentLoading,
         marketOrders,
@@ -206,16 +220,21 @@ export const OwnerContextProvider = ({ children }) => {
         cancelOrders,
         setcancelOrders,
         deliveredOrders,
-        purchasedList,
-        setPurcahsedList,
         setDeliveredOrders,
+        farmerData, 
+        setFarmerData,
         selectedStatus,
         setSelectedStatus,
         allOrders,
-        cancelOrder
+        cancelOrder,
+        purchasedList,
+        setPurchasedList,
         
-      }}
-    >
+       
+
+        
+      
+    }}>
       {children}
     </OwnerContext>
   );

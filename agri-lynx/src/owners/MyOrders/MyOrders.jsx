@@ -6,13 +6,12 @@ import logistic from '../../Assest/logistic.svg';
 import ordericon from '../../Assest/ordericon.svg';
 import product from '../../Assest/product.svg';
 import { Button } from '@/components/ui/button';
-
 import { Link } from "react-router-dom";
 
 const accessKey = "ngZx_O2HxOkiG9ML_VctB1Z2ImTU5OsYXNK_Jivcq2E";
 
 const MyOrders = () => {
-    const { marketOwnerData, allOrders, selectedStatus, setSelectedStatus, cancelOrder } = useContext(OwnerContext);
+    const { OwnerData, allOrders, selectedStatus, setSelectedStatus, cancelOrder } = useContext(OwnerContext);
 
     const [images, setImages] = useState({});
 
@@ -42,18 +41,18 @@ const MyOrders = () => {
                 {/* Header */}
                 <header className='flex rounded-xl h-16 pt-2 bg-(--green) mt-5 w-100 text-xl'>
                     <h1 className='font-bold font-inter pt-1 ms-10 text-1xl'>
-                        Welcome {marketOwnerData?.name}!
+                    {OwnerData?.name}!
                     </h1>
                     <div className='ms-83 pb-1 fixed'>
                         <img src={avatar} alt="avatar" />
                     </div>
 
                 </header>
-                <div className='flex rounded-xl h-10 pt-2 bg-(--green) mt-5 w-100 text-xl'>
-                    <div className="flex rounded-xl h-10 bg-[--green] mt-0 w-full overflow-x-scroll px-0 space-x-2 py-0  justify-center">
+                <div className='flex rounded-xl h-10 pt-2 bg-(--green) mt-5 w-100 text-xl justify-center'>
+                    <div className="flex rounded-xl h-10 bg-[--green] w-full overflow-x-scroll px-0 space-x-2 py-0 justify-center">
                         {["ordered", "delivered", "canceled"].map((status) => (
                             <button key={status} onClick={() => setSelectedStatus(status)}
-                                className={`rounded-xl h-6 px-4 font-medium font-inter ${selectedStatus === status ? " text-black bg-(primary) border-1 border-green-500" : "bg-[var(--primary)]"}`}>
+                                className={`rounded  h-7 px-4 font-medium font-inter ${selectedStatus === status ? " text-black bg-(primary) border-1 border-green-500" : "bg-[var(--primary)]"}`}>
                                 {status.charAt(0).toUpperCase() + status.slice(1)}
                             </button>
                         ))}
