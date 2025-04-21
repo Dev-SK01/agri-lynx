@@ -12,6 +12,7 @@ import analytics from "../../Assests/analytics.svg"
 import Rectangle from "../../Assests/Rectangle.svg"
 import { Button } from "@/components/ui/button"
 import OwnerContext from '../context/OwnerContext'
+import { useParams } from "react-router-dom";
 
 
 
@@ -20,37 +21,50 @@ const OrderMange = () => {
   const { OwnerData } = useContext(OwnerContext);
   const { farmerData } = useContext(OwnerContext);
   const { purchasedList } = useContext(OwnerContext);
+  const { listingId } = useParams();
+
+  const selectedItem = purchasedList.find(
+    (item) => item.listingId === listingId
+  );
+
+  if (!selectedItem) return <p>Item not found</p>;
 
 
-  const price = purchasedList.price;
-  const availableQuantity = purchasedList.quantity;
+
+  const price = selectedItem.price;
+  const availableQuantity = selectedItem.quantity;
   const [userQuantity, setUserQuantity] = useState("");
   const handleClick = () => {
   const OrderData = {
-        listingId:purchasedList[0].listingId,
-        commodity: purchasedList.commodity,
-        commodityPrice: purchasedList[0].price,
+        orderId:OwnerData.orderId,
+        listingId:selectedItem.listingId,
+        commodity: selectedItem.commodity,
+        commodityPrice: selectedItem.price,
         quantity:userQuantity,
         price:totalPrice,
-        
-        imageUrl:purchasedList.imageUrl,
+        orderDate: selectedItem.orderDate,
+        orderStatus: selectedItem.orderStatus, 
+        bookinfgStatus: selectedItem.bookingStatus,      
+        imageUrl:selectedItem.imageUrl,
     
     customer:{
-    ownerId: OwnerData.ownerId,
+    customerId: OwnerData.customerId,
     name: OwnerData.name,
     email: OwnerData.email,
     phoneNumber: OwnerData.phoneNumber,
-    address: OwnerData.adress,
+    address: OwnerData.address,
     taluk: OwnerData.taluk,
     district: OwnerData.district,
     state: OwnerData.state,
     pincode: OwnerData.pincode,
     },
     farmer:{
+      farmerId:farmerData.farmerId,
       name: farmerData.name,
-      number: farmerData.number,
+      phonenumber: farmerData.phonenumber,
       address: farmerData.address,
       village: farmerData.village,
+      postoffice: farmerData.postOffice,
       taluk: farmerData.taluk,
       district: farmerData.district,
       pincode: farmerData.pincode,
@@ -83,6 +97,8 @@ const OrderMange = () => {
     }
      };
      const totalPrice = price * userQuantity;
+     
+
   return (
     <>
 
@@ -110,17 +126,17 @@ const OrderMange = () => {
                 <img className='object-cover h-40 w-40 -ml-2' src={Rectangle} alt="Assests" />
                 <div>
                   <div className='inline-block'>
-                    <input type='text' className='ml-2 inline-block bg-white rounded-xl text-center font-bold text-2xl text-black p-2.5 w-full' value={purchasedList[0].commodity} disabled={true} />
+                    <input type='text' className='ml-2 inline-block bg-white rounded-xl text-center font-bold text-2xl text-black p-2.5 w-full' value={selectedItem.commodity} disabled={true} />
                   </div>
                   <div className='inline-block'>
-                    <input className='ml-2 mt-5 bg-white inline-block rounded-xl w-23 p-1 text-center font-bold text-' value={purchasedList.quantity} disabled={true} />
+                    <input className='ml-2 mt-5 bg-white inline-block rounded-xl w-23 p-1 text-center font-bold text-' value={selectedItem.quantity} disabled={true} />
                     <span className=" mt-3 -ml-6 translate-y-1/2 font-bold text-black pointer-events-none">
                       kg
                     </span>
                   </div>
                   <div className='inline-block'>
 
-                    <input className='ml-5 bg-white inline-block rounded-xl w-23 p-1 text-center font-bold text-' value={purchasedList.price} disabled={true} />
+                    <input className='ml-5 bg-white inline-block rounded-xl w-23 p-1 text-center font-bold text-' value={selectedItem.price} disabled={true} />
                     <span className="  mt-1 -ml-5 translate-y-1/2 font-bold text-black pointer-events-none">
                       ₹
                     </span>
@@ -137,7 +153,7 @@ const OrderMange = () => {
                 <img className='ml-1 inline-block' src={Payment} alt="Assests" />
               </div>
               <div>
-                <h2 className='ms-10 mt-1 text-black'>Commodity Price : ₹{purchasedList.price}</h2>
+                <h2 className='ms-10 mt-1 text-black'>Commodity Price : ₹{selectedItem.price}</h2>
                 <h2 className='ms-10 mt-1 text-black'>Total Quantity : {userQuantity || 0}Kg</h2>
                 <h2 className='ms-10 mt-1'>Total Amount : ₹{totalPrice}</h2> 
                 <h2 className=' font-bold ms-10 mt-1'>UPI ID :</h2>
