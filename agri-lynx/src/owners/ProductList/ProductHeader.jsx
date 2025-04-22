@@ -20,11 +20,13 @@ const ProductHeader = () => {
   const filteredCommodities = (purchasedList || []).filter((item) => {
     const matchesSearch = item.commodity?.toLowerCase().includes(searchTerm.toLowerCase());
     const isLocal = item.district?.toLowerCase() === localDistrict;
+    const hasQuantity = parseInt(item.quantity) > 0;
+
    
 
     // Show all matching items if checkbox is checked
     // Show only local matching items if checkbox is unchecked
-    return matchesSearch && (checked || isLocal);
+    return hasQuantity && matchesSearch && (checked || isLocal);
   });
   const navigate = useNavigate();
 
@@ -82,6 +84,7 @@ const ProductHeader = () => {
                 </h1>
                 <h1 className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--teritary)] mt-2 ms-2 w-60 items-center font-bold font-inter'>
                   {OwnerData.name}
+
                 </h1>
                 <h1 className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--teritary)] mt-2 ms-2 w-60 items-center font-bold font-inter'>
                   +91-{OwnerData.phoneNumber}

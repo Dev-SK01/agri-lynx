@@ -19,22 +19,26 @@ import { Link, useNavigate } from "react-router-dom";
 
 
 const OrderMange = () => {
-  const { OwnerData, purchasedList, farmerData, updateOrderStatus, setMarketOrders, marketOrders, allOrders } = useContext(OwnerContext);
+  const { OwnerData, purchasedList, farmerData, updateOrderStatus, setMarketOrders, marketOrders, allOrders,updateProductQuantity } = useContext(OwnerContext);
   const { listingId } = useParams();
-  // console.log("listingId from URL:", listingId);
-  const selectedItem = Array.isArray(purchasedList)
-    ? purchasedList.find((item) => String(item.listingId) === String(listingId))
-    : '';
-
+   console.log("listingId from URL:", listingId);
+  const [selectedItem,setSelectedItem] = useState(null);
 
   // useEffect(() => {
   //   console.log("marketOrders has been updated:", marketOrders);
   // }, [marketOrders]);
+  useEffect(() => {
+    if (Array.isArray(purchasedList)) {
+      const item = purchasedList.find(item => String(item.listingId) === String(listingId));
+      setSelectedItem(item);
+    }
+  }, [purchasedList, listingId]
+);
 
 
 
-  const price = selectedItem.price;
-  const availableQuantity = selectedItem.quantity;
+  const price = selectedItem?.price || 0;
+  const availableQuantity = selectedItem?.quantity || 0;
   const [userQuantity, setUserQuantity] = useState("");
 
   const handleClick = () => {
@@ -45,6 +49,8 @@ const OrderMange = () => {
 
     const newOrderId = `order_${Date.now()}`;
     const totalPrice = price * userQuantity;
+
+
 
     const OrderData = {
       orderId: newOrderId,
@@ -87,9 +93,18 @@ const OrderMange = () => {
     console.log("allOrders", allOrders);
     updateOrderStatus(newOrderId, "ordered");
     navigate("/myorder");
+
+    updateOrderStatus(newOrderId, "ordered");
+
+    //update the remaining quantity
+    updateProductQuantity(selectedItem.listingId, Number(userQuantity));
+    navigate("/myorder");
   };
 
   console.log("updated orders", marketOrders);
+
+
+
 
 
 
@@ -133,8 +148,8 @@ const OrderMange = () => {
               <h1 className='font-bold font-inknut mt-3 ms-10 text-1xl'> {OwnerData?.name}!</h1>
             </div>
           </Link>
-          <div className='fixed ml-80'>
-            <img className="object-cover" src={Avatar} onClick={handleAvatarClick} alt="Assests" />
+          <div className='flex justify-end pr-4'>
+          <img className="object-cover w-10 h-10" src={Avatar} onClick={handleAvatarClick} alt="Avatar" />
           </div>
         </header>
 
@@ -145,8 +160,9 @@ const OrderMange = () => {
               <img className='inline-block ml-1.5' src={Checkout} alt='Assests' />
             </div>
           </nav>
-          <nav className=' flex items-center justify-center mt-4'>
-            <div className='bg-(--green)  p-5 w-96 rounded-xl'>
+          <nav className='flex items-center justify-center mt-4 px-4 w-full'>
+          <div className='bg-(--green) p-5 w-full max-w-md rounded-xl'>
+
               <div className='flex items-start -ml-3'>
                 <img className='object-cover h-40 w-40 -ml-2' src={Rectangle} alt="Assests" />
                 <div>
@@ -161,7 +177,7 @@ const OrderMange = () => {
                   </div>
                   <div className='inline-block'>
 
-                    <input className='ml-5 bg-white inline-block rounded-xl w-23 p-1 text-center font-bold text-' value={selectedItem.price} disabled={true} />
+                    <input className='ml-5 bg-white inline-block rounded-xl w-23 p-1 text-center font-bold text-' value={selectedItem?.price || 0} disabled={true} />
                     <span className="  mt-1 -ml-5 translate-y-1/2 font-bold text-black pointer-events-none">
                       ₹
                     </span>
@@ -171,14 +187,14 @@ const OrderMange = () => {
               </div>
             </div>
           </nav>
-          <nav className=' flex items-center justify-center mt-5 mb-18 '>
-            <div className='bg-(--green)  p-5 w-96 rounded-xl'>
+          <nav className='flex items-center justify-center mt-5 mb-24 px-4 w-full'>
+          <div className='bg-(--green) p-5 w-full max-w-md rounded-xl'>
               <div>
                 <h1 className=' inline-block font-bold font-inter mt-3 ms-2 text-1xl'>PAYMENT DETAILS</h1>
                 <img className='ml-1 inline-block' src={Payment} alt="Assests" />
               </div>
               <div>
-                <h2 className='ms-10 mt-1 text-black'>Commodity Price : ₹{selectedItem.price}</h2>
+                <h2 className='ms-10 mt-1 text-black'>Commodity Price : ₹{selectedItem?.price || 0}</h2>
                 <h2 className='ms-10 mt-1 text-black'>Total Quantity : {userQuantity || 0}Kg</h2>
                 <h2 className='ms-10 mt-1'>Total Amount : ₹{totalPrice}</h2>
                 <h2 className=' font-bold ms-10 mt-1'>UPI ID :</h2>
@@ -202,7 +218,7 @@ const OrderMange = () => {
                 </div>
                 <div>
                   <h2 className='ms-10 mt-1'>FarmerId : {farmerData?.name}</h2>
-                  <h2 className='ms-10 mt-1'>Number : +91- {farmerData?.phonenumber}</h2>
+                  <h2 className='ms-10 mt-1'>Number : +91- {farmerData?.phoneNumber}</h2>
                   <h2 className='ms-10 mt-1'>Address : {farmerData?.address}</h2>
                   <h2 className=' ms-10 mt-1'>Taluk : {farmerData?.taluk}</h2>
                   <h2 className=' ms-10 mt-1'>District : {farmerData?.district}</h2>

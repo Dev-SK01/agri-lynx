@@ -219,7 +219,16 @@ export const OwnerContextProvider = ({ children }) => {
       )
     );
   };
-  
+
+  const updateProductQuantity = (listingId,quantityOrderd) =>{
+    setPurchasedList((prevList) =>
+      prevList.map((item) =>
+        item.listingId === listingId
+    ?{...item,quantity: item.quantity - quantityOrderd}
+    :item
+  )
+);
+  };
 
   return (
     <OwnerContext.Provider
@@ -243,6 +252,8 @@ export const OwnerContextProvider = ({ children }) => {
         purchasedList,
         setPurchasedList,
         updateOrderStatus,
+        updateProductQuantity,
+       
         
        
 
