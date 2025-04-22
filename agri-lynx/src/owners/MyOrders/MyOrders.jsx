@@ -11,28 +11,28 @@ import { Link, useNavigate } from "react-router-dom";
 const accessKey = "ngZx_O2HxOkiG9ML_VctB1Z2ImTU5OsYXNK_Jivcq2E";
 
 const MyOrders = () => {
-    const { OwnerData, allOrders, selectedStatus, setSelectedStatus, cancelOrder ,marketOrders} = useContext(OwnerContext);
+    const { OwnerData, allOrders, selectedStatus, setSelectedStatus, cancelOrder} = useContext(OwnerContext);
 
-    const [images, setImages] = useState({});
-
-    useEffect(() => {
-        if (!allOrders) return; // Prevent API call if allOrders is undefined
-        const fetchImages = async () => {
-            const updatedImages = {};
-            await Promise.all(
-                allOrders.map(async (item) => {
-                    const response = await fetch(
-                        `https://api.unsplash.com/search/photos?page=1&query=${item.commodity}&client_id=${accessKey}`
-                    );
-                    const data = await response.json();
-                    updatedImages[item.commodity] = data.results[0]?.urls.small || '';
-                })
-            );
-            setImages(updatedImages);
-        };
-        fetchImages();
-    }, [allOrders]);
-    console.log(marketOrders);
+    // const [images, setImages] = useState({});
+  
+    // useEffect(() => {
+    //     if (!allOrders) return; // Prevent API call if allOrders is undefined
+    //     const fetchImages = async () => {
+    //         const updatedImages = {};
+    //         await Promise.all(
+    //             allOrders.map(async (item) => {
+    //                 const response = await fetch(
+    //                     `https://api.unsplash.com/search/photos?page=1&query=${item.commodity}&client_id=${accessKey}`
+    //                 );
+    //                 const data = await response.json();
+    //                 updatedImages[item.commodity] = data.results[0]?.urls.small || '';
+    //             })
+    //         );
+    //         setImages(updatedImages);
+    //     };
+    //     fetchImages();
+    // }, [allOrders]);
+    
     
     const navigate = useNavigate();
 
@@ -78,7 +78,7 @@ const MyOrders = () => {
                                     {item.farmer.name}
                                 </h1>
                                 <h1 className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-60 items-center font-bold font-inter'>
-                                    {item.farmer.phoneNumber}
+                                    +91- {item.farmer.phoneNumber}
                                 </h1>
                             </div>
                             <div>

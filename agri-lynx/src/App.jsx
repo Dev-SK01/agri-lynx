@@ -40,6 +40,7 @@ import LocalMarketOwnerAnalytics from "./owners/Analytics/LocalMarketOwnerAnalyt
 import Analytics from "./owners/Analytics";
 import OrderMange from "./owners/OrderCheckOut/OrderMange";
 import OrderCheckOut from "./owners/OrderCheckOut";
+import { OwnerContextProvider } from "./owners/context/OwnerContext";
 
 function App() {
   // context
@@ -83,54 +84,56 @@ function App() {
   return (
     <>
       <LogisticContextProvider>
-        <Routes>
-          <Route
-            index
-            element={userData ? <Dashboard /> : <Registration />}
-          />
-          <Route path="login" element={<Login />} />
-          <Route path="*" element={<NotFound />} />
-
-          <Route element={<ProctedRoute />}>
-            {/* farmer routes */}
-            <Route path="farmerdashboard" element={<FarmerDashboard />} />
-            <Route path="farmerprofile" element={<FarmerProfile />} />
-            <Route path="updateproduce">
-              <Route path=":listingId" element={<UpdateProduce />} />
-            </Route>
-            <Route path="addproduce" element={<FarmerProduceListing />} />
-            <Route path="farmerorders" element={<FarmerOrders />} />
-            <Route path="farmerorderdetails">
-              <Route path=":orderId" element={<FarmerOrderDetails />} />
-            </Route>
+        <OwnerContextProvider>
+          <Routes>
             <Route
-              path="farmerlogistics"
-              element={<FarmerLogisticInformation />}
+              index
+              element={userData ? <Dashboard /> : <Registration />}
             />
-            <Route path="farmerlogisticsbooking">
-              <Route path=":partnerId" element={<LogisticsBooking />} />
-            </Route>
-            <Route path="farmeranalytics" element={<FarmerAnalytics />} />
+            <Route path="login" element={<Login />} />
+            <Route path="*" element={<NotFound />} />
 
-            {/* local market routes */}
-            <Route path="localmarketdashboard"element={<LocalMarketOwnerProductList/>}/>
-            <Route path="myorder" element={<LocalMarketOwnerMyOrder />} />
-            <Route path="OwnerDashBoard" element={<OwnerDashBoard/>}></Route>
-            <Route path="OwnerAnalytics"element={<Analytics/>}></Route>
-            <Route path="/" element={<ProductHeader/>}/>
-            <Route path="/order/:listingId" element={<OrderCheckOut />} />
+            <Route element={<ProctedRoute />}>
+              {/* farmer routes */}
+              <Route path="farmerdashboard" element={<FarmerDashboard />} />
+              <Route path="farmerprofile" element={<FarmerProfile />} />
+              <Route path="updateproduce">
+                <Route path=":listingId" element={<UpdateProduce />} />
+              </Route>
+              <Route path="addproduce" element={<FarmerProduceListing />} />
+              <Route path="farmerorders" element={<FarmerOrders />} />
+              <Route path="farmerorderdetails">
+                <Route path=":orderId" element={<FarmerOrderDetails />} />
+              </Route>
+              <Route
+                path="farmerlogistics"
+                element={<FarmerLogisticInformation />}
+              />
+              <Route path="farmerlogisticsbooking">
+                <Route path=":partnerId" element={<LogisticsBooking />} />
+              </Route>
+              <Route path="farmeranalytics" element={<FarmerAnalytics />} />
 
-            
-            {/* logistics routes */}
-            <Route path="logisticdashboard" element={<LogisticHome />} />
-            <Route path="DashBoard" element={<DashBoard />} />
-            <Route path="checkoutPage" element={<OrderCheckOutPage />} />
-            <Route path="/checkoutPage/:orderId" element={<OrderCheckOutPage />} />
-            <Route path="orderdetails">
-              <Route path=":orderId" element={<OrderDetails />} />
+              {/* local market routes */}
+              <Route path="localmarketdashboard" element={<LocalMarketOwnerProductList />} />
+              <Route path="myorder" element={<LocalMarketOwnerMyOrder />} />
+              <Route path="OwnerDashBoard" element={<OwnerDashBoard />}></Route>
+              <Route path="OwnerAnalytics" element={<Analytics />}></Route>
+              <Route path="/" element={<ProductHeader />} />
+              <Route path="/order/:listingId" element={<OrderCheckOut />} />
+
+
+              {/* logistics routes */}
+              <Route path="logisticdashboard" element={<LogisticHome />} />
+              <Route path="DashBoard" element={<DashBoard />} />
+              <Route path="checkoutPage" element={<OrderCheckOutPage />} />
+              <Route path="/checkoutPage/:orderId" element={<OrderCheckOutPage />} />
+              <Route path="orderdetails">
+                <Route path=":orderId" element={<OrderDetails />} />
+              </Route>
             </Route>
-          </Route>
-        </Routes>
+          </Routes>
+        </OwnerContextProvider>
       </LogisticContextProvider>
 
       {isLoading && <Loader />}

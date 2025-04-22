@@ -5,9 +5,7 @@ const LocalMarketOwnerProductList = () => {
   return (
     <div>
       <div className="place-content-center flex flex-col items-center justify-center  ">
-        <OwnerContextProvider>
           <ProductHeader />
-        </OwnerContextProvider>
       </div>
 
     </div>

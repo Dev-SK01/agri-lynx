@@ -4,10 +4,9 @@ import { OwnerContextProvider } from './context/OwnerContext'
 const OrderCheckOut = () => {
   return (
     <>
-      <OwnerContextProvider>
+     
         <OrderMange />
-        </OwnerContextProvider>
-
+        
     </>
   )
 }

@@ -7,11 +7,11 @@ import Analytics from './Analytics'
 const Dashboard = () => {
   return (
     <>
-    <OwnerContextProvider>
+    
         {/* <LocalMarketOwnerDashboard></LocalMarketOwnerDashboard>  */}
        <OrderCheckOut/> 
       {/*<Analytics/>*/}
-     </OwnerContextProvider> 
+     
     </>
     
   )

@@ -143,8 +143,8 @@ const DashBoard = () => {
             
         </main>
 
-        {/* Footer*/}
-        <footer className="bg-(--green) h-[8vh] rounded-[30px] mt-4 flex items-center justify-evenly py-4 fixed bottom-3">
+        {/* Footer */}
+        {/* <footer className="bg-(--green) h-[8vh] rounded-[30px] mt-4 flex items-center justify-evenly py-4 fixed bottom-3">
                         <Link to="/">
                         <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1'>
                             <img src={product} alt="product" />
@@ -161,7 +161,7 @@ const DashBoard = () => {
                         <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1 pt-1'>
                             <img src={analytics} alt="analytics" />
                         </div>
-                    </footer>
+                    </footer> */}
 
       </div>
 

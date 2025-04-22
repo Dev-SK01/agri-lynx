@@ -4,10 +4,9 @@ import { OwnerContextProvider } from './context/OwnerContext';
 const Analytics = () => {
   return (
     <>
-    <OwnerContextProvider>
+    
     <LocalMarketOwnerAnalytics/>
-    </OwnerContextProvider>
-
+   
    
 
     </>

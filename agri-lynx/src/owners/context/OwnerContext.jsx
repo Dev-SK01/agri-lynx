@@ -136,7 +136,7 @@ export const OwnerContextProvider = ({ children }) => {
  const [ farmerData, setFarmerData] = useState({
   farmerId: "s63hdb38dyb9ae4",
   name: "prasanth",
-  phonenumber: "8898812345",
+  phoneNumber: "8898812345",
   address: "123,ucer shop,ucer street",
   village: "MettuPatti",
   postOffice: "Pullangudi",
@@ -194,7 +194,9 @@ export const OwnerContextProvider = ({ children }) => {
   const [selectedStatus, setSelectedStatus] = useState("ordered");
 
   // Combining all orders   
-  const allOrders = marketOrders.concat(cancelOrders,deliveredOrders)
+  const allOrders = marketOrders.concat(cancelOrders,deliveredOrders);
+  console.log(marketOrders);
+  
   const cancelOrder = (orderId) => {
     const orderToCancel = marketOrders.find(order => order.orderId === orderId);
     if (orderToCancel) {
@@ -207,6 +209,7 @@ export const OwnerContextProvider = ({ children }) => {
       ]);
     }
   };
+
   const updateOrderStatus = (orderId, newStatus) => {
     setMarketOrders((prevOrders) =>
       prevOrders.map((order) =>

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import Avatar from "../../Assests/Avatar.svg"
 import delivery from "../../Assests/delivery.svg"
 import farmer from "../../Assests/farmer.svg"
@@ -19,24 +19,33 @@ import { Link, useNavigate } from "react-router-dom";
 
 
 const OrderMange = () => {
-  const { OwnerData,purchasedList,farmerData,updateOrderStatus,setMarketOrders} = useContext(OwnerContext);
+  const { OwnerData, purchasedList, farmerData, updateOrderStatus, setMarketOrders, marketOrders, allOrders } = useContext(OwnerContext);
   const { listingId } = useParams();
-  console.log("listingId from URL:", listingId);
+  // console.log("listingId from URL:", listingId);
   const selectedItem = Array.isArray(purchasedList)
-  ? purchasedList.find((item) => String(item.listingId) === String(listingId))
-  :'';
+    ? purchasedList.find((item) => String(item.listingId) === String(listingId))
+    : '';
 
 
-
+  // useEffect(() => {
+  //   console.log("marketOrders has been updated:", marketOrders);
+  // }, [marketOrders]);
 
 
 
   const price = selectedItem.price;
   const availableQuantity = selectedItem.quantity;
   const [userQuantity, setUserQuantity] = useState("");
+
   const handleClick = () => {
+    if (!userQuantity || Number(userQuantity) <= 0) {
+      alert("Please enter a valid quantity.");
+      return;
+    }
+
     const newOrderId = `order_${Date.now()}`;
-  
+    const totalPrice = price * userQuantity;
+
     const OrderData = {
       orderId: newOrderId,
       listingId: selectedItem.listingId,
@@ -62,7 +71,7 @@ const OrderMange = () => {
       farmer: {
         farmerId: farmerData.farmerId,
         name: farmerData.name,
-        phonenumber: farmerData.phonenumber,
+        phoneNumber: farmerData.phoneNumber,
         address: farmerData.address,
         village: farmerData.village,
         postoffice: farmerData.postOffice,
@@ -72,34 +81,18 @@ const OrderMange = () => {
         upiId: farmerData.upiId,
       },
     };
-  
-    setMarketOrders((prevOrders) => {
-      const existingOrderIndex = prevOrders.findIndex(
-        (order) => order.listingId === selectedItem.listingId
-      );
-  
-      if (existingOrderIndex !== -1) {
-        // Update existing order
-        const updatedOrders = [...prevOrders];
-        updatedOrders[existingOrderIndex] = {
-          ...updatedOrders[existingOrderIndex],
-          ...OrderData,
-          orderStatus: "ordered",
-        };
-        return updatedOrders;
-      } else {
-        // Add new order
-        return [...prevOrders, OrderData];
-      }
-    });
-  
+
+    setMarketOrders((prevOrders) => [...prevOrders, OrderData])
+    console.log("Order successfully added/updated:", OrderData);
+    console.log("allOrders", allOrders);
     updateOrderStatus(newOrderId, "ordered");
     navigate("/myorder");
   };
-  
+
+  console.log("updated orders", marketOrders);
 
 
-  
+
   const handleChange = (e) => {
     let value = e.target.value;
 
@@ -118,15 +111,17 @@ const OrderMange = () => {
     } else {
       alert(`You can’t select more than ${availableQuantity} kg`);
     }
-     };
-     const totalPrice = price * userQuantity;
-     console.log("Listing ID from URL:", listingId);
-console.log("Available IDs:", purchasedList?.map(item => item.listingId));
-console.log("purchasedList:", purchasedList); 
-const navigate = useNavigate();
-const handleAvatarClick = () => {
-  navigate("/OwnerDashBoard");
-};
+  };
+  const totalPrice = price * userQuantity;
+  //      console.log("Listing ID from URL:", listingId);
+  // console.log("Available IDs:", purchasedList?.map(item => item.listingId));
+  // console.log("purchasedList:", purchasedList); 
+  const navigate = useNavigate();
+
+  const handleAvatarClick = () => {
+    navigate("/OwnerDashBoard");
+  };
+
   return (
     <>
 
@@ -134,9 +129,9 @@ const handleAvatarClick = () => {
         {/* Header */}
         <header className='flex rounded-xl justify-between  h-[8vh] pt-2 bg-(--green) mt-2 w-100 text-xl  '>
           <Link to="/">
-          <div className='max-w-[80%]'>
-            <h1 className='font-bold font-inknut mt-3 ms-10 text-1xl'> {OwnerData?.name}!</h1>
-          </div>
+            <div className='max-w-[80%]'>
+              <h1 className='font-bold font-inknut mt-3 ms-10 text-1xl'> {OwnerData?.name}!</h1>
+            </div>
           </Link>
           <div className='fixed ml-80'>
             <img className="object-cover" src={Avatar} onClick={handleAvatarClick} alt="Assests" />
@@ -185,7 +180,7 @@ const handleAvatarClick = () => {
               <div>
                 <h2 className='ms-10 mt-1 text-black'>Commodity Price : ₹{selectedItem.price}</h2>
                 <h2 className='ms-10 mt-1 text-black'>Total Quantity : {userQuantity || 0}Kg</h2>
-                <h2 className='ms-10 mt-1'>Total Amount : ₹{totalPrice}</h2> 
+                <h2 className='ms-10 mt-1'>Total Amount : ₹{totalPrice}</h2>
                 <h2 className=' font-bold ms-10 mt-1'>UPI ID :</h2>
                 <div className='inline-block ms-10 mt-2'>
                   <input className='bg-white inline-block rounded-xl w-70 p-2' value={farmerData?.upiId} disabled={true} />
@@ -198,7 +193,7 @@ const handleAvatarClick = () => {
                   <h2 className='ms-10 mt-1' >Address : {OwnerData?.address} </h2>
                   <h2 className='ms-10 mt-1'>Taluk : {OwnerData?.taluk}</h2>
                   <h2 className='ms-10 mt-1'>District : {OwnerData?.district}</h2>
-                  <h2 className=' ms-10 mt-1'>PinCode : { OwnerData?.pincode}</h2>
+                  <h2 className=' ms-10 mt-1'>PinCode : {OwnerData?.pincode}</h2>
 
                 </div>
                 <div>
@@ -223,27 +218,27 @@ const handleAvatarClick = () => {
         </div>
 
         {/* Footer */}
-             <footer className="bg-(--green) h-[8vh] rounded-[30px] mt-4 flex items-center justify-evenly py-4 fixed bottom-3">
-               <Link to="/localmarketdashboard">
-               <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1'>
-                 <img src={product} alt="product" />
-               </div>
-               </Link>
-               <Link to="/myorder">
-                 <div className="ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1">
-                   <img src={ordericon} alt="orderIcon" />
-                 </div>
-               </Link>
-               <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1'>
-                 <img src={logistic} alt="logistic" />
-               </div>
-               <Link to="/OwnerAnalytics">
-               
-               <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1'>
-                 <img src={analytics} alt="analytics" />
-               </div>
-               </Link>
-             </footer> 
+        <footer className="bg-(--green) h-[8vh] rounded-[30px] mt-4 flex items-center justify-evenly py-4 fixed bottom-3">
+          <Link to="/localmarketdashboard">
+            <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1'>
+              <img src={product} alt="product" />
+            </div>
+          </Link>
+          <Link to="/myorder">
+            <div className="ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1">
+              <img src={ordericon} alt="orderIcon" />
+            </div>
+          </Link>
+          <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1'>
+            <img src={logistic} alt="logistic" />
+          </div>
+          <Link to="/OwnerAnalytics">
+
+            <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1'>
+              <img src={analytics} alt="analytics" />
+            </div>
+          </Link>
+        </footer>
       </div>
 
     </>

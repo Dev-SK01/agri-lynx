@@ -50,7 +50,7 @@ const LocalMarketOwnerAnalytics = () => {
 
         </footer>
       </div>
-      <nav className='flex items-center justify-center flex-col mt-30'>
+      <nav className='flex items-center justify-center flex-col mt-7'>
         <div>
           <h1 className='text-2xl font-serif font-bold font-stretch-150% inline-block space-x-5'>Your Analytics</h1>
           <img className='inline-block -mt-2 ml-1.5' src={analytics} alt='Assests' />
