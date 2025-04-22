@@ -140,9 +140,10 @@ const OrderMange = () => {
   return (
     <>
 
-      <div className="flex items-center justify-between flex-col ">
-        {/* Header */}
-        <header className='flex rounded-xl justify-between  h-[8vh] pt-2 bg-(--green) mt-2 w-100 text-xl  '>
+       <div className="flex flex-col items-center justify-between">
+                {/* Header */}
+        <header className='flex rounded-xl justify-between  h-[8vh] pt-2 bg-(--green) mt-2 w-[95q
+        dvw] px-3 text-xl  '>
           <Link to="/">
             <div className='max-w-[80%]'>
               <h1 className='font-bold font-inknut mt-3 ms-10 text-1xl'> {OwnerData?.name}!</h1>
@@ -167,20 +168,13 @@ const OrderMange = () => {
                 <img className='object-cover h-40 w-40 -ml-2' src={Rectangle} alt="Assests" />
                 <div>
                   <div className='inline-block'>
-                    <input type='text' className='ml-2 inline-block bg-white rounded-xl text-center font-bold text-2xl text-black p-2.5 w-full' value={selectedItem?.commodity} />
+                    <input  className='ml-2 inline-block bg-white rounded-xl text-center font-bold text-2xl text-black p-2.5 w-full' value={selectedItem?.commodity} disabled={true} />
                   </div>
                   <div className='inline-block'>
-                    <input className='ml-2 mt-5 bg-white inline-block rounded-xl w-23 p-1 text-center font-bold text-' value={selectedItem?.quantity} disabled={true} />
-                    <span className=" mt-3 -ml-6 translate-y-1/2 font-bold text-black pointer-events-none">
-                      kg
-                    </span>
+                    <span className='ml-2 mt-5 bg-white inline-block rounded-xl w-23 p-1 text-center font-bold text-'>{selectedItem?.quantity} KG</span>
                   </div>
                   <div className='inline-block'>
-
-                    <input className='ml-5 bg-white inline-block rounded-xl w-23 p-1 text-center font-bold text-' value={selectedItem?.price || 0} disabled={true} />
-                    <span className="  mt-1 -ml-5 translate-y-1/2 font-bold text-black pointer-events-none">
-                      ₹
-                    </span>
+                    <span  className='ml-5 bg-white inline-block rounded-xl w-23 p-1 text-center font-bold text-'>₹ {selectedItem?.price } </span>
                   </div>
                   <input type="number" inputMode='numeric' value={userQuantity} onChange={handleChange} onKeyDown={(e) => { if (["ArrowUp", "ArrowDown", "e", "-", "+"].includes(e.key)) { e.preventDefault(); } }} className='ml-2 mt-5 bg-white inline-block rounded-xl  text-black p-2' placeholder='Enter Quantity' />
                 </div>
@@ -217,8 +211,8 @@ const OrderMange = () => {
                   <img className='ml-1 inline-block' src={farmer} alt="Assests" />
                 </div>
                 <div>
-                  <h2 className='ms-10 mt-1'>FarmerId : {farmerData?.name}</h2>
-                  <h2 className='ms-10 mt-1'>Number : +91- {farmerData?.phoneNumber}</h2>
+                  <h2 className='ms-10 mt-1'>Name : {farmerData?.name}</h2>
+                  <a className='ms-10 mt-1' href={`tel:+91${farmerData?.phoneNumber}`}>Number : +91 {farmerData?.phoneNumber}</a>
                   <h2 className='ms-10 mt-1'>Address : {farmerData?.address}</h2>
                   <h2 className=' ms-10 mt-1'>Taluk : {farmerData?.taluk}</h2>
                   <h2 className=' ms-10 mt-1'>District : {farmerData?.district}</h2>

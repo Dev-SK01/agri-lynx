@@ -72,7 +72,9 @@ const OrderCheckOutPage = () => {
                     {order.customer.name}
                   </h1>
                   <h1 className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-60 font-bold font-inter'>
-                    +91 {order.customer.phoneNumber}
+                  <a href={`tel:+91${order?.customer?.phoneNumber}`}>
+                    +91<span>{order?.customer?.phoneNumber}</span>
+                  </a>
                   </h1>
                 </div>
                 <div>

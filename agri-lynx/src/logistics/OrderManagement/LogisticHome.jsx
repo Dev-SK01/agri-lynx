@@ -17,9 +17,11 @@ const LogisticHome = () => {
   };
 
   const handleAccept = (orderId) => {
+    const order = LogisticOrders.find(o => o.orderId === orderId);
     acceptOrder(orderId); 
-    navigate(`/checkoutPage/${orderId}`); 
+    navigate(`/checkoutPage/${orderId}`, { state: { order } }); 
   };
+  
 
   return (
     <div className="flex items-center justify-center flex-col">
@@ -36,29 +38,33 @@ const LogisticHome = () => {
       </header>
 
       {/* Order Cards */}
-      {LogisticOrders.map((order) => (
+      {LogisticOrders.filter(order => order.status !== 'accepted')
+         .map(order => (
+         
         <div
           key={order.orderId}
           className='bg-[var(--green)] flex mt-4 h-48 rounded-2xl w-100 py-1 relative border-l-8 border-l-green-600'
         >
           <div>
-            <h1 className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-60 items-center font-bold font-inter'>
+            <h1 className='flex justify-center items-center text-center rounded-xl h-9 pt-0 bg-[var(--primary)] mt-2 ms-2 w-60 font-bold font-inter'>
               {order.farmer.name}
             </h1>
-            <h1 className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-60 items-center font-bold font-inter'>
-              +91-{order.farmer.phoneNumber}
+            <h1 className='flex justify-center items-center text-center rounded-xl h-9 pt-0 bg-[var(--primary)] mt-2 ms-2 w-60 font-bold font-inter'>
+            <a href={`tel:+91${order?.farmer?.phoneNumber}`}>
+                    +91<span>{order?.farmer?.phoneNumber}</span>
+                  </a>
             </h1>
-            <h1 className='flex justify-center rounded-xl h-20 pt-2 bg-[var(--primary)] mt-2 ms-2 w-60 items-center font-medium font-inter'>
+            <h1 className='flex justify-center items-center text-center rounded-xl h-20 pt-0 bg-[var(--primary)] mt-2 ms-2 w-60 font-bold font-inter'>
               {order.farmer.address}, {order.farmer.village}, {order.farmer.taluk}
             </h1>
           </div>
 
           <div>
-            <p className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-28 items-center font-bold font-inter'>
-              {order.quantity} K.G
+            <p className='flex justify-center rounded-xl h-9 pt-0 bg-[var(--primary)] mt-2 ms-2 w-28 items-center font-bold font-inter'>
+              {order.quantity} KG
             </p>
-            <p className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-28 items-center font-bold font-inter'>
-              {order.price} R.s
+            <p className='flex justify-center rounded-xl h-9 pt-0 bg-[var(--primary)] mt-2 ms-2 w-28 items-center font-bold font-inter'>
+            ₹ {order.price} 
             </p>
 
             <Button

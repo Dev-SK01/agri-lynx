@@ -149,7 +149,7 @@ export const OwnerContextProvider = ({ children }) => {
  const [purchasedList,setPurchasedList] = useState([
   {
     commodity: "Tomato",
-    quantity: 500,
+    quantity: 5100,
     price: 140,
     listingId: "purch123xyz",
     farmerId: "s63hdb38dyb9ae4",

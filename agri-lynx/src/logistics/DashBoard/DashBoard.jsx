@@ -20,9 +20,9 @@ const DashBoard = () => {
   const { LogisticData } = useContext(LogisticContext);
   const [showDetails, setShowDetails] = useState(false);
   const handleAvatarClick = () => {
-    setShowDetails(true);   
+    setShowDetails(true);
   };
-  const {setUserData} = useContext(RegistrationContext);
+  const { setUserData } = useContext(RegistrationContext);
   const logOut = () => {
     if (confirm("Are you Sure !")) {
       localStorage.removeItem("userData");
@@ -55,93 +55,200 @@ const DashBoard = () => {
         </header> */}
         {/* Header */}
 
-        <header className='flex rounded-xl h-16 pt-2 bg-(--green) mt-5 w-100 text-xl'>
+        <header className="bg-[var(--green)] mt-2 rounded-xl flex items-center justify-between px-6 h-[8dvh] top-0 w-95   z-10">
           <Link to="/">
-            <h1 className='font-bold font-inknut pt-1 ms-10 items-center'>
+            <h1 className="font-bold font-inknut text-xl">
               {LogisticData?.name}!
             </h1>
           </Link>
-          <div className='ms-83 pb-1 fixed'>
-            <img src={avatar} onClick={handleAvatarClick} alt="avatar" />
-          </div>
-
+          <img src={avatar} onClick={handleAvatarClick} alt="avatar" className="cursor-pointer" />
         </header>
 
 
 
 
-        <main className="w-[95%] overflow-auto h-[80vh] rounded-md scrollbar">
-          
-              <div className="flex items-center justify-center flex-col">
 
-                <div className="mt-5 w-full max-w-sm "><Label className="font-bold">Name</Label><Input className="text-black bg-gray-200" value={LogisticData.name} disabled={true} /></div>
+        <div className="w-full flex flex-col scrollbar overflow-auto  items-center justify-center mt-2">
+          {/* personal details */}
+          <div className="w-full max-w-sm">
+            <label htmlFor="name" className="font-bold font-inter mb-2">
+              Name
+            </label>
+            <Input
+              type="text"
+              placeholder="Enter Your Name"
+              className="font-inter bg-(--teritary) pt-5 pb-5"
+              id="name"
+              disabled={true}
+              value={LogisticData?.name || "Name"}
+            />
+          </div>
+          <div className="w-full max-w-sm mt-5">
+            <label htmlFor="number" className="font-bold font-inter flex mb-2">
+              Phone Number{" "}
+              <img src={phone} className="ml-2 h-[20px] w-[20px]" />
+            </label>
+            <Input
+              type="number"
+              placeholder="Enter Your Phone Number"
+              className="font-inter  bg-(--teritary) pt-5 pb-5"
+              id="number"
+              disabled={true}
+              value={LogisticData?.phoneNumber || "Phone Number"}
+            />
+          </div>
+          <div className="w-full max-w-sm mt-5">
+            <label
+              htmlFor="alter-number"
+              className="font-bold font-inter flex mb-2"
+            >
+              Alternate Phone Number
+              <img src={phone} className="ml-2 h-[20px] w-[20px]" />
+            </label>
+            <Input
+              type="number"
+              placeholder="Enter Your Alternate Number"
+              className="font-inter  bg-(--teritary) pt-5 pb-5"
+              id="alter-number"
+              disabled={true}
+              value={LogisticData?.alternateNumber || "Alternate Number"}
+            />
+          </div>
+          {/* Address Details */}
+          <div className="w-full max-w-sm mt-10">
+            <label htmlFor="number" className="font-bold font-inter flex mb-2">
+              ADDRESS DETAILS
+            </label>
+          </div>
+          <div className="w-full max-w-sm mt-5">
+            <label htmlFor="address" className="font-bold font-inter mb-2">
+              Address
+            </label>
+            <Input
+              type="text"
+              placeholder="Enter Your Address"
+              className="font-inter bg-(--teritary) pt-5 pb-5"
+              id="address"
+              disabled={true}
+              value={LogisticData?.address || "Address"}
+            />
+          </div>
+          <div className="w-full max-w-sm mt-5">
+            <label htmlFor="taluk" className="font-bold font-inter mb-2">
+              Taluk
+            </label>
+            <Input
+              type="text"
+              placeholder="Enter Your Taluk"
+              className="font-inter bg-(--teritary) pt-5 pb-5"
+              id="taluk"
+              disabled={true}
+              value={LogisticData?.taluk || "Taluk"}
+            />
+          </div>
+          <div className="w-full max-w-sm mt-5">
+            <label htmlFor="district" className="font-bold font-inter mb-2">
+              District
+            </label>
+            <Input
+              type="text"
+              placeholder="Enter Your District"
+              className="font-inter bg-(--teritary) pt-5 pb-5"
+              id="district"
+              disabled={true}
+              value={LogisticData?.district || "District"}
+            />
+          </div>
+          <div className="w-full max-w-sm mt-5">
+            <label htmlFor="state" className="font-bold font-inter mb-2">
+              State
+            </label>
+            <Input
+              type="text"
+              placeholder="Enter Your State"
+              className="font-inter bg-(--teritary) pt-5 pb-5"
+              id="state"
+              disabled={true}
+              value={LogisticData?.state || "State"}
+            />
+          </div>
+          <div className="w-full max-w-sm mt-5">
+            <label htmlFor="pincode" className="font-bold font-inter mb-2">
+              Pincode
+            </label>
+            <Input
+              type="number"
+              placeholder="Enter Your Pincode"
+              className="font-inter bg-(--teritary) pt-5 pb-5"
+              id="pincode"
+              minLength={6}
+              disabled={true}
+              value={LogisticData?.pincode || "Pincode"}
+            />
 
-                <div className="mt-5 w-full max-w-sm "><Label className="font-bold">Email</Label><Input className="text-black bg-gray-200" value={LogisticData.email} disabled={true} /></div>
-                <div className="w-full max-w-sm mt-5">
-                  <label htmlFor="number" className="font-bold font-inter flex mb-2">
-                    Phone Number{" "}
-                    <img src={phone} className="ml-2 h-[20px] w-[20px]" />
-                  </label>
-                  <Input
-                    type="number"
-                    placeholder="Enter Your Phone Number"
-                    className="font-inter  bg-(--teritary) pt-5 pb-5"
-                    id="number"
-                    disabled={true}
-                    value={LogisticData?.phoneNumber || "Phone Number"}
-                  />
-                </div>
-                <div className="w-full max-w-sm mt-5">
-                  <label htmlFor="number" className="font-bold font-inter flex mb-2">
-                    Alternate Number{" "}
-                    <img src={phone} className="ml-2 h-[20px] w-[20px]" />
-                  </label>
-                  <Input
-                    type="number"
-                    placeholder="Enter Your Phone Number"
-                    className="font-inter  bg-(--teritary) pt-5 pb-5"
-                    id="number"
-                    disabled={true}
-                    value={LogisticData?.alternateNumber || "Phone Number"}
-                  />
-                </div>
-              </div>
+          </div>
+          <div className="w-full max-w-sm mt-10">
+            <label htmlFor="number" className="font-bold font-inter flex mb-2">
+              VECHICLE DETAILS
+            </label>
+          </div>
+          <div className="w-full max-w-sm mt-5">
+            <label htmlFor="pincode" className="font-bold font-inter mb-2">
+              VehicleType
+            </label>
+            <Input
+              type="number"
+              placeholder="Enter Your Pincode"
+              className="font-inter bg-(--teritary) pt-5 pb-5"
+              id="pincode"
+              minLength={6}
+              disabled={true}
+              value={LogisticData?.vehicleType || "Pincode"}
+            />
 
-              <div className=" flex items-center  flex-col  mt-5  font-bold ">
-                <div className="mr-60">
-                  <h1>ADDRESS DETAILS</h1>
-                </div>
-              </div>
+          </div>
+          <div className="w-full max-w-sm mt-5">
+            <label htmlFor="pincode" className="font-bold font-inter mb-2">
+              VehicleNumber
+            </label>
+            <Input
+              type="number"
+              placeholder="Enter Your Pincode"
+              className="font-inter bg-(--teritary) pt-5 pb-5"
+              id="pincode"
+              minLength={6}
+              disabled={true}
+              value={LogisticData?.vehicleNumber || "Pincode"}
+            />
 
-              <div className="flex items-center justify-center flex-col">
-                <div className="mt-5 w-full max-w-sm "><Label className="font-bold">Address</Label><Input className="text-black bg-gray-200" value={LogisticData.address} disabled={true} /></div>
-                <div className="mt-5 w-full max-w-sm "><Label className="font-bold">Taluk</Label><Input className="text-black bg-gray-200" value={LogisticData.taluk} disabled={true} /></div>
-                <div className="mt-5 w-full max-w-sm "><Label className="font-bold">District</Label><Input className="text-black bg-gray-200" value={LogisticData.district} disabled={true} /></div>
-                <div className="mt-5 w-full max-w-sm "><Label className="font-bold">State</Label><Input className="text-black bg-gray-200" value={LogisticData.state} disabled={true} /></div>
-                <div className="mt-5 w-full max-w-sm "><Label className="font-bold">Pincode</Label><Input className="text-black bg-gray-200" value={LogisticData.pincode} disabled={true} /></div>
+          </div>
+          <div className="w-full max-w-sm mt-5">
+            <label htmlFor="pincode" className="font-bold font-inter mb-2">
+              LicenseNumber
+            </label>
+            <Input
+              type="number"
+              placeholder="Enter Your Pincode"
+              className="font-inter bg-(--teritary) pt-5 pb-5"
+              id="pincode"
+              minLength={6}
+              disabled={true}
+              value={LogisticData?.licenseNumber || "Pincode"}
+            />
 
-              </div>
-              <div className=" flex items-center  flex-col  mt-5  font-bold ">
-                <div className="mr-60">
-                  <h1>VECHICLE DETAILS</h1>
-                </div>
-              </div>
-              <div className="flex items-center justify-center flex-col">
-                <div className="mt-5 w-full max-w-sm "><Label className="font-bold">Vechicle Type</Label><Input className="text-black bg-gray-200" value={LogisticData.vehicleType} disabled={true} /></div>
-                <div className="mt-5 w-full max-w-sm "><Label className="font-bold">Vechicle Number</Label><Input className="text-black bg-gray-200" value={LogisticData.vehicleNumber} disabled={true} /></div>
-                <div className="mt-5 w-full max-w-sm "><Label className="font-bold">Liecense Number</Label><Input className="text-black bg-gray-200" value={LogisticData.licenseNumber} disabled={true} /></div>
+          </div>
 
-              </div>
+          <div
+            className="flex px-6 py-2 mt-6 items-center justify-evenly bg-(--green) rounded-[15px]"
+            onClick={logOut}
+          >
+            <img src={log} alt="logout" />
+            <p className="font-inter font-bold ml-2">Logout</p>
+          </div>
+          {/* version */}
+          <p className="font-inter font-bold mt-2">V1.0.0</p>
 
-              <nav className='flex items-center justify-center flex-col'>
-                <div className=" flex items-center justify-center rounded-xl h-8  w-30  bg-(--green) mt-9 " onClick={logOut}>
-                  <img src={log} alt="Assests" /> <h1 className=" font-bold  text-xl ml-1.5"> Logout</h1>
-
-                </div>
-                <p className='font-bold'>V1.0.0</p>
-              </nav>
-            
-        </main>
+        </div>
 
         {/* Footer */}
         {/* <footer className="bg-(--green) h-[8vh] rounded-[30px] mt-4 flex items-center justify-evenly py-4 fixed bottom-3">
