@@ -141,9 +141,8 @@ const OrderMange = () => {
     <>
 
        <div className="flex flex-col items-center justify-between">
-                {/* Header */}
-        <header className='flex rounded-xl justify-between  h-[8vh] pt-2 bg-(--green) mt-2 w-[95q
-        dvw] px-3 text-xl  '>
+                {/* Header */}git 
+        <header className='flex rounded-xl justify-between  h-[8vh] pt-2 bg-(--green) mt-2 w-[95dvw] px-3 text-xl  '>
           <Link to="/">
             <div className='max-w-[80%]'>
               <h1 className='font-bold font-inknut mt-3 ms-10 text-1xl'> {OwnerData?.name}!</h1>
