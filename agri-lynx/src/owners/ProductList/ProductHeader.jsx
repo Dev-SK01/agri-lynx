@@ -7,6 +7,7 @@ import ordericon from '../../Assest/ordericon.svg';
 import product from '../../Assest/product.svg';
 import { Input } from "@/components/ui/input";
 
+
 import OwnerContext from '../context/OwnerContext';
 import { Link, useNavigate } from "react-router-dom";
 const ProductHeader = () => {
@@ -19,6 +20,7 @@ const ProductHeader = () => {
   const filteredCommodities = (purchasedList || []).filter((item) => {
     const matchesSearch = item.commodity?.toLowerCase().includes(searchTerm.toLowerCase());
     const isLocal = item.district?.toLowerCase() === localDistrict;
+   
 
     // Show all matching items if checkbox is checked
     // Show only local matching items if checkbox is unchecked
@@ -28,6 +30,10 @@ const ProductHeader = () => {
 
   const handleAvatarClick = () => {
     navigate("/OwnerDashBoard");
+  };
+  
+  const handleClick = (listingId) =>{
+    navigate(`/order/${listingId}`);
   };
 
   return (
@@ -68,9 +74,9 @@ const ProductHeader = () => {
 
         {/* Filtered results */}
         {filteredCommodities.length > 0 ? (
-          filteredCommodities.map((item, index) => (
-            <div key={index} className='flex border-2 rounded-2xl mb-5 mt-5 '>
-              <div className='mb-5'>
+          filteredCommodities.map((item, index) => (            
+            <div className='flex border-2 rounded-2xl mb-5 mt-5' key={item.listingId} onClick={() => handleClick(item.listingId)}>
+              <div className='mb-5' key={index} >
                 <h1 className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--teritary)] mt-2 ms-2 w-60 items-center text-center font-bold font-inter'>
                   {item.commodity}
                 </h1>

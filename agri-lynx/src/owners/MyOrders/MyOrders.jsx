@@ -11,7 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 const accessKey = "ngZx_O2HxOkiG9ML_VctB1Z2ImTU5OsYXNK_Jivcq2E";
 
 const MyOrders = () => {
-    const { OwnerData, allOrders, selectedStatus, setSelectedStatus, cancelOrder } = useContext(OwnerContext);
+    const { OwnerData, allOrders, selectedStatus, setSelectedStatus, cancelOrder ,marketOrders} = useContext(OwnerContext);
 
     const [images, setImages] = useState({});
 
@@ -32,6 +32,8 @@ const MyOrders = () => {
         };
         fetchImages();
     }, [allOrders]);
+    console.log(marketOrders);
+    
     const navigate = useNavigate();
 
     const handleAvatarClick = () => {

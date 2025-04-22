@@ -207,6 +207,16 @@ export const OwnerContextProvider = ({ children }) => {
       ]);
     }
   };
+  const updateOrderStatus = (orderId, newStatus) => {
+    setMarketOrders((prevOrders) =>
+      prevOrders.map((order) =>
+        order.orderId === orderId
+          ? { ...order, orderStatus: newStatus }
+          : order
+      )
+    );
+  };
+  
 
   return (
     <OwnerContext.Provider
@@ -229,6 +239,7 @@ export const OwnerContextProvider = ({ children }) => {
         cancelOrder,
         purchasedList,
         setPurchasedList,
+        updateOrderStatus,
         
        
 

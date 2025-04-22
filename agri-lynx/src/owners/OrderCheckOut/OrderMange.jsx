@@ -13,21 +13,21 @@ import Rectangle from "../../Assests/Rectangle.svg"
 import { Button } from "@/components/ui/button"
 import OwnerContext from '../context/OwnerContext'
 import { useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 
 
 const OrderMange = () => {
-  const { OwnerData } = useContext(OwnerContext);
-  const { farmerData } = useContext(OwnerContext);
-  const { purchasedList } = useContext(OwnerContext);
+  const { OwnerData,purchasedList,farmerData,updateOrderStatus,setMarketOrders} = useContext(OwnerContext);
   const { listingId } = useParams();
+  console.log("listingId from URL:", listingId);
+  const selectedItem = Array.isArray(purchasedList)
+  ? purchasedList.find((item) => String(item.listingId) === String(listingId))
+  :'';
 
-  const selectedItem = purchasedList.find(
-    (item) => item.listingId === listingId
-  );
 
-  if (!selectedItem) return <p>Item not found</p>;
+
 
 
 
@@ -35,47 +35,70 @@ const OrderMange = () => {
   const availableQuantity = selectedItem.quantity;
   const [userQuantity, setUserQuantity] = useState("");
   const handleClick = () => {
-  const OrderData = {
-        orderId:OwnerData.orderId,
-        listingId:selectedItem.listingId,
-        commodity: selectedItem.commodity,
-        commodityPrice: selectedItem.price,
-        quantity:userQuantity,
-        price:totalPrice,
-        orderDate: selectedItem.orderDate,
-        orderStatus: selectedItem.orderStatus, 
-        bookinfgStatus: selectedItem.bookingStatus,      
-        imageUrl:selectedItem.imageUrl,
-    
-    customer:{
-    customerId: OwnerData.customerId,
-    name: OwnerData.name,
-    email: OwnerData.email,
-    phoneNumber: OwnerData.phoneNumber,
-    address: OwnerData.address,
-    taluk: OwnerData.taluk,
-    district: OwnerData.district,
-    state: OwnerData.state,
-    pincode: OwnerData.pincode,
-    },
-    farmer:{
-      farmerId:farmerData.farmerId,
-      name: farmerData.name,
-      phonenumber: farmerData.phonenumber,
-      address: farmerData.address,
-      village: farmerData.village,
-      postoffice: farmerData.postOffice,
-      taluk: farmerData.taluk,
-      district: farmerData.district,
-      pincode: farmerData.pincode,
-      upiId: farmerData.upiId,
-    },
-    
-  }
-  console.log("OrderData",OrderData);
-};
-
+    const newOrderId = `order_${Date.now()}`;
   
+    const OrderData = {
+      orderId: newOrderId,
+      listingId: selectedItem.listingId,
+      commodity: selectedItem.commodity,
+      commodityPrice: selectedItem.price,
+      quantity: userQuantity,
+      price: totalPrice,
+      orderDate: new Date().toUTCString(),
+      orderStatus: "ordered",
+      bookingStatus: "pending",
+      imageUrl: selectedItem.imageUrl,
+      customer: {
+        customerId: OwnerData.customerId,
+        name: OwnerData.name,
+        email: OwnerData.email,
+        phoneNumber: OwnerData.phoneNumber,
+        address: OwnerData.address,
+        taluk: OwnerData.taluk,
+        district: OwnerData.district,
+        state: OwnerData.state,
+        pincode: OwnerData.pincode,
+      },
+      farmer: {
+        farmerId: farmerData.farmerId,
+        name: farmerData.name,
+        phonenumber: farmerData.phonenumber,
+        address: farmerData.address,
+        village: farmerData.village,
+        postoffice: farmerData.postOffice,
+        taluk: farmerData.taluk,
+        district: farmerData.district,
+        pincode: farmerData.pincode,
+        upiId: farmerData.upiId,
+      },
+    };
+  
+    setMarketOrders((prevOrders) => {
+      const existingOrderIndex = prevOrders.findIndex(
+        (order) => order.listingId === selectedItem.listingId
+      );
+  
+      if (existingOrderIndex !== -1) {
+        // Update existing order
+        const updatedOrders = [...prevOrders];
+        updatedOrders[existingOrderIndex] = {
+          ...updatedOrders[existingOrderIndex],
+          ...OrderData,
+          orderStatus: "ordered",
+        };
+        return updatedOrders;
+      } else {
+        // Add new order
+        return [...prevOrders, OrderData];
+      }
+    });
+  
+    updateOrderStatus(newOrderId, "ordered");
+    navigate("/myorder");
+  };
+  
+
+
   
   const handleChange = (e) => {
     let value = e.target.value;
@@ -97,19 +120,26 @@ const OrderMange = () => {
     }
      };
      const totalPrice = price * userQuantity;
-     
-
+     console.log("Listing ID from URL:", listingId);
+console.log("Available IDs:", purchasedList?.map(item => item.listingId));
+console.log("purchasedList:", purchasedList); 
+const navigate = useNavigate();
+const handleAvatarClick = () => {
+  navigate("/OwnerDashBoard");
+};
   return (
     <>
 
       <div className="flex items-center justify-between flex-col ">
         {/* Header */}
         <header className='flex rounded-xl justify-between  h-[8vh] pt-2 bg-(--green) mt-2 w-100 text-xl  '>
+          <Link to="/">
           <div className='max-w-[80%]'>
-            <h1 className='font-bold font-inter  mt-3 ms-10 text-1xl'>luffy</h1>
+            <h1 className='font-bold font-inknut mt-3 ms-10 text-1xl'> {OwnerData?.name}!</h1>
           </div>
+          </Link>
           <div className='fixed ml-80'>
-            <img className="object-cover" src={Avatar} alt="Assests" />
+            <img className="object-cover" src={Avatar} onClick={handleAvatarClick} alt="Assests" />
           </div>
         </header>
 
@@ -126,10 +156,10 @@ const OrderMange = () => {
                 <img className='object-cover h-40 w-40 -ml-2' src={Rectangle} alt="Assests" />
                 <div>
                   <div className='inline-block'>
-                    <input type='text' className='ml-2 inline-block bg-white rounded-xl text-center font-bold text-2xl text-black p-2.5 w-full' value={selectedItem.commodity} disabled={true} />
+                    <input type='text' className='ml-2 inline-block bg-white rounded-xl text-center font-bold text-2xl text-black p-2.5 w-full' value={selectedItem?.commodity} />
                   </div>
                   <div className='inline-block'>
-                    <input className='ml-2 mt-5 bg-white inline-block rounded-xl w-23 p-1 text-center font-bold text-' value={selectedItem.quantity} disabled={true} />
+                    <input className='ml-2 mt-5 bg-white inline-block rounded-xl w-23 p-1 text-center font-bold text-' value={selectedItem?.quantity} disabled={true} />
                     <span className=" mt-3 -ml-6 translate-y-1/2 font-bold text-black pointer-events-none">
                       kg
                     </span>
@@ -158,17 +188,17 @@ const OrderMange = () => {
                 <h2 className='ms-10 mt-1'>Total Amount : ₹{totalPrice}</h2> 
                 <h2 className=' font-bold ms-10 mt-1'>UPI ID :</h2>
                 <div className='inline-block ms-10 mt-2'>
-                  <input className='bg-white inline-block rounded-xl w-70 p-2' value={farmerData.upiId} disabled={true} />
+                  <input className='bg-white inline-block rounded-xl w-70 p-2' value={farmerData?.upiId} disabled={true} />
                 </div>
                 <div>
                   <h1 className='inline-block font-bold font-inter mt-5 ms-2 text-1xl'>DELIVERY DETAILS</h1>
                   <img className='ml-1 inline-block' src={location} alt="Assests" />
                 </div>
                 <div>
-                  <h2 className='ms-10 mt-1' >Address : {OwnerData.address} </h2>
-                  <h2 className='ms-10 mt-1'>Taluk : {OwnerData.taluk}</h2>
-                  <h2 className='ms-10 mt-1'>District : {OwnerData.district}</h2>
-                  <h2 className=' ms-10 mt-1'>PinCode : { OwnerData.pincode}</h2>
+                  <h2 className='ms-10 mt-1' >Address : {OwnerData?.address} </h2>
+                  <h2 className='ms-10 mt-1'>Taluk : {OwnerData?.taluk}</h2>
+                  <h2 className='ms-10 mt-1'>District : {OwnerData?.district}</h2>
+                  <h2 className=' ms-10 mt-1'>PinCode : { OwnerData?.pincode}</h2>
 
                 </div>
                 <div>
@@ -176,11 +206,11 @@ const OrderMange = () => {
                   <img className='ml-1 inline-block' src={farmer} alt="Assests" />
                 </div>
                 <div>
-                  <h2 className='ms-10 mt-1'>FarmerId : {farmerData.name}</h2>
-                  <h2 className='ms-10 mt-1'>Number : {farmerData.number}</h2>
-                  <h2 className='ms-10 mt-1'>Address : {farmerData.address}</h2>
-                  <h2 className=' ms-10 mt-1'>Taluk : {farmerData.taluk}</h2>
-                  <h2 className=' ms-10 mt-1'>District : {farmerData.district}</h2>
+                  <h2 className='ms-10 mt-1'>FarmerId : {farmerData?.name}</h2>
+                  <h2 className='ms-10 mt-1'>Number : +91- {farmerData?.phonenumber}</h2>
+                  <h2 className='ms-10 mt-1'>Address : {farmerData?.address}</h2>
+                  <h2 className=' ms-10 mt-1'>Taluk : {farmerData?.taluk}</h2>
+                  <h2 className=' ms-10 mt-1'>District : {farmerData?.district}</h2>
                 </div>
               </div>
               <div className='ml-24 mt-7'>
@@ -193,20 +223,27 @@ const OrderMange = () => {
         </div>
 
         {/* Footer */}
-        <footer className='bg-(--green) h-[8vh] w-100 rounded-[30px] mt-4 flex items-center justify-evenly py-4 fixed bottom-3 '>
-          <div className='ms-6 me-5 h-12 w-11 bg-white rounded-lg p-1'>
-            <img className='inline' src={product} alt="Assests" />
-          </div>
-          <div className='ms-6 me-6 h-12 w-12 bg-white rounded-lg p-1 '>
-            <img src={ordericon} alt='Assests' />
-          </div>
-          <div className='ms-6 me-6 h-12 w-12 bg-white rounded-lg p-1 pt-1.5'>
-            <img src={logistic} alt='Assests' />
-          </div>
-          <div className='ms-6 me-6 h-12 w-12 bg-white rounded-lg p-1 pt-2'>
-            <img src={analytics} alt='Assests' />
-          </div>
-        </footer>
+             <footer className="bg-(--green) h-[8vh] rounded-[30px] mt-4 flex items-center justify-evenly py-4 fixed bottom-3">
+               <Link to="/localmarketdashboard">
+               <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1'>
+                 <img src={product} alt="product" />
+               </div>
+               </Link>
+               <Link to="/myorder">
+                 <div className="ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1">
+                   <img src={ordericon} alt="orderIcon" />
+                 </div>
+               </Link>
+               <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1'>
+                 <img src={logistic} alt="logistic" />
+               </div>
+               <Link to="/OwnerAnalytics">
+               
+               <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1'>
+                 <img src={analytics} alt="analytics" />
+               </div>
+               </Link>
+             </footer> 
       </div>
 
     </>

@@ -38,6 +38,8 @@ import LocalMarketOwnerDashboard from "./owners/DashBoard/LocalMarketOwnerDashbo
 import OwnerDashBoard from "./owners/OwnerDashBoard";
 import LocalMarketOwnerAnalytics from "./owners/Analytics/LocalMarketOwnerAnalytics";
 import Analytics from "./owners/Analytics";
+import OrderMange from "./owners/OrderCheckOut/OrderMange";
+import OrderCheckOut from "./owners/OrderCheckOut";
 
 function App() {
   // context
@@ -115,6 +117,9 @@ function App() {
             <Route path="myorder" element={<LocalMarketOwnerMyOrder />} />
             <Route path="OwnerDashBoard" element={<OwnerDashBoard/>}></Route>
             <Route path="OwnerAnalytics"element={<Analytics/>}></Route>
+            <Route path="/" element={<ProductHeader/>}/>
+            <Route path="/order/:listingId" element={<OrderCheckOut />} />
+
             
             {/* logistics routes */}
             <Route path="logisticdashboard" element={<LogisticHome />} />
