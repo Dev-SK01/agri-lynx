@@ -1,15 +1,13 @@
 import React, { useState, useContext } from 'react';
 import { Checkbox } from "@/components/ui/checkbox";
 import avatar from '../../Assest/avatar.svg';
-import analytics from '../../Assest/analytics.svg';
-import logistic from '../../Assest/logistic.svg';
-import ordericon from '../../Assest/ordericon.svg';
-import product from '../../Assest/product.svg';
+
 import { Input } from "@/components/ui/input";
 
 
 import OwnerContext from '../context/OwnerContext';
 import { Link, useNavigate } from "react-router-dom";
+import Footer from './Footer';
 const ProductHeader = () => {
   const { OwnerData, purchasedList } = useContext(OwnerContext);
   const [searchTerm, setSearchTerm] = useState("");
@@ -79,14 +77,14 @@ const ProductHeader = () => {
           filteredCommodities.map((item, index) => (            
             <div className='flex border-2 rounded-2xl mb-5 mt-5' key={item.listingId} onClick={() => handleClick(item.listingId)}>
               <div className='mb-5' key={index} >
-                <h1 className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--teritary)] mt-2 ms-2 w-60 items-center text-center font-bold font-inter'>
+                <h1 className='flex justify-center rounded-xl h-9 pt-0 bg-[var(--teritary)] mt-2 ms-2 w-60 items-center text-center font-bold font-inter'>
                   {item.commodity}
                 </h1>
-                <h1 className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--teritary)] mt-2 ms-2 w-60 items-center font-bold font-inter'>
+                <h1 className='flex justify-center rounded-xl h-9 pt-0 bg-[var(--teritary)] mt-2 ms-2 w-60 items-center font-bold font-inter'>
                   {OwnerData.name}
 
                 </h1>
-                <h1 className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--teritary)] mt-2 ms-2 w-60 items-center font-bold font-inter'>
+                <h1 className='flex justify-center rounded-xl h-9 pt-0 bg-[var(--teritary)] mt-2 ms-2 w-60 items-center font-bold font-inter'>
                   
                   <a href={`tel:+91${OwnerData.phoneNumber}`}>
                     +91<span>{OwnerData.phoneNumber}</span>
@@ -94,8 +92,8 @@ const ProductHeader = () => {
                 </h1>
               </div>
               <div>
-                <p className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--teritary)] mt-2 ms-2 w-28 items-center font-bold font-inter'>
-                  {item.quantity}
+                <p className='flex justify-center rounded-xl h-9 pt-0 bg-[var(--teritary)] mt-2 ms-2 w-28 items-center font-bold font-inter'>
+                  {item.quantity} KG
                 </p>
                 <img
                   src={item.imageUrl}
@@ -111,27 +109,7 @@ const ProductHeader = () => {
       </div>
 
       {/* Footer */}
-      <footer className="bg-(--green) h-[8vh] rounded-[30px] mt-4 flex items-center justify-evenly py-4 fixed bottom-3">
-        <Link to="/localmarketdashboard">
-        <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1'>
-          <img src={product} alt="product" />
-        </div>
-        </Link>
-        <Link to="/myorder">
-          <div className="ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1">
-            <img src={ordericon} alt="orderIcon" />
-          </div>
-        </Link>
-        <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1'>
-          <img src={logistic} alt="logistic" />
-        </div>
-        <Link to="/OwnerAnalytics">
-        
-        <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1'>
-          <img src={analytics} alt="analytics" />
-        </div>
-        </Link>
-      </footer> 
+     <Footer />
     </div>
   );
 };

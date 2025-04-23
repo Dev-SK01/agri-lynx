@@ -7,6 +7,7 @@ import product from '../../Assest/product.svg';
 import LogisticContext from '../context/LogisticContext';
 import { Button } from '@/components/ui/button';
 import { Link, useNavigate } from "react-router-dom";
+import welcome from "../../assets/welcome.svg";
 
 const LogisticHome = () => {
   const { LogisticOrders, LogisticData, acceptOrder, deleteOrder } = useContext(LogisticContext);
@@ -18,10 +19,11 @@ const LogisticHome = () => {
 
   const handleAccept = (orderId) => {
     const order = LogisticOrders.find(o => o.orderId === orderId);
-    acceptOrder(orderId); 
-    navigate(`/checkoutPage/${orderId}`, { state: { order } }); 
+    acceptOrder(orderId);
+    navigate(`/checkoutPage/${orderId}`, { state: { order } });
   };
-  
+
+  const pendingOrders = LogisticOrders.filter(order => order.status !== 'accepted');
 
   return (
     <div className="flex items-center justify-center flex-col">
@@ -37,10 +39,16 @@ const LogisticHome = () => {
         </div>
       </header>
 
+      {/* Welcome Image if no orders */}
+      {pendingOrders.length === 0 && (
+        <div className="flex flex-col items-center mt-10">
+          <img src={welcome} alt="Welcome" className="w-[300px] h-auto" />
+          <p className="mt-4 text-lg font-medium text-gray-600">No pending orders right now </p>
+        </div>
+      )}
+
       {/* Order Cards */}
-      {LogisticOrders.filter(order => order.status !== 'accepted')
-         .map(order => (
-         
+      {pendingOrders.map(order => (
         <div
           key={order.orderId}
           className='bg-[var(--green)] flex mt-4 h-48 rounded-2xl w-100 py-1 relative border-l-8 border-l-green-600'
@@ -50,9 +58,9 @@ const LogisticHome = () => {
               {order.farmer.name}
             </h1>
             <h1 className='flex justify-center items-center text-center rounded-xl h-9 pt-0 bg-[var(--primary)] mt-2 ms-2 w-60 font-bold font-inter'>
-            <a href={`tel:+91${order?.farmer?.phoneNumber}`}>
-                    +91<span>{order?.farmer?.phoneNumber}</span>
-                  </a>
+              <a href={`tel:+91${order?.farmer?.phoneNumber}`}>
+                +91<span>{order?.farmer?.phoneNumber}</span>
+              </a>
             </h1>
             <h1 className='flex justify-center items-center text-center rounded-xl h-20 pt-0 bg-[var(--primary)] mt-2 ms-2 w-60 font-bold font-inter'>
               {order.farmer.address}, {order.farmer.village}, {order.farmer.taluk}
@@ -64,7 +72,7 @@ const LogisticHome = () => {
               {order.quantity} KG
             </p>
             <p className='flex justify-center rounded-xl h-9 pt-0 bg-[var(--primary)] mt-2 ms-2 w-28 items-center font-bold font-inter'>
-            ₹ {order.price} 
+              ₹ {order.price}
             </p>
 
             <Button
@@ -85,24 +93,24 @@ const LogisticHome = () => {
       ))}
 
       {/* Footer */}
-      <footer className="bg-(--green) h-[8vh] rounded-[30px] mt-4 flex items-center justify-evenly py-4 fixed bottom-3">
-        <Link to="/">
-          <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1'>
-            <img src={product} alt="product" />
-          </div>
-        </Link>
-        <Link to="/checkoutPage">
-          <div className="ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1">
-            <img src={ordericon} alt="orderIcon" />
-          </div>
-        </Link>
-        <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1 pt-1'>
-          <img src={logistic} alt="logistic" />
-        </div>
-        <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1 pt-1'>
-          <img src={analytics} alt="analytics" />
-        </div>
-      </footer>
+    <footer className="bg-(--green) h-[8vh] rounded-[30px] mt-4 flex items-center justify-evenly py-4 fixed bottom-3">
+            <Link to="/">
+              <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1'>
+                <img src={product} alt="product" />
+              </div>
+            </Link>
+            <Link to="/checkoutPage">
+              <div className="ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1">
+                <img src={ordericon} alt="orderIcon" />
+              </div>
+            </Link>
+            <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-2 pt-1.5'>
+              <img src={logistic} alt="logistic" />
+            </div>
+            <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm pt-2 ps-1.5'>
+              <img src={analytics} alt="analytics" />
+            </div>
+          </footer>
     </div>
   );
 };

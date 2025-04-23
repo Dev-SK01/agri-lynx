@@ -55,13 +55,15 @@ const DashBoard = () => {
         </header> */}
         {/* Header */}
 
-        <header className="bg-[var(--green)] mt-2 rounded-xl flex items-center justify-between px-6 h-[8dvh] top-0 w-95   z-10">
+        <header className='flex rounded-xl h-16 pt-2 bg-(--green) mt-5 w-100 text-xl'>
           <Link to="/">
-            <h1 className="font-bold font-inknut text-xl">
+            <h1 className='font-bold font-inknut pt-1 ms-10 items-center'>
               {LogisticData?.name}!
             </h1>
           </Link>
-          <img src={avatar} onClick={handleAvatarClick} alt="avatar" className="cursor-pointer" />
+          <div className='ms-83 pb-1 fixed'>
+            <img src={avatar} onClick={handleAvatarClick} alt="avatar" />
+          </div>
         </header>
 
 
@@ -201,7 +203,7 @@ const DashBoard = () => {
               placeholder="Enter Your VehicleType "
               className="font-inter bg-(--teritary) pt-5 pb-5"
               id="vehicleType"
-              
+
               disabled={true}
               value={LogisticData?.vehicleType || "vehicleType"}
             />
@@ -216,7 +218,7 @@ const DashBoard = () => {
               placeholder="Enter Your vehicleNumber"
               className="font-inter bg-(--teritary) pt-5 pb-5"
               id="vehicleNumber"
-              
+
               disabled={true}
               value={LogisticData?.vehicleNumber || "vehicleNumber"}
             />

@@ -7,6 +7,7 @@ import ordericon from '../../Assest/ordericon.svg';
 import product from '../../Assest/product.svg';
 import { Button } from '@/components/ui/button';
 import { Link, useNavigate } from "react-router-dom";
+import Footer from '../ProductList/Footer';
 
 const accessKey = "ngZx_O2HxOkiG9ML_VctB1Z2ImTU5OsYXNK_Jivcq2E";
 
@@ -56,7 +57,7 @@ const MyOrders = () => {
                     </div>
                 </header>
                 <div className='flex rounded-sm  p-2 bg-(--green) mt-5 w-95 text-xl justify-between items-center overflow-x-scroll scrollbar'>
-                    <div >
+                    <div   className='ps-2'>
                         {["ordered", "delivered", "canceled"].map((status) => (
                             <button key={status} onClick={() => setSelectedStatus(status)}
                                 className={`rounded-sm font-bold font-inter ml-2 px-2 py-1${selectedStatus === status ? " bg-(--primary) border-1 border-green-600" : ""}`}>
@@ -66,7 +67,7 @@ const MyOrders = () => {
                     </div>
                 </div>
 
-                <div className=' mt-3 w-full max-w-1xl h-[75vh]  overflow-y-auto px-4 flex items-center  flex-col'>
+                <div className=' mt-3 w-full max-w-1xl h-[70vh]  overflow-y-auto px-4 flex items-center  flex-col'>
                     {allOrders.filter((item) => item.orderStatus === selectedStatus).map((item, index) => (
 
                         <div key={index} className='bg-[var(--green)] flex mt-4 h-35 rounded-2xl w-100 py-1'>
@@ -122,26 +123,7 @@ const MyOrders = () => {
 
 
                 {/* Footer*/}
-                <footer className="bg-(--green) h-[8vh] rounded-[30px] mt-4 flex items-center justify-evenly py-4 fixed bottom-3">
-                    <Link to="/localmarketdashboard">
-                        <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1'>
-                            <img src={product} alt="product" />
-                        </div>
-                    </Link>
-                    <Link to="/myorder">
-                        <div className="ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1">
-                            <img src={ordericon} alt="orderIcon" />
-                        </div>
-                    </Link>
-                    <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1'>
-                        <img src={logistic} alt="logistic" />
-                    </div>
-                    <Link to="/OwnerAnalytics">
-                        <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1'>
-                            <img src={analytics} alt="analytics" />
-                        </div>
-                    </Link>
-                </footer>
+                <Footer />
             </div>
         </>
 

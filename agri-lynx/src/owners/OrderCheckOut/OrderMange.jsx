@@ -14,15 +14,16 @@ import { Button } from "@/components/ui/button"
 import OwnerContext from '../context/OwnerContext'
 import { useParams } from "react-router-dom";
 import { Link, useNavigate } from "react-router-dom";
+import Footer from '../ProductList/Footer'
 
 
 
 
 const OrderMange = () => {
-  const { OwnerData, purchasedList, farmerData, updateOrderStatus, setMarketOrders, marketOrders, allOrders,updateProductQuantity } = useContext(OwnerContext);
+  const { OwnerData, purchasedList, farmerData, updateOrderStatus, setMarketOrders, marketOrders, allOrders, updateProductQuantity } = useContext(OwnerContext);
   const { listingId } = useParams();
-   console.log("listingId from URL:", listingId);
-  const [selectedItem,setSelectedItem] = useState(null);
+  console.log("listingId from URL:", listingId);
+  const [selectedItem, setSelectedItem] = useState(null);
 
   // useEffect(() => {
   //   console.log("marketOrders has been updated:", marketOrders);
@@ -33,7 +34,7 @@ const OrderMange = () => {
       setSelectedItem(item);
     }
   }, [purchasedList, listingId]
-);
+  );
 
 
 
@@ -140,59 +141,60 @@ const OrderMange = () => {
   return (
     <>
 
-       <div className="flex flex-col items-center justify-between">
-                {/* Header */}
-        <header className='bg-[var(--green)] mt-2 rounded-xl flex items-center justify-between px-6 h-[8dvh] top-0 w-95   z-10  '>
+      <div className="flex flex-col items-center justify-between">
+        {/* Header */}
+        <header className='flex rounded-xl h-16 pt-2 bg-(--green) mt-5 w-[95dvw] py-4 text-xl'>
           <Link to="/">
-           
-              <h1 className='font-bold font-inknut text-xl'> {OwnerData?.name}!</h1>
-           
+            <h1 className='font-bold font-inknut pt-1 ms-10 items-center'>
+              {OwnerData?.name}!
+            </h1>
           </Link>
-          
-          <img className="object-cover " src={Avatar} onClick={handleAvatarClick} alt="Avatar" />
-          
+          <div className='ms-83 pb-1 fixed'>
+            <img src={Avatar} onClick={handleAvatarClick} alt="avatar" />
+          </div>
         </header>
 
-        <div className='overflow-scroll scrollbar-hide h-[84vh] mt-8 '>
+        <div className='overflow-scroll scrollbar-hide h-[76vh] mt-8 w-[90dvw] '>
           <nav className='flex items-center justify-center flex-col '>
             <div>
               <h1 className='text-2xl font-serif font-bold font-stretch-150% inline-block space-x-5'>Checkout Order</h1>
               <img className='inline-block ml-1.5' src={Checkout} alt='Assests' />
             </div>
           </nav>
-          <nav className='flex items-center justify-center mt-4 px-4 w-full'>
-          <div className='bg-(--green) p-5 w-full max-w-md rounded-xl'>
+          <nav className='flex items-center justify-center mt-4 px-4 '>
+            <div className='bg-(--green) p-5 rounded-xl'>
 
               <div className='flex items-start -ml-3'>
                 <img className='object-cover h-40 w-40 -ml-2' src={Rectangle} alt="Assests" />
-                <div>
+                <div className='w-[70dvw]'>
+                  <div className='inline-block '>
+                 
+                  <p className='flex ml-2  bg-white   rounded-xl text-center font-bold text-2xl text-black p-2.5 '>{selectedItem?.commodity}</p>
+                  </div> <br />
                   <div className='inline-block'>
-                    <input  className='ml-2 inline-block bg-white rounded-xl text-center font-bold text-2xl text-black p-2.5 w-full' value={selectedItem?.commodity} disabled={true} />
+                    <span className='ml-2 mt-5 bg-white inline-block rounded-xl  p-1 text-center font-bold text-'>{selectedItem?.quantity} KG</span>
                   </div>
                   <div className='inline-block'>
-                    <span className='ml-2 mt-5 bg-white inline-block rounded-xl w-23 p-1 text-center font-bold text-'>{selectedItem?.quantity} KG</span>
+                    <span className='ml-5 bg-white inline-block rounded-xl  p-1 text-center font-bold text-'>₹ {selectedItem?.price} </span>
                   </div>
-                  <div className='inline-block'>
-                    <span  className='ml-5 bg-white inline-block rounded-xl w-23 p-1 text-center font-bold text-'>₹ {selectedItem?.price } </span>
-                  </div>
-                  <input type="number" inputMode='numeric' value={userQuantity} onChange={handleChange} onKeyDown={(e) => { if (["ArrowUp", "ArrowDown", "e", "-", "+"].includes(e.key)) { e.preventDefault(); } }} className='ml-2 mt-5 bg-white inline-block rounded-xl  text-black p-2' placeholder='Enter Quantity' />
+                  <input type="number" inputMode='numeric' value={userQuantity} onChange={handleChange} onKeyDown={(e) => { if (["ArrowUp", "ArrowDown", "e", "-", "+"].includes(e.key)) { e.preventDefault(); } }} className='ml-2 mt-5 bg-white inline-block rounded-xl w-40  text-black p-2' placeholder='Enter Quantity' />
                 </div>
               </div>
             </div>
           </nav>
           <nav className='flex items-center justify-center mt-5 mb-24 px-4 w-full'>
-          <div className='bg-(--green) p-5 w-full max-w-md rounded-xl'>
+            <div className='bg-(--green) p-5 w-full max-w-md rounded-xl'>
               <div>
                 <h1 className=' inline-block font-bold font-inter mt-3 ms-2 text-1xl'>PAYMENT DETAILS</h1>
                 <img className='ml-1 inline-block' src={Payment} alt="Assests" />
               </div>
-              <div>
+              <div className='w-50'>
                 <h2 className='ms-10 mt-1 text-black'>Commodity Price : ₹{selectedItem?.price || 0}</h2>
                 <h2 className='ms-10 mt-1 text-black'>Total Quantity : {userQuantity || 0}Kg</h2>
                 <h2 className='ms-10 mt-1'>Total Amount : ₹{totalPrice}</h2>
                 <h2 className=' font-bold ms-10 mt-1'>UPI ID :</h2>
                 <div className='inline-block ms-10 mt-2'>
-                  <input className='bg-white inline-block rounded-xl w-70 p-2' value={farmerData?.upiId} disabled={true} />
+                  <input className='bg-white inline-block rounded-xl  p-2' value={farmerData?.upiId} disabled={true} />
                 </div>
                 <div>
                   <h1 className='inline-block font-bold font-inter mt-5 ms-2 text-1xl'>DELIVERY DETAILS</h1>
@@ -227,27 +229,7 @@ const OrderMange = () => {
         </div>
 
         {/* Footer */}
-        <footer className="bg-(--green) h-[8vh] rounded-[30px] mt-4 flex items-center justify-evenly py-4 fixed bottom-3">
-          <Link to="/localmarketdashboard">
-            <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1'>
-              <img src={product} alt="product" />
-            </div>
-          </Link>
-          <Link to="/myorder">
-            <div className="ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1">
-              <img src={ordericon} alt="orderIcon" />
-            </div>
-          </Link>
-          <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1'>
-            <img src={logistic} alt="logistic" />
-          </div>
-          <Link to="/OwnerAnalytics">
-
-            <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1'>
-              <img src={analytics} alt="analytics" />
-            </div>
-          </Link>
-        </footer>
+       <div className='w-[95dvw] '><Footer /></div>
       </div>
 
     </>

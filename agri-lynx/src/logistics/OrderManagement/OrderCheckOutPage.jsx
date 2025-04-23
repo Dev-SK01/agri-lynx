@@ -41,7 +41,7 @@ const OrderCheckOutPage = () => {
 
       {/* Status Selector */}
       <div className='flex rounded-sm  p-2 bg-(--green) mt-5 w-95 text-xl justify-between items-center overflow-x-scroll scrollbar'>
-      <div >
+      <div className='ms-2.5 ' >
 
           {['ordered', 'In-Transit', 'delivered'].map((status) => (
             <button
@@ -83,10 +83,10 @@ const OrderCheckOutPage = () => {
                     {order.quantity}.KG
                   </p>
                   <p className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-28 font-bold font-inter'>
-                    {order.commodityPrice}.Rs
+                  ₹ {order.commodityPrice}
                   </p>
                   <p className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-28 font-bold font-inter'>
-                    {order.price}.Rs
+                  ₹{order.price}
                   </p>
                 </div>
               </div>
@@ -110,10 +110,10 @@ const OrderCheckOutPage = () => {
             <img src={ordericon} alt="orderIcon" />
           </div>
         </Link>
-        <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1 pt-1'>
+        <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-2 pt-1.5'>
           <img src={logistic} alt="logistic" />
         </div>
-        <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1 pt-1'>
+        <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm pt-2 ps-1.5'>
           <img src={analytics} alt="analytics" />
         </div>
       </footer>
