@@ -193,47 +193,47 @@ const DashBoard = () => {
             </label>
           </div>
           <div className="w-full max-w-sm mt-5">
-            <label htmlFor="pincode" className="font-bold font-inter mb-2">
+            <label htmlFor="vehicleType" className="font-bold font-inter mb-2">
               VehicleType
             </label>
             <Input
-              type="number"
-              placeholder="Enter Your Pincode"
+              type="text"
+              placeholder="Enter Your VehicleType "
               className="font-inter bg-(--teritary) pt-5 pb-5"
-              id="pincode"
-              minLength={6}
+              id="vehicleType"
+              
               disabled={true}
-              value={LogisticData?.vehicleType || "Pincode"}
+              value={LogisticData?.vehicleType || "vehicleType"}
             />
 
           </div>
           <div className="w-full max-w-sm mt-5">
-            <label htmlFor="pincode" className="font-bold font-inter mb-2">
+            <label htmlFor="vehicleNumber" className="font-bold font-inter mb-2">
               VehicleNumber
             </label>
             <Input
-              type="number"
-              placeholder="Enter Your Pincode"
+              type="text"
+              placeholder="Enter Your vehicleNumber"
               className="font-inter bg-(--teritary) pt-5 pb-5"
-              id="pincode"
-              minLength={6}
+              id="vehicleNumber"
+              
               disabled={true}
-              value={LogisticData?.vehicleNumber || "Pincode"}
+              value={LogisticData?.vehicleNumber || "vehicleNumber"}
             />
 
           </div>
           <div className="w-full max-w-sm mt-5">
-            <label htmlFor="pincode" className="font-bold font-inter mb-2">
+            <label htmlFor="licenseNumber" className="font-bold font-inter mb-2">
               LicenseNumber
             </label>
             <Input
-              type="number"
-              placeholder="Enter Your Pincode"
+              type="text"
+              placeholder="Enter Your licenseNumber"
               className="font-inter bg-(--teritary) pt-5 pb-5"
-              id="pincode"
+              id="licenseNumber"
               minLength={6}
               disabled={true}
-              value={LogisticData?.licenseNumber || "Pincode"}
+              value={LogisticData?.licenseNumber || "licenseNumber"}
             />
 
           </div>

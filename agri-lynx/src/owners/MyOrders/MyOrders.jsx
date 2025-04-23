@@ -11,10 +11,10 @@ import { Link, useNavigate } from "react-router-dom";
 const accessKey = "ngZx_O2HxOkiG9ML_VctB1Z2ImTU5OsYXNK_Jivcq2E";
 
 const MyOrders = () => {
-    const { OwnerData, allOrders, selectedStatus, setSelectedStatus, cancelOrder} = useContext(OwnerContext);
+    const { OwnerData, allOrders, selectedStatus, setSelectedStatus, cancelOrder } = useContext(OwnerContext);
 
     // const [images, setImages] = useState({});
-  
+
     // useEffect(() => {
     //     if (!allOrders) return; // Prevent API call if allOrders is undefined
     //     const fetchImages = async () => {
@@ -32,8 +32,8 @@ const MyOrders = () => {
     //     };
     //     fetchImages();
     // }, [allOrders]);
-    
-    
+
+
     const navigate = useNavigate();
 
     const handleAvatarClick = () => {
@@ -55,11 +55,11 @@ const MyOrders = () => {
                         <img src={avatar} onClick={handleAvatarClick} alt="avatar" />
                     </div>
                 </header>
-                <div className='flex rounded-xl h-10 pt-2 bg-(--green) mt-5 w-100 text-xl justify-center'>
-                    <div className="flex rounded-xl h-10 bg-[--green] w-full overflow-x-scroll px-0 space-x-2 py-0 justify-center">
+                <div className='flex rounded-sm  p-2 bg-(--green) mt-5 w-95 text-xl justify-between items-center overflow-x-scroll scrollbar'>
+                    <div >
                         {["ordered", "delivered", "canceled"].map((status) => (
                             <button key={status} onClick={() => setSelectedStatus(status)}
-                                className={`rounded  h-7 px-4 font-medium font-inter ${selectedStatus === status ? " text-black bg-(primary) border-1 border-green-500" : "bg-[var(--primary)]"}`}>
+                                className={`rounded-sm font-bold font-inter ml-2 px-2 py-1${selectedStatus === status ? " bg-(--primary) border-1 border-green-600" : ""}`}>
                                 {status.charAt(0).toUpperCase() + status.slice(1)}
                             </button>
                         ))}
@@ -78,7 +78,10 @@ const MyOrders = () => {
                                     {item.farmer.name}
                                 </h1>
                                 <h1 className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-60 items-center font-bold font-inter'>
-                                    +91- {item.farmer.phoneNumber}
+
+                                    <a href={`tel:+91${item?.farmer?.phoneNumber}`}>
+                                        +91<span>{item?.farmer?.phoneNumber}</span>
+                                    </a>
                                 </h1>
                             </div>
                             <div>
@@ -120,25 +123,25 @@ const MyOrders = () => {
 
                 {/* Footer*/}
                 <footer className="bg-(--green) h-[8vh] rounded-[30px] mt-4 flex items-center justify-evenly py-4 fixed bottom-3">
-                        <Link to="/localmarketdashboard">
+                    <Link to="/localmarketdashboard">
                         <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1'>
-                          <img src={product} alt="product" />
+                            <img src={product} alt="product" />
                         </div>
-                        </Link>
-                        <Link to="/myorder">
-                          <div className="ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1">
+                    </Link>
+                    <Link to="/myorder">
+                        <div className="ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1">
                             <img src={ordericon} alt="orderIcon" />
-                          </div>
-                        </Link>
-                        <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1'>
-                          <img src={logistic} alt="logistic" />
                         </div>
-                        <Link to="/OwnerAnalytics">                        
+                    </Link>
+                    <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1'>
+                        <img src={logistic} alt="logistic" />
+                    </div>
+                    <Link to="/OwnerAnalytics">
                         <div className='ms-7 me-7 h-12 w-12 bg-white rounded-xl p-1 pt-1'>
-                          <img src={analytics} alt="analytics" />
+                            <img src={analytics} alt="analytics" />
                         </div>
-                        </Link>
-                      </footer> 
+                    </Link>
+                </footer>
             </div>
         </>
 

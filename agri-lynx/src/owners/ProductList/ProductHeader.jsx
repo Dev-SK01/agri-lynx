@@ -87,7 +87,10 @@ const ProductHeader = () => {
 
                 </h1>
                 <h1 className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--teritary)] mt-2 ms-2 w-60 items-center font-bold font-inter'>
-                  +91-{OwnerData.phoneNumber}
+                  
+                  <a href={`tel:+91${OwnerData.phoneNumber}`}>
+                    +91<span>{OwnerData.phoneNumber}</span>
+                  </a>
                 </h1>
               </div>
               <div>

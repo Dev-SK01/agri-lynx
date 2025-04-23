@@ -40,14 +40,15 @@ const OrderCheckOutPage = () => {
       </header>
 
       {/* Status Selector */}
-      <div className="flex rounded-xl h-10 pt-2 bg-(--green) mt-5 w-100 text-xl justify-center">
-        <div className="flex rounded-xl h-10 bg-[--green] w-full overflow-x-scroll px-0 space-x-2 py-0 justify-center">
+      <div className='flex rounded-sm  p-2 bg-(--green) mt-5 w-95 text-xl justify-between items-center overflow-x-scroll scrollbar'>
+      <div >
+
           {['ordered', 'In-Transit', 'delivered'].map((status) => (
             <button
               key={status}
               onClick={() => setOrderStatus(status)}
-              className={`rounded  h-7 px-4 font-medium font-inter ${status.toLowerCase() === orderStatus.toLowerCase()
-                ? 'bg-white border-2  border-(--secondary) text-black pb-1.5'
+              className={`rounded-sm font-bold font-inter ml-2 px-2 py-1   ${status.toLowerCase() === orderStatus.toLowerCase()
+                ? "bg-(--primary) border-1 border-green-600"
                 : ''
                 }`}
             >

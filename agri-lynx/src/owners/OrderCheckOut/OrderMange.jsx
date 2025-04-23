@@ -141,16 +141,16 @@ const OrderMange = () => {
     <>
 
        <div className="flex flex-col items-center justify-between">
-                {/* Header */}git 
-        <header className='flex rounded-xl justify-between  h-[8vh] pt-2 bg-(--green) mt-2 w-[95dvw] px-3 text-xl  '>
+                {/* Header */}
+        <header className='bg-[var(--green)] mt-2 rounded-xl flex items-center justify-between px-6 h-[8dvh] top-0 w-95   z-10  '>
           <Link to="/">
-            <div className='max-w-[80%]'>
-              <h1 className='font-bold font-inknut mt-3 ms-10 text-1xl'> {OwnerData?.name}!</h1>
-            </div>
+           
+              <h1 className='font-bold font-inknut text-xl'> {OwnerData?.name}!</h1>
+           
           </Link>
-          <div className='flex justify-end pr-4'>
-          <img className="object-cover w-10 h-10" src={Avatar} onClick={handleAvatarClick} alt="Avatar" />
-          </div>
+          
+          <img className="object-cover " src={Avatar} onClick={handleAvatarClick} alt="Avatar" />
+          
         </header>
 
         <div className='overflow-scroll scrollbar-hide h-[84vh] mt-8 '>
