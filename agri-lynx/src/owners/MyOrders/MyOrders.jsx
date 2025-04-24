@@ -44,50 +44,49 @@ const MyOrders = () => {
 
     return (
         <>
-            <div className="flex items-center justify-center flex-col">
+            <div className="flex items-center justify-center flex-col overflow-hidden">
                 {/* Header */}
                 <header className='flex rounded-xl h-16 pt-2 bg-(--green) mt-5 w-100 text-xl'>
                     <Link to="/">
                         <h1 className='font-bold font-inknut pt-1 ms-10 items-center'>
-                            {OwnerData?.name}!
+                            {OwnerData?.name}
                         </h1>
                     </Link>
                     <div className='ms-83 pb-1 fixed'>
                         <img src={avatar} onClick={handleAvatarClick} alt="avatar" />
                     </div>
                 </header>
-                <div className='flex rounded-sm  p-2 bg-(--green) mt-5 w-95 text-xl justify-between items-center overflow-x-scroll scrollbar'>
-                    <div   className='ps-2'>
+                <div className='flex rounded-sm  py-2 bg-(--green) mt-5 w-98 text-xl px-0 items-center justify-evenly'>
                         {["ordered", "delivered", "canceled"].map((status) => (
                             <button key={status} onClick={() => setSelectedStatus(status)}
-                                className={`rounded-sm font-bold font-inter ml-2 px-2 py-1${selectedStatus === status ? " bg-(--primary) border-1 border-green-600" : ""}`}>
+                                className={`rounded-sm font-bold font-inter ml-2 px-4 py-1${selectedStatus === status ? " bg-(--primary) border-1 border-green-600" : ""}`}>
                                 {status.charAt(0).toUpperCase() + status.slice(1)}
                             </button>
                         ))}
-                    </div>
+                    
                 </div>
 
-                <div className=' mt-3 w-full max-w-1xl h-[70vh]  overflow-y-auto px-4 flex items-center  flex-col'>
+                <div className=' mt-3 w-dvh  h-[69vh]  overflow-y-auto px-4 flex items-center  flex-col overflow-x-hidden'>
                     {allOrders.filter((item) => item.orderStatus === selectedStatus).map((item, index) => (
 
-                        <div key={index} className='bg-[var(--green)] flex mt-4 h-35 rounded-2xl w-100 py-1'>
-                            <div>
-                                <h1 className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-60 items-center text-center font-bold font-inter'>
+                        <div key={index} className='bg-(--green) flex mt-4 rounded-2xl w-100 py-2 '>
+                            <div className='ml-1'>
+                                <h1 className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-1.5 ms-2 w-60 items-center text-center font-bold font-inter'>
                                     {item.commodity}
                                 </h1>
                                 <h1 className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-60 items-center font-bold font-inter'>
                                     {item.farmer.name}
                                 </h1>
-                                <h1 className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-60 items-center font-bold font-inter'>
+                                <h1 className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-60 items-center font-bold font-inter pb-1'>
 
                                     <a href={`tel:+91${item?.farmer?.phoneNumber}`}>
-                                        +91<span>{item?.farmer?.phoneNumber}</span>
+                                        +91 <span>{item?.farmer?.phoneNumber}</span>
                                     </a>
                                 </h1>
                             </div>
-                            <div>
+                            <div className='ml-4'>
                                 <p className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-28 items-center font-bold font-inter'>
-                                    {item.quantity}.KG
+                                    {item.quantity} KG
                                 </p>
                                 {/* <img
                                     src={images[item.commodity] || ''}
@@ -95,7 +94,7 @@ const MyOrders = () => {
                                     className='h-20 w-20 mt-2 ms-6 pt-1 rounded-2xl'
                                 /> */}
                                 <p className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-28 items-center font-bold font-inter'>
-                                    $ {item.price}
+                                &#8377; {item.price}
                                 </p>
                                 {item.orderStatus !== "delivered" && item.orderStatus !== "canceled" && (
                                     <Button
@@ -118,10 +117,6 @@ const MyOrders = () => {
 
                     ))}
                 </div>
-
-
-
-
                 {/* Footer*/}
                 <Footer />
             </div>

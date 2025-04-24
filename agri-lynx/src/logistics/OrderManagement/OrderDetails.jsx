@@ -64,7 +64,7 @@ const OrderDetails = () => {
                 <header className='flex rounded-xl h-16 pt-2 bg-(--green) mt-5 w-100 text-xl'>
                     <Link to="/">
                         <h1 className='font-bold font-inknut pt-1 ms-10 items-center'>
-                            {LogisticData?.name}!
+                            {LogisticData?.name}
                         </h1>
                     </Link>
                     <div className='ms-83 pb-1 fixed'>

@@ -1,6 +1,5 @@
 import { createContext, useState } from "react";
 
-
 const OwnerContext = createContext({});
 
 export const OwnerContextProvider = ({ children }) => {
@@ -24,7 +23,6 @@ export const OwnerContextProvider = ({ children }) => {
     bankName: "Canara Bank",
     bankBranch: "Chennai",
     upiId: "luffy12@upi",
-    
   });
 
   const [isContentLoading, setIsContentLoading] = useState(true);
@@ -41,7 +39,8 @@ export const OwnerContextProvider = ({ children }) => {
       commodity: "Tomato",
       minPrice: "2000",
       maxPrice: "2300",
-      imageUrl: "https://media.istockphoto.com/id/1459115525/photo/tomato-vegetables-isolated-on-white-background.webp",
+      imageUrl:
+        "https://images.unsplash.com/photo-1720680052575-e629a9eff73b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Yml0dGVyJTIwZ291cmR8ZW58MHwxfDB8fHwy",
       farmer: {
         name: "Prasanth Muthusamy",
         phoneNumber: "8760254168",
@@ -76,7 +75,8 @@ export const OwnerContextProvider = ({ children }) => {
       commodity: "Potato",
       minPrice: "2000",
       maxPrice: "2300",
-      imageUrl: "https://media.istockphoto.com/id/157430678/photo/three-potatoes.webp",
+      imageUrl:
+        "https://media.istockphoto.com/id/157430678/photo/three-potatoes.webp",
       farmer: {
         name: "Prasanth Muthusamy",
         phoneNumber: "8760254168",
@@ -111,7 +111,8 @@ export const OwnerContextProvider = ({ children }) => {
       commodity: "Tomato",
       minPrice: "2000",
       maxPrice: "2300",
-      imageUrl: "https://media.istockphoto.com/id/1459115525/photo/tomato-vegetables-isolated-on-white-background.webp",
+      imageUrl:
+        "https://images.unsplash.com/photo-1720680052575-e629a9eff73b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Yml0dGVyJTIwZ291cmR8ZW58MHwxfDB8fHwy",
       farmer: {
         name: "Prasanth Muthusamy",
         phoneNumber: "8760254168",
@@ -133,79 +134,118 @@ export const OwnerContextProvider = ({ children }) => {
       },
     },
   ]);
- const [ farmerData, setFarmerData] = useState({
-  farmerId: "s63hdb38dyb9ae4",
-  name: "prasanth",
-  phoneNumber: "8898812345",
-  address: "123,ucer shop,ucer street",
-  village: "MettuPatti",
-  postOffice: "Pullangudi",
-  taluk: "kalaiyarkovil",
-  district: "Ramanathapuram",
-  pincode: "630661",
-  upiId:"prasanth@upi"
- });
+  const [farmerData, setFarmerData] = useState({
+    farmerId: "s63hdb38dyb9ae4",
+    name: "prasanth",
+    phoneNumber: "8898812345",
+    address: "123,ucer shop,ucer street",
+    village: "MettuPatti",
+    postOffice: "Pullangudi",
+    taluk: "kalaiyarkovil",
+    district: "Ramanathapuram",
+    pincode: "630661",
+    upiId: "prasanth@upi",
+  });
 
- const [purchasedList,setPurchasedList] = useState([
-  {
-    commodity: "Tomato",
-    quantity: 5100,
-    price: 140,
-    listingId: "purch123xyz",
-    farmerId: "s63hdb38dyb9ae4",
-    imageUrl: "https://media.istockphoto.com/id/1459115525/photo/tomato-vegetables-isolated-on-white-background.webp",
-    orderDate: new Date().toUTCString(),
-    orderStatus: "ordered",
-    bookingStatus: "pending",
-    minPrice: "2000",
-    maxPrice: "2300",
-    district: "Chennai",
-  },
-  {
-    commodity: "Potato",
-    quantity: 200,
-    price: 15,
-    listingId: "purch124xyz",
-    farmerId: "s63hdb38dyb9ae4",
-    imageUrl: "https://media.istockphoto.com/id/157430678/photo/three-potatoes.webp",
-    orderDate: new Date().toUTCString(),
-    orderStatus: "ordered",
+  const [purchasedList, setPurchasedList] = useState([
+    {
+      commodity: "Tomato",
+      quantity: 5100,
+      price: 140,
+      listingId: "purch123xyz",
+      farmerId: "s63hdb38dyb9ae4",
+      imageUrl:
+        "https://images.unsplash.com/photo-1720680052575-e629a9eff73b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Yml0dGVyJTIwZ291cmR8ZW58MHwxfDB8fHwy",
+      orderStatus: "ordered",
       bookingStatus: "pending",
-    minPrice: "2000",
-    maxPrice: "2300",
-    district: "Chennai",
-  },
-  {
-    commodity: "Brinjal",
-    quantity: 350,
-    price: 22,
-    listingId: "purchxyz",
-    farmerId: "s63hdb38dyb9ae4",
-    imageUrl: "https://images.unsplash.com/photo-1639428134238-b548770d4b77",
-    orderDate: new Date().toUTCString(),
-    orderStatus: "ordered",
-    bookingStatus: "pending",
-    minPrice: "2000",
-    maxPrice: "2300",
-    district: "Madurai",
-  },
- ]) 
+      minPrice: "2000",
+      maxPrice: "2300",
+      district: "Chennai",
+      farmer: {
+        farmerId: "s63hdb38dyb9ae4",
+        name: "prasanth",
+        phoneNumber: "8898812345",
+        address: "123,ucer shop,ucer street",
+        village: "MettuPatti",
+        postOffice: "Pullangudi",
+        taluk: "kalaiyarkovil",
+        district: "Ramanathapuram",
+        pincode: "630661",
+        upiId: "prasanth@upi",
+      },
+    },
+    {
+      commodity: "Potato",
+      quantity: 200,
+      price: 15,
+      listingId: "purch124xyz",
+      farmerId: "s63hdb38dyb9ae4",
+      imageUrl:
+        "https://images.unsplash.com/photo-1720680052575-e629a9eff73b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Yml0dGVyJTIwZ291cmR8ZW58MHwxfDB8fHwy",
+      orderDate: new Date().toUTCString(),
+      orderStatus: "ordered",
+      bookingStatus: "pending",
+      minPrice: "2000",
+      maxPrice: "2300",
+      district: "Chennai",
+      farmer: {
+        farmerId: "s63hdb38dyb9ae4",
+        name: "prasanth",
+        phoneNumber: "8898812345",
+        address: "123,ucer shop,ucer street",
+        village: "MettuPatti",
+        postOffice: "Pullangudi",
+        taluk: "kalaiyarkovil",
+        district: "Ramanathapuram",
+        pincode: "630661",
+        upiId: "prasanth@upi",
+      },
+    },
+    {
+      commodity: "Brinjal",
+      quantity: 350,
+      price: 22,
+      listingId: "purchxyz",
+      farmerId: "s63hdb38dyb9ae4",
+      imageUrl: "https://images.unsplash.com/photo-1639428134238-b548770d4b77",
+      orderDate: new Date().toUTCString(),
+      orderStatus: "ordered",
+      bookingStatus: "pending",
+      minPrice: "2000",
+      maxPrice: "2300",
+      district: "Madurai",
+      farmer: {
+        farmerId: "s63hdb38dyb9ae4",
+        name: "prasanth",
+        phoneNumber: "8898812345",
+        address: "123,ucer shop,ucer street",
+        village: "MettuPatti",
+        postOffice: "Pullangudi",
+        taluk: "kalaiyarkovil",
+        district: "Ramanathapuram",
+        pincode: "630661",
+        upiId: "prasanth@upi",
+      },
+    },
+  ]);
 
   const [selectedStatus, setSelectedStatus] = useState("ordered");
 
-  // Combining all orders   
-  const allOrders = marketOrders.concat(cancelOrders,deliveredOrders);
-  console.log(marketOrders);
-  
+  // Combining all orders
+  const allOrders = marketOrders.concat(cancelOrders, deliveredOrders);
+  // console.log(marketOrders);
+
   const cancelOrder = (orderId) => {
-    const orderToCancel = marketOrders.find(order => order.orderId === orderId);
+    const orderToCancel = marketOrders.find(
+      (order) => order.orderId === orderId
+    );
     if (orderToCancel) {
       setMarketOrders((prev) =>
-        prev.filter(order => order.orderId !== orderId)
+        prev.filter((order) => order.orderId !== orderId)
       );
       setcancelOrders((prev) => [
         ...prev,
-        { ...orderToCancel, orderStatus: "canceled" }
+        { ...orderToCancel, orderStatus: "canceled" },
       ]);
     }
   };
@@ -213,21 +253,19 @@ export const OwnerContextProvider = ({ children }) => {
   const updateOrderStatus = (orderId, newStatus) => {
     setMarketOrders((prevOrders) =>
       prevOrders.map((order) =>
-        order.orderId === orderId
-          ? { ...order, orderStatus: newStatus }
-          : order
+        order.orderId === orderId ? { ...order, orderStatus: newStatus } : order
       )
     );
   };
 
-  const updateProductQuantity = (listingId,quantityOrderd) =>{
+  const updateProductQuantity = (listingId, quantityOrderd) => {
     setPurchasedList((prevList) =>
       prevList.map((item) =>
         item.listingId === listingId
-    ?{...item,quantity: item.quantity - quantityOrderd}
-    :item
-  )
-);
+          ? { ...item, quantity: item.quantity - quantityOrderd }
+          : item
+      )
+    );
   };
 
   return (
@@ -243,7 +281,7 @@ export const OwnerContextProvider = ({ children }) => {
         setcancelOrders,
         deliveredOrders,
         setDeliveredOrders,
-        farmerData, 
+        farmerData,
         setFarmerData,
         selectedStatus,
         setSelectedStatus,
@@ -253,13 +291,8 @@ export const OwnerContextProvider = ({ children }) => {
         setPurchasedList,
         updateOrderStatus,
         updateProductQuantity,
-       
-        
-       
-
-        
-      
-    }}>
+      }}
+    >
       {children}
     </OwnerContext.Provider>
   );

@@ -67,7 +67,7 @@ const FarmerLogisticsDetails = () => {
         <div
           className={
             LogisticsDetails.length
-              ? "flex-col h-[62dvh] overflow-auto w-[95dvw] scrollbar justify-items-center mt-4"
+              ? "flex-col h-[62.5dvh] overflow-auto w-[95dvw] scrollbar justify-items-center mt-4"
               : "flex-col flex items-center justify-center h-[62dvh] overflow-auto w-[95dvw] scrollbar mt-4"
           }
         >
@@ -108,7 +108,7 @@ const FarmerLogisticsDetails = () => {
                 <img
                   src={location}
                   alt="location"
-                  className="h-[30px] w-[30px]"
+                  className="h-[25px] w-[25px]"
                 />
                 {Logistics.address +
                   Logistics.village +

@@ -58,7 +58,25 @@ function App() {
         farmerId: "s63hdb38dyb9ae4",
         name: "Prasanth Muthusamy",
         email: "prasanthfarmer@gmail.com",
-        // ...more mock data
+        farmerId: "s63hdb38dyb9ae4",
+        name: "Prasanth Muthusamy",
+        email: "prasanthfarmer@gmail.com",
+        phoneNumber: "8760254168",
+        alternateNumber: "7094295944",
+        address: "123,ucer shop,ucer street",
+        village: "MettuPatti",
+        postOffice: "Pullangudi",
+        taluk: "kalaiyarkovil",
+        district: "Ramanathapuram",
+        pincode: "630661",
+        state: "TAMIL NADU",
+        ifscCode: "IOBA0000876",
+        accountNumber: "187200023992",
+        accountHolderName: "Prasanth",
+        bankName: "Indian Overseas Bank",
+        bankBranch: "Ramanathapuram",
+        upiId: "prasanth@okaxis",
+        produceList:[]
       };
       if (response) {
         Toast(toast.success, "Data Fetched Successfully");
@@ -115,19 +133,24 @@ function App() {
               <Route path="farmeranalytics" element={<FarmerAnalytics />} />
 
               {/* local market routes */}
-              <Route path="localmarketdashboard" element={<LocalMarketOwnerProductList />} />
+              <Route
+                path="localmarketdashboard"
+                element={<LocalMarketOwnerProductList />}
+              />
               <Route path="myorder" element={<LocalMarketOwnerMyOrder />} />
               <Route path="OwnerDashBoard" element={<OwnerDashBoard />}></Route>
               <Route path="OwnerAnalytics" element={<Analytics />}></Route>
               <Route path="/" element={<ProductHeader />} />
               <Route path="/order/:listingId" element={<OrderCheckOut />} />
 
-
               {/* logistics routes */}
               <Route path="logisticdashboard" element={<LogisticHome />} />
               <Route path="DashBoard" element={<DashBoard />} />
               <Route path="checkoutPage" element={<OrderCheckOutPage />} />
-              <Route path="/checkoutPage/:orderId" element={<OrderCheckOutPage />} />
+              <Route
+                path="/checkoutPage/:orderId"
+                element={<OrderCheckOutPage />}
+              />
               <Route path="orderdetails">
                 <Route path=":orderId" element={<OrderDetails />} />
               </Route>

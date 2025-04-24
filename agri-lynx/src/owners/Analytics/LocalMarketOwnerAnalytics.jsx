@@ -37,24 +37,23 @@ const LocalMarketOwnerAnalytics = () => {
           <img className='inline-block -mt-2 ml-1.5' src={analytics} alt='Assests' />
         </div>
       </nav>
-      <nav className='flex items-center justify-center  me-60'>
+      <div className='flex items-center justify-center  me-60'>
+        <a href="https://www.agmarknet.gov.in" target="_blank" rel="noopener noreferrer">
         <div className=' flex-shrink-0 bg-(--green)  w-[160px] text-xl mt-5 ml-5  border-2 border-black p-1 px- py-1 rounded-lg'>
           <h1 className='font-black text-center'>MARKET PRICE</h1>
         </div>
-      </nav>
+        </a>
+      </div>
 
-      <div className='flex items-center justify-center h-[66dvh]'>
-        <div className=" flex items-center w-100 h-[350px] mt-4">
-          <embed src="https://www.agmarknet.gov.in" href='https://www.agmarknet.gov.in' height="100%" width="100%" className="rounded-md bg-(--green)" />
+      <div className='flex items-center justify-center h-[64dvh]'>
+        <div className=" flex items-center w-100 h-[350px] mt-4 rounded-md bg-(--green)">
+          <embed src="https://www.agmarknet.gov.in" href='https://www.agmarknet.gov.in' height="100%" width="100%" className='rounded-xl bg-(--green)'/>
         </div>
       </div>
-       
-
-       <div className='ms-6' ><Footer /></div>
-
-
-
-
+       {/* footer */}
+       <div className='ms-6' >
+        <Footer />
+        </div>
     </>
 
 

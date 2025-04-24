@@ -58,21 +58,17 @@ const DashBoard = () => {
         <header className='flex rounded-xl h-16 pt-2 bg-(--green) mt-5 w-100 text-xl'>
           <Link to="/">
             <h1 className='font-bold font-inknut pt-1 ms-10 items-center'>
-              {LogisticData?.name}!
+              {LogisticData?.name}
             </h1>
           </Link>
           <div className='ms-83 pb-1 fixed'>
             <img src={avatar} onClick={handleAvatarClick} alt="avatar" />
           </div>
         </header>
-
-
-
-
-
+        {/* Avatar */}
         <div className="w-full flex flex-col scrollbar overflow-auto  items-center justify-center mt-2">
           {/* personal details */}
-          <div className="w-full max-w-sm">
+          <div className="w-full max-w-sm mt-4">
             <label htmlFor="name" className="font-bold font-inter mb-2">
               Name
             </label>
@@ -196,7 +192,7 @@ const DashBoard = () => {
           </div>
           <div className="w-full max-w-sm mt-5">
             <label htmlFor="vehicleType" className="font-bold font-inter mb-2">
-              VehicleType
+              Vehicle Type
             </label>
             <Input
               type="text"
@@ -211,7 +207,7 @@ const DashBoard = () => {
           </div>
           <div className="w-full max-w-sm mt-5">
             <label htmlFor="vehicleNumber" className="font-bold font-inter mb-2">
-              VehicleNumber
+              Vehicle Number
             </label>
             <Input
               type="text"
@@ -226,7 +222,7 @@ const DashBoard = () => {
           </div>
           <div className="w-full max-w-sm mt-5">
             <label htmlFor="licenseNumber" className="font-bold font-inter mb-2">
-              LicenseNumber
+              License Number
             </label>
             <Input
               type="text"

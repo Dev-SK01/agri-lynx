@@ -31,7 +31,7 @@ const LogisticHome = () => {
       <header className='flex rounded-xl h-16 pt-2 bg-(--green) mt-5 w-100 text-xl'>
         <Link to="/">
           <h1 className='font-bold font-inknut pt-1 ms-10 items-center'>
-            {LogisticData?.name}!
+            {LogisticData?.name}
           </h1>
         </Link>
         <div className='ms-83 pb-1 fixed'>
@@ -41,9 +41,8 @@ const LogisticHome = () => {
 
       {/* Welcome Image if no orders */}
       {pendingOrders.length === 0 && (
-        <div className="flex flex-col items-center mt-10">
-          <img src={welcome} alt="Welcome" className="w-[300px] h-auto" />
-          <p className="mt-4 text-lg font-medium text-gray-600">No pending orders right now </p>
+        <div className="flex flex-col items-center mt-10 justify-center h-[80dvh]">
+          <img src={welcome} alt="Welcome" className="w-[450px] h-auto" />
         </div>
       )}
 

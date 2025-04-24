@@ -42,7 +42,7 @@ const ProductHeader = () => {
       <header className='flex rounded-xl h-16 pt-2 bg-(--green) mt-5 w-100 text-xl'>
               <Link to="/">
                 <h1 className='font-bold font-inknut pt-1 ms-10 items-center'>
-                  {OwnerData?.name}!
+                  {OwnerData?.name}
                 </h1>
               </Link>
               <div className='ms-83 pb-1 fixed'>
@@ -50,15 +50,15 @@ const ProductHeader = () => {
               </div>
             </header>
 
-      <div className="w-[100%] overflow-auto h-[80vh] rounded-md scrollbar ">
+      <div className="w-[100%] overflow-auto h-[79vh] rounded-[25px] scrollbar ">
         {/* Search Bar */}
-        <div className='items-center bg-(--teritary) flex rounded-xl h-10 pt-2 mt-5 w-100'>
+        <div className='items-center bg-(--teritary) flex rounded-[25px] h-10 pt-2 mt-5 w-100'>
           <Input
             type="text"
             placeholder="Search Your Product"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="bg-(--green) p-5.5 font-inknut rounded-[5px] w-[100%]"
+            className="bg-(--green) p-5.5 font-inknut rounded-[25px] w-[100%]"
           />
         </div>
 
@@ -75,24 +75,24 @@ const ProductHeader = () => {
         {/* Filtered results */}
         {filteredCommodities.length > 0 ? (
           filteredCommodities.map((item, index) => (            
-            <div className='flex border-2 rounded-2xl mb-5 mt-5' key={item.listingId} onClick={() => handleClick(item.listingId)}>
+            <div className='flex border-2 rounded-2xl mb-5 mt-5 bg-(--green)' key={item.listingId} onClick={() => handleClick(item.listingId)}>
               <div className='mb-5' key={index} >
-                <h1 className='flex justify-center rounded-xl h-9 pt-0 bg-[var(--teritary)] mt-2 ms-2 w-60 items-center text-center font-bold font-inter'>
+                <h1 className='flex justify-center rounded-xl h-9 pt-0 bg-[var(--primary)] mt-2 ms-2 w-60 items-center text-center font-bold font-inter'>
                   {item.commodity}
                 </h1>
-                <h1 className='flex justify-center rounded-xl h-9 pt-0 bg-[var(--teritary)] mt-2 ms-2 w-60 items-center font-bold font-inter'>
+                <h1 className='flex justify-center rounded-xl h-9 pt-0 bg-[var(--primary)] mt-2 ms-2 w-60 items-center font-bold font-inter'>
                   {OwnerData.name}
 
                 </h1>
-                <h1 className='flex justify-center rounded-xl h-9 pt-0 bg-[var(--teritary)] mt-2 ms-2 w-60 items-center font-bold font-inter'>
+                <h1 className='flex justify-center rounded-xl h-9 pt-0 bg-[var(--primary)] mt-2 ms-2 w-60 items-center font-bold font-inter'>
                   
                   <a href={`tel:+91${OwnerData.phoneNumber}`}>
-                    +91<span>{OwnerData.phoneNumber}</span>
+                    +91 <span>{OwnerData.phoneNumber}</span>
                   </a>
                 </h1>
               </div>
-              <div>
-                <p className='flex justify-center rounded-xl h-9 pt-0 bg-[var(--teritary)] mt-2 ms-2 w-28 items-center font-bold font-inter'>
+              <div className='ml-2'>
+                <p className='flex justify-center rounded-xl h-9 pt-0 bg-[var(--primary)] mt-2 ms-2 w-28 items-center font-bold font-inter'>
                   {item.quantity} KG
                 </p>
                 <img
