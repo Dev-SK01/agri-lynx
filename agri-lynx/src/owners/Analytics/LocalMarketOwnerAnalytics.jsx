@@ -39,7 +39,7 @@ const LocalMarketOwnerAnalytics = () => {
       </nav>
       <div className='flex items-center justify-center  me-60'>
         <a href="https://www.agmarknet.gov.in" target="_blank" rel="noopener noreferrer">
-        <div className=' flex-shrink-0 bg-(--green)  w-[160px] text-xl mt-5 ml-5  border-2 border-black p-1 px- py-1 rounded-lg'>
+        <div className=' flex-shrink-0 bg-(--green) text-xl mt-5 ml-5  border-2 border-black p-1 px- py-1 rounded-lg'>
           <h1 className='font-black text-center'>MARKET PRICE</h1>
         </div>
         </a>

@@ -92,7 +92,7 @@ const LogisticHome = () => {
       ))}
 
       {/* Footer */}
-    <footer className="bg-(--green) h-[8vh] rounded-[30px] mt-4 flex items-center justify-evenly py-4 fixed bottom-3">
+    <footer className="bg-(--green) h-[8vh] w-[95%] rounded-[30px] mt-4 flex items-center justify-evenly py-2 fixed bottom-3">
             <Link to="/">
               <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1'>
                 <img src={product} alt="product" />
@@ -103,10 +103,10 @@ const LogisticHome = () => {
                 <img src={ordericon} alt="orderIcon" />
               </div>
             </Link>
-            <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-2 pt-1.5'>
+            <div className='ms-4 me-7 h-12 w-21 bg-white rounded-sm p-2 pt-1.5'>
               <img src={logistic} alt="logistic" />
             </div>
-            <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm pt-2 ps-1.5'>
+            <div className='ms-4 me-7 h-12 w-21 bg-white rounded-sm p-2 ps-1.5'>
               <img src={analytics} alt="analytics" />
             </div>
           </footer>

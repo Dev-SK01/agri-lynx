@@ -71,7 +71,7 @@ const OrderDetails = () => {
                         <img src={avatar} onClick={handleAvatarClick} alt="avatar" />
                     </div>
                 </header>
-                <div className='overflow-scroll scrollbar-hide h-[75vh] mt-4 '>
+                <div className='overflow-scroll scrollbar h-[75vh] mt-4 '>
                     <div className="w-80 mt-4 text-center bg-(--green) rounded-sm  ">
                         <h1 className="font-bold text-[1.2rem] font-inter">
                             #{currentOrder?.orderId?.toUpperCase()}
@@ -223,7 +223,7 @@ const OrderDetails = () => {
                 </div>
 
                 {/* footer */}
-               <footer className="bg-(--green) h-[8vh] rounded-[30px] mt-4 flex items-center justify-evenly py-4 fixed bottom-3">
+               <footer className="bg-(--green) w-[95%] h-[8vh] rounded-[30px] mt-4 flex items-center justify-evenly py-4 fixed bottom-3">
                        <Link to="/">
                          <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1'>
                            <img src={product} alt="product" />
@@ -234,10 +234,10 @@ const OrderDetails = () => {
                            <img src={ordericon} alt="orderIcon" />
                          </div>
                        </Link>
-                       <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-2 pt-1.5'>
+                       <div className='ms-4 me-7 h-12 w-21 bg-white rounded-sm p-2 pt-1.5'>
                          <img src={logistic} alt="logistic" />
                        </div>
-                       <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm pt-2 ps-1.5'>
+                       <div className='ms-4 me-7 h-12 w-21 bg-white rounded-sm pt-2 ps-1.5'>
                          <img src={analytics} alt="analytics" />
                        </div>
                      </footer>

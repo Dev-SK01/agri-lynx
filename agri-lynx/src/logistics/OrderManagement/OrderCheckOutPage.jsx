@@ -26,7 +26,7 @@ const OrderCheckOutPage = () => {
   );
 
   return (
-    <div className="flex items-center justify-center flex-col">
+    <div className="flex items-center justify-center flex-col overflow-x-hidden">
       {/* Header */}
       <header className='flex rounded-xl h-16 pt-2 bg-(--green) mt-5 w-100 text-xl'>
         <Link to="/">
@@ -40,14 +40,14 @@ const OrderCheckOutPage = () => {
       </header>
 
       {/* Status Selector */}
-      <div className='flex rounded-sm  p-2 bg-(--green) mt-5 w-95 text-xl justify-between items-center overflow-x-scroll scrollbar'>
-      <div className='ms-2.5 ' >
+      <div className='flex rounded-sm  p-2 bg-(--green) mt-5 w-[95%] text-xl justify-around items-center overflow-x-scroll scrollbar'>
+      
 
           {['ordered', 'In-Transit', 'delivered'].map((status) => (
             <button
               key={status}
               onClick={() => setOrderStatus(status)}
-              className={`rounded-sm font-bold font-inter ml-2 px-2 py-1   ${status.toLowerCase() === orderStatus.toLowerCase()
+              className={`rounded-sm font-bold font-inter px-4 py-1 ml-2   ${status.toLowerCase() === orderStatus.toLowerCase()
                 ? "bg-(--primary) border-1 border-green-600"
                 : ''
                 }`}
@@ -55,12 +55,12 @@ const OrderCheckOutPage = () => {
               {status.charAt(0).toUpperCase() + status.slice(1)}
             </button>
           ))}
-        </div>
+
       </div>
 
 
       {/* Filtered Orders */}
-      <div className="mt-4 w-full max-w-1xl h-[75vh] overflow-y-auto px-4 flex items-center flex-col">
+      <div className="mt-4 h-[75vh] overflow-y-auto px-4 flex items-center flex-col">
         {filteredOrders.length > 0 ? (
           filteredOrders.map((order) => (
             <Link to={`/orderdetails/${order.orderId}`} key={order.orderId}>
@@ -99,7 +99,7 @@ const OrderCheckOutPage = () => {
 
       {/* Footer */}
       {/* footer */}
-      <footer className="bg-(--green) h-[8vh] rounded-[30px] mt-4 flex items-center justify-evenly py-4 fixed bottom-3">
+      <footer className="bg-(--green) h-[8vh] rounded-[30px] mt-4 flex items-center justify-evenly py-4 fixed bottom-3 w-[95%]">
         <Link to="/">
           <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1'>
             <img src={product} alt="product" />
@@ -110,10 +110,10 @@ const OrderCheckOutPage = () => {
             <img src={ordericon} alt="orderIcon" />
           </div>
         </Link>
-        <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-2 pt-1.5'>
+        <div className='ms-4 me-7 h-12 w-21 bg-white rounded-sm p-2 pt-1.5'>
           <img src={logistic} alt="logistic" />
         </div>
-        <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm pt-2 ps-1.5'>
+        <div className='ms-4 me-7 h-12 w-21 bg-white rounded-sm pt-2 ps-1.5'>
           <img src={analytics} alt="analytics" />
         </div>
       </footer>
