@@ -21,7 +21,6 @@ const OrderMange = () => {
   const {
     OwnerData,
     purchasedList,
-    farmerData,
     updateOrderStatus,
     setMarketOrders,
     marketOrders,
@@ -42,16 +41,14 @@ const OrderMange = () => {
   const price = selectedItem?.price || 0;
   const availableQuantity = selectedItem?.quantity || 0;
   const [userQuantity, setUserQuantity] = useState("");
-
+  const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
   const handleClick = () => {
     if (!userQuantity || Number(userQuantity) <= 0) {
       alert("Please enter a valid quantity.");
       return;
     }
-
-    const newOrderId = useUid(); 
+    const newOrderId = useUid();
     const totalPrice = price * userQuantity;
-
     const OrderData = {
       orderId: newOrderId,
       listingId: selectedItem.listingId,
@@ -62,6 +59,7 @@ const OrderMange = () => {
       orderDate: new Date().toUTCString(),
       orderStatus: "ordered",
       bookingStatus: "pending",
+      month: months[new Date().getMonth()],
       imageUrl: selectedItem.imageUrl,
       customer: {
         customerId: OwnerData.customerId,
@@ -75,16 +73,16 @@ const OrderMange = () => {
         pincode: OwnerData.pincode,
       },
       farmer: {
-        farmerId: farmerData.farmerId,
-        name: farmerData.name,
-        phoneNumber: farmerData.phoneNumber,
-        address: farmerData.address,
-        village: farmerData.village,
-        postoffice: farmerData.postOffice,
-        taluk: farmerData.taluk,
-        district: farmerData.district,
-        pincode: farmerData.pincode,
-        upiId: farmerData.upiId,
+        farmerId: selectedItem.farmer.farmerId,
+        name: selectedItem.farmer.name,
+        phoneNumber: selectedItem.farmer.phoneNumber,
+        address: selectedItem.farmer.address,
+        village: selectedItem.farmer.village,
+        postoffice: selectedItem.farmer.postOffice,
+        taluk: selectedItem.farmer.taluk,
+        district: selectedItem.farmer.district,
+        pincode: selectedItem.farmer.pincode,
+        upiId: selectedItem.farmer.upiId,
       },
     };
 

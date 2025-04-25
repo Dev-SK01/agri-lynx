@@ -134,18 +134,7 @@ export const OwnerContextProvider = ({ children }) => {
       },
     },
   ]);
-  const [farmerData, setFarmerData] = useState({
-    farmerId: "s63hdb38dyb9ae4",
-    name: "prasanth",
-    phoneNumber: "8898812345",
-    address: "123,ucer shop,ucer street",
-    village: "MettuPatti",
-    postOffice: "Pullangudi",
-    taluk: "kalaiyarkovil",
-    district: "Ramanathapuram",
-    pincode: "630661",
-    upiId: "prasanth@upi",
-  });
+
 
   const [purchasedList, setPurchasedList] = useState([
     {
@@ -171,7 +160,7 @@ export const OwnerContextProvider = ({ children }) => {
         taluk: "kalaiyarkovil",
         district: "Ramanathapuram",
         pincode: "630661",
-        upiId: "prasanth@upi",
+        upiId: "devsk@upi",
       },
     },
     {
@@ -281,8 +270,6 @@ export const OwnerContextProvider = ({ children }) => {
         setcancelOrders,
         deliveredOrders,
         setDeliveredOrders,
-        farmerData,
-        setFarmerData,
         selectedStatus,
         setSelectedStatus,
         allOrders,
