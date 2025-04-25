@@ -15,6 +15,7 @@ import OwnerContext from "../context/OwnerContext";
 import { useParams } from "react-router-dom";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "../ProductList/Footer";
+import useUid from "@/hook/useUid";
 
 const OrderMange = () => {
   const {
@@ -48,7 +49,7 @@ const OrderMange = () => {
       return;
     }
 
-    const newOrderId = `order_${Date.now()}`;
+    const newOrderId = useUid(); 
     const totalPrice = price * userQuantity;
 
     const OrderData = {
@@ -88,8 +89,8 @@ const OrderMange = () => {
     };
 
     setMarketOrders((prevOrders) => [...prevOrders, OrderData]);
-    console.log("Order successfully added/updated:", OrderData);
-    console.log("allOrders", allOrders);
+    console.log("OrderData", OrderData);
+    // console.log("allOrders", allOrders);
     updateOrderStatus(newOrderId, "ordered");
     navigate("/myorder");
 
@@ -100,7 +101,7 @@ const OrderMange = () => {
     navigate("/myorder");
   };
 
-  console.log("updated orders", marketOrders);
+  // console.log("updated orders", marketOrders);
 
   const handleChange = (e) => {
     let value = e.target.value;

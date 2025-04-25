@@ -47,7 +47,7 @@ const OrderCheckOutPage = () => {
             <button
               key={status}
               onClick={() => setOrderStatus(status)}
-              className={`rounded-sm font-bold font-inter px-4 py-1 ml-2   ${status.toLowerCase() === orderStatus.toLowerCase()
+              className={`rounded-sm font-bold font-inter px-2 py-1 ml-2   ${status.toLowerCase() === orderStatus.toLowerCase()
                 ? "bg-(--primary) border-1 border-green-600"
                 : ''
                 }`}
@@ -110,10 +110,10 @@ const OrderCheckOutPage = () => {
             <img src={ordericon} alt="orderIcon" />
           </div>
         </Link>
-        <div className='ms-4 me-7 h-12 w-21 bg-white rounded-sm p-2 pt-1.5'>
+        <div className='ms-4 me-7 h-12 w-12 bg-white rounded-sm flex items-center justify-center px-1'>
           <img src={logistic} alt="logistic" />
         </div>
-        <div className='ms-4 me-7 h-12 w-21 bg-white rounded-sm pt-2 ps-1.5'>
+        <div className='ms-4 me-7 h-12 w-12 bg-white rounded-sm flex items-center justify-center px-1'>
           <img src={analytics} alt="analytics" />
         </div>
       </footer>
