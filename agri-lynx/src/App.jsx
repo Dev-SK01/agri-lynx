@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import Registration from "./pages/Registration";
 import RegistrationContext from "./registration/context/RegistrationContext";
 import { ToastContainer, Slide, toast } from "react-toastify";
@@ -24,21 +24,16 @@ import FarmerAnalytics from "./farmers/FarmerAnalytics";
 import FarmerProduceListing from "./farmers/components/FarmerProduceListing";
 import FarmerLogisticInformation from "./farmers/FarmerLogisticInformation";
 import LogisticsBooking from "./farmers/components/LogisticsBooking";
-import LocalMarketOwnerRegistration from "./owners/LocalMarketOwnerRegistration";
 import DashBoard from "./logistics/DashBoard/DashBoard";
 import LocalMarketOwnerProductList from "./owners/LocalMarketOwnerProductList";
 import LocalMarketOwnerMyOrder from "./owners/LocalMarketOwnerMyOrder";
-import Logistic from "./logistics/Logistic";
 import { LogisticContextProvider } from "./logistics/context/LogisticContext";
 import ProductHeader from "./owners/ProductList/ProductHeader";
 import OrderCheckOutPage from "./logistics/OrderManagement/OrderCheckOutPage";
 import LogisticHome from "./logistics/OrderManagement/LogisticHome";
 import OrderDetails from "./logistics/OrderManagement/OrderDetails";
-import LocalMarketOwnerDashboard from "./owners/DashBoard/LocalMarketOwnerDashboard";
 import OwnerDashBoard from "./owners/OwnerDashBoard";
-import LocalMarketOwnerAnalytics from "./owners/Analytics/LocalMarketOwnerAnalytics";
 import Analytics from "./owners/Analytics";
-import OrderMange from "./owners/OrderCheckOut/OrderMange";
 import OrderCheckOut from "./owners/OrderCheckOut";
 import { OwnerContextProvider } from "./owners/context/OwnerContext";
 
@@ -46,7 +41,7 @@ function App() {
   // context
   const { userData, isOtpVerified, isLoading, setUserData } =
     useContext(RegistrationContext);
-  const { setFarmerData, setIsContentLoading } = useContext(FarmerContext);
+  const { setFarmerData, setIsContentLoading,setProduceList } = useContext(FarmerContext);
 
   const localUserData = JSON.parse(localStorage.getItem("userData"));
 
@@ -54,35 +49,24 @@ function App() {
     try {
       setIsContentLoading(true);
       console.log("FarmerID:", farmerId);
-      const response = {
-        farmerId: "s63hdb38dyb9ae4",
-        name: "Prasanth Muthusamy",
-        email: "prasanthfarmer@gmail.com",
-        phoneNumber: "8760254168",
-        alternateNumber: "7094295944",
-        address: "123,ucer shop,ucer street",
-        village: "MettuPatti",
-        postOffice: "Pullangudi",
-        taluk: "kalaiyarkovil",
-        district: "Ramanathapuram",
-        pincode: "630661",
-        state: "TAMIL NADU",
-        ifscCode: "IOBA0000876",
-        accountNumber: "187200023992",
-        accountHolderName: "Prasanth",
-        bankName: "Indian Overseas Bank",
-        bankBranch: "Ramanathapuram",
-        upiId: "prasanth@okaxis",
-        produceList:[]
-      };
-      if (response) {
+      const req = await fetch(import.meta.env.VITE_API_BASE_URL + `/farmer/getfarmerdata`,{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json",
+        },
+        body:JSON.stringify({farmerId}),
+      });
+      const response = await req.json();
+      if (!response?.error) {
         Toast(toast.success, "Data Fetched Successfully");
         setFarmerData(response);
+        setProduceList(response.produceList);
       } else {
         Toast(toast.error, "Failed to Fetch Data");
       }
     } catch (err) {
       Toast(toast.error, err.message);
+      console.error(err.message);
     } finally {
       setTimeout(() => setIsContentLoading(false), 2000);
     }

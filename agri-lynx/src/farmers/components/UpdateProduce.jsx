@@ -72,7 +72,7 @@ const UpdateProduce = () => {
     }
   }
 
-  const updateFarmerProduce = () => {
+  const updateFarmerProduce = async () => {
     // updating price
    produceData[0].price = updatedPrice;
    produceData[0].quantity = updatedQuantity;
@@ -87,12 +87,21 @@ const UpdateProduce = () => {
     // console.log(produceData[0]);
     try {
       // update backend api
-      const res = listingId;
-      if (res) {
+      const req = await fetch(import.meta.env.VITE_API_BASE_URL + "/farmer/updateproduce", {
+        method:"POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(produceData[0]),
+      })
+      const res = await req.json();
+      if (res.isUpdated) {
         Toast(toast.success, "Updated Successfully.");
         // navigating to home after updation and reversing  array 
         setProduceList([...remainingProduceData,produceData[0]].reverse())
         setTimeout(() => navigate("/"), 2000);
+      }else{
+        Toast(toast.error, "Cannot Update Produce!");
       }
     } catch (err) {
       Toast(toast.error, err.messsage);

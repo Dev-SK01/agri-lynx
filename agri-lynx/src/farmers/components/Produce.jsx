@@ -15,7 +15,7 @@ const Produce = () => {
       key={produce?.listingId}
     >
       <div className="bg-(--primary) rounded-lg flex items-center justify-center h-40 w-34">
-        {produce?.imageUrl && (
+        {produce?.imageUrl !== produce?.commodity && (
           <img
             src={produce?.imageUrl}
             alt={produce?.commodity}
@@ -23,7 +23,7 @@ const Produce = () => {
             loading="lazy"
           />
         )}
-        {!produce?.imageUrl && <p className="rounded-lg text-center font-bold">{produce?.commodity}</p>}
+        {produce?.imageUrl == produce?.commodity && <p className="rounded-lg text-center font-bold">{produce?.commodity}</p>}
       </div>
       <Link to={`/updateproduce/${produce?.listingId}`}>
         <img
@@ -38,10 +38,10 @@ const Produce = () => {
         </p>
         <div className="flex items-center justify-around mt-4">
           <p className="bg-(--primary) px-5 py-2 rounded-lg font-inter font-bold text-center text-violet-400">
-            {produce?.quantity + "KG"}
+          {produce?.quantity + " KG"}
           </p>
           <p className="bg-(--primary) px-5 py-2 rounded-lg font-inter font-bold text-center ml-2 text-orange-400">
-            {produce?.price + "/KG"}
+          &#8377;{produce?.price + "/KG"}
           </p>
         </div>
         <p className="bg-(--primary) px-5 py-3 rounded-lg font-inter font-bold text-center  mt-3 text-green-600">

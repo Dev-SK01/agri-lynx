@@ -45,7 +45,7 @@ const Registration = () => {
   // router navigation
   const navigate = useNavigate();
   // farmers registration
-  const handleFarmerRegistration = () => {
+  const handleFarmerRegistration = async () => {
     // disable btn
     setIsClicked(true);
     if (
@@ -68,7 +68,7 @@ const Registration = () => {
         email,
         name,
         phoneNumber,
-        alternatePhoneNumber,
+        alternateNumber:alternatePhoneNumber,
         address,
         taluk,
         district,
@@ -80,24 +80,35 @@ const Registration = () => {
         bankName,
         bankBranch,
         upiId,
-        userType // send res for login data
+        produceList:[],
       };
       console.log(farmerData);
-      // settimg timout for btn disabled
+      // set timout for btn disabled
       setTimeout(() => setIsClicked(false), 3000);
       try {
         //backend api
-        const response = { userId: "123456789", userType };
-        // checking registered user or not from server response
-        Toast(toast.success, "registered Successfully");
-        setUserData(response);
-        // localstorage for user data
-        localStorage.setItem("userData", JSON.stringify(response));
-        // clearing form function;
-        clearForm();
-        Toast(toast.update, "Redirecting....");
-        navigate("farmerdashboard");
-        setOtpVerified(false);
+        const req = await fetch(import.meta.env.VITE_API_BASE_URL + "/farmer/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(farmerData),
+        });
+        const response = await req.json();
+        if(response?.error){
+          Toast(toast.error, "Server Error");
+          setIsClicked(false);
+        }else{
+          Toast(toast.success, "registered Successfully");
+          setUserData(response);
+          // localstorage for user data
+          localStorage.setItem("userData", JSON.stringify(response));
+          // clearing form function;
+          clearForm();
+          navigate("farmerdashboard");
+          setOtpVerified(false);
+        }
+        
       } catch (err) {
         console.log(err.message);
       }

@@ -120,42 +120,57 @@ const FarmerProduceListing = () => {
           maxPrice: marketPrice.maxPrice,
           price: inputPrice,
           quantity: inputQuantity,
-          imageUrl: await fetchImage(optionValue),
+          imageUrl: await fetchImage(optionValue) || optionValue,
           listingId: useUid(),
           farmer: {
-            farmerId: farmerData.farmerId,
+            farmerId: farmerData._id,
             name: farmerData.name,
             phoneNumber: farmerData.phoneNumber,
             address: farmerData.address,
-            village: farmerData.village,
-            postOffice: farmerData.postOffice,
             taluk: farmerData.taluk,
             district: farmerData.district,
             pincode: farmerData.pincode,
             upiId: farmerData.upiId,
+            postOffice: "post",
+            village: "village",
           },
         };
         console.log(__newProduceData);
-        // copying the farmer data
-        const __FarmerData = farmerData;
-        __FarmerData.produceList.push(__newProduceData);
-        setFarmerData(__FarmerData);
         try {
           // backend api
-          const res = __newProduceData;
-          if (res) {
+          const req = await fetch(
+            import.meta.env.VITE_API_BASE_URL + "/farmer/createproduce",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(__newProduceData),
+            }
+          );
+          const res = await req.json();
+          if (res.isCreated) {
             toast.success("Produce Added successFully", {
               toastId: "toast",
             });
+            // copying the farmer data
+            const __FarmerData = farmerData;
+            __FarmerData.produceList.push(__newProduceData);
+            setFarmerData(__FarmerData);
             // new update state
             setProduceList(produceList);
             setTimeout(() => navigate("/"), 2000);
             // console.log([...produceList,produceDetails]);
+          } else {
+            toast.error("Cannot Add Produce", {
+              toastId: "toast",
+            });
           }
         } catch (err) {
           toast.error(err.message, {
             toastId: "toast",
           });
+          console.log(err.message);
         }
         // console.log("ProduceData : ", produceDetails);
       }

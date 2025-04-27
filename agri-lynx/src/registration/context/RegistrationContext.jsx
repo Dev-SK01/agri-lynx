@@ -87,31 +87,57 @@ export const RegistrationContextProvider = ({ children }) => {
     setLicenseNumber("");
   };
   // registration handlers backend api
-  const handleRegisteredUser = async (email) => {
+  const handleRegisteredUser = async (email, userType) => {
     try {
-      const response = false;
+      const req = await fetch(
+        import.meta.env.VITE_API_BASE_URL + "/checkuser",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            type: userType,
+          }),
+        }
+      );
+      const response = await req.json();
       // send true or false from backend if user presents
-      if (response) {
-        return true;
-      } else {
-        return false;
-      }
+      return response.isRegistered;
     } catch (err) {
       Toast(toast.error, err.message);
     }
   };
-  const handleEmailVerification = () => {
+  // registration handlers backend api
+  const handleEmailVerification = async () => {
     try {
       // validating email
       setIsLoading(true);
       if (validateEmail(email)) {
         // checking user is registered
-        const isRegistered = handleRegisteredUser(email);
+        const isRegistered = await handleRegisteredUser(email, userType);
         if (!isRegistered) {
           // email otp api implementation
-          setCodeSent(true);
-          // otp sent message
-          Toast(toast.success, "OTP sent Successfully");
+          const req = await fetch(
+            import.meta.env.VITE_API_BASE_URL + "/sendotp",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ email }),
+            }
+          );
+          const response = await req.json();
+          setCodeSent(response.isCodeSent);
+          // send true or false from backend if otp sent
+          if (response.isCodeSent) {
+            // otp sent message
+            Toast(toast.success, "OTP sent Successfully");
+          } else {
+            Toast(toast.error, "OTP not sent");
+          }
         } else {
           Toast(toast.error, "User Already Registered! LOGIN");
           clearForm();
@@ -121,48 +147,82 @@ export const RegistrationContextProvider = ({ children }) => {
         Toast(toast.error, "Enter Proper Email!");
       }
       // loading for user experience
-      setTimeout(() => setIsLoading(false), 2000);
+      setIsLoading(false);
     } catch (err) {
       Toast(toast.error, err.message);
     }
   };
-  const verifyOtp = () => {
+  const verifyOtp = async () => {
     try {
       if (!otp || otp.length !== 6) {
         Toast(toast.error, "Enter OTP!");
       } else {
         // otp verification api
-        setOtpVerified(true);
-        setIsLoading(true);
-        setTimeout(() => setIsLoading(false), 2000);
-        Toast(toast.success, "OTP Verified");
+        const req = await fetch(
+          import.meta.env.VITE_API_BASE_URL + `/verifyotp?otp=${otp}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const response = await req.json();
+        // send true or false from backend if otp verified
+        if (!response.verified) {
+          Toast(toast.error, "OTP Not Verified!");
+          setOtpVerified(response.verified);
+          setIsLoading(false);
+        } else {
+          // otp verified message
+          Toast(toast.success, "OTP Verified");
+          setOtpVerified(true);
+          setIsLoading(true);
+          // loading for user experience
+          setTimeout(() => setIsLoading(false), 2000);
+        }
       }
     } catch (err) {
       Toast(toast.error, err.message);
     }
   };
-  const handleUserLogin = () => {
+  const handleUserLogin = async () => {
     try {
       // validating email
+      setIsLoading(true);
       if (validateEmail(email)) {
         // checking user is registered
-        const isRegistered = handleRegisteredUser(email);
+        const isRegistered = await handleRegisteredUser(email, userType);
         if (isRegistered) {
           // email otp api implementation
-          setIsLoading(true);
+          const req = await fetch(
+            import.meta.env.VITE_API_BASE_URL + "/sendotp",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ email }),
+            }
+          );
+          const response = await req.json();
           // loading for user experience
-          setTimeout(() => setIsLoading(false), 2000);
-          setCodeSent(true);
-          // otp sent message
-          Toast(toast.success, "OTP sent Successfully");
+          setCodeSent(response.isCodeSent);
+          if (response.isCodeSent) {
+            // otp sent message
+            Toast(toast.success, "OTP sent Successfully");
+          } else {
+            Toast(toast.error, "OTP not sent");
+          }
         } else {
-          Toast(toast.error, "User Not Registered!");
+          Toast(toast.error, "Email Not Registered !");
           clearForm();
           navigate("/");
         }
       } else {
         Toast(toast.error, "Enter Proper Email!");
       }
+      setIsLoading(false);
     } catch (err) {
       Toast(toast.error, err.message);
     }
@@ -183,6 +243,7 @@ export const RegistrationContextProvider = ({ children }) => {
         setUserData(response);
         // localstorage for user data
         localStorage.setItem("userData", JSON.stringify(response));
+        // navigatin user based on their type
         if (userType === "farmer") {
           navigate("farmerdashboard");
           setOtpVerified(false);
@@ -198,7 +259,7 @@ export const RegistrationContextProvider = ({ children }) => {
       }
     }
   };
-  
+
   return (
     <RegistrationContext
       value={{

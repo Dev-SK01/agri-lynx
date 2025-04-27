@@ -4,14 +4,14 @@ const FarmerContext = createContext({});
 
 export const FarmerContextProvider = ({ children }) => {
   // farmer data from server
-  const [farmerData, setFarmerData] = useState();
+  const [farmerData, setFarmerData] = useState([]);
   const [isContentLoading, setIsContentLoading] = useState(false);
   // copying the farmer produce list
   const farmerProduces = farmerData?.produceList;
   // console.log("FarmerProduces :",farmerProduces);
   const [produceList, setProduceList] = useState([]);
   const [produceDetails ,setProduceDetails] = useState();
-  // console.log("ProduceList :" , produceList);
+  console.log("ProduceList :" , produceList);
 
   // farmer orders states
   const [farmerOrders, setFarmerOrders] = useState([
