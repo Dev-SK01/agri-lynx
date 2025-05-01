@@ -19,6 +19,8 @@ import BottomNavigation from "./BottomNavigation";
 import Navigation from "./Navigation";
 import FarmerContext from "../context/FarmerContext";
 import Toast from "@/utils/toast";
+import { SelectLabel } from "@radix-ui/react-select";
+import { add } from "date-fns";
 
 const LogisticsBooking = () => {
   const [selectedName, setSelectedName] = useState("");
@@ -32,16 +34,16 @@ const LogisticsBooking = () => {
   const { partnerId } = useParams();
 
   const logisticsData = LogisticsDetails.filter((logistics) => {
-    if (
-      logistics.logisticsPartnerId.toLowerCase() === partnerId.toLowerCase()
-    ) {
+    if (logistics._id.toLowerCase() === partnerId.toLowerCase()) {
       return logistics;
     }
   });
 
-  function handleBookLogisticsPartner(e) {
+  // logistics booking
+  async function handleBookLogisticsPartner() {
+    //user selected order
     const userSelectedOrder = farmerOrders.filter((farmerOrders) => {
-      if (selectedName === farmerOrders.customer.name) {
+      if (selectedName === farmerOrders.orderId) {
         return farmerOrders;
       }
     });
@@ -52,6 +54,7 @@ const LogisticsBooking = () => {
         return farmerOrders;
       }
     });
+    // farmer selected logistics data
     const logistics = logisticsData[0];
     // appending logistics data to order datai
     if (
@@ -65,19 +68,41 @@ const LogisticsBooking = () => {
     } else {
       try {
         // backend api
-        const res = true;
-        if (res) {
+        const req = await fetch(import.meta.env.VITE_API_BASE_URL +"/farmer/booklogistics",{
+          method:"POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            orderId:userSelectedOrder[0].orderId,
+            bookingStatus:"booked",
+            logistics:{
+              logisticsId:logistics._id,
+              name:logistics.name,
+              phoneNumber:logistics.phoneNumber,
+              email:logistics.email,
+              address:logistics.address,
+              taluk:logistics.taluk,
+              district:logistics.district,
+              pincode:logistics.pincode,
+            },
+          }),
+        })
+        const res = await req.json();
+        if (res.isBooked) {
           // changing booking status
-          userSelectedOrder[0].bookingStatus = "booked";
-          const logisticsAddedData = { ...userSelectedOrder[0], logistics };
-          console.log(logisticsAddedData, logisticsUpdatedOrders);
-          // adding the logistics added data to state.
-          logisticsUpdatedOrders.push(logisticsAddedData);
-          // console.log(logisticsUpdatedOrders);
-          // updating farmer orders state
-          setFarmerOrders(logisticsUpdatedOrders);
+          // userSelectedOrder[0].bookingStatus = "booked";
+          // const logisticsAddedData = { ...userSelectedOrder[0], logistics };
+          // console.log(logisticsAddedData, logisticsUpdatedOrders);
+          // // adding the logistics added data to state.
+          // logisticsUpdatedOrders.push(logisticsAddedData);
+          // // console.log(logisticsUpdatedOrders);
+          // // updating farmer orders state
+          // setFarmerOrders(logisticsUpdatedOrders);
           Toast(toast.success, "booked Successfully");
           navigate("/farmerOrders");
+        }else{
+          Toast(toast.error, "Booking Failed");
         }
       } catch (err) {
         Toast(toast.error, err.message);
@@ -97,19 +122,20 @@ const LogisticsBooking = () => {
             <SelectValue placeholder="Select Customer" />
           </SelectTrigger>
           <SelectContent className="font-inter font-bold">
-            <SelectGroup>
-              {farmerOrders.map((farmerOrder) => (
+            {farmerOrders.map((farmerOrder) => (
+              <SelectGroup>
+                <SelectLabel>{farmerOrder?.customer?.name}</SelectLabel>
                 <SelectItem
-                  key={farmerOrder.orderId}
-                  value={farmerOrder.customer.name}
+                  key={farmerOrder?.orderId}
+                  value={farmerOrder?.orderId}
                 >
-                  {farmerOrder.customer.name}
+                  {farmerOrder.orderId.toString().toUpperCase()}
                 </SelectItem>
-              ))}
-            </SelectGroup>
+              </SelectGroup>
+            ))}
           </SelectContent>
         </Select>
-        
+
         <div className="h-[61dvh] mt-3 overflow-y-scroll">
           {logisticsData.map((logistics, index) => (
             <div key={index}>
@@ -137,7 +163,7 @@ const LogisticsBooking = () => {
                   <img src={message} alt="mail" className="me-4" />
                 </div>
               </div>
-              <div className="font-inter font-bold  mt-2  mb-2">
+              {/* <div className="font-inter font-bold  mt-2  mb-2">
                 <p>Village</p>
                 <div className="flex justify-between mt-2  p-1 ps-3 bg-(--teritary) h-10  text-lg text-gray-500 w-90 rounded border-2 border-gray-300">
                   {logistics.village}{" "}
@@ -150,7 +176,7 @@ const LogisticsBooking = () => {
                   {logistics.postOffice}{" "}
                   <img src={location} alt="location" className="me-4" />
                 </div>
-              </div>
+              </div> */}
               <div className="font-inter font-bold  mt-2  mb-2">
                 <p>Taluk</p>
                 <div className="flex justify-between mt-2  p-1 ps-3 bg-(--teritary) h-10  text-lg text-gray-500 w-90 rounded border-2 border-gray-300">
@@ -190,7 +216,7 @@ const LogisticsBooking = () => {
           ))}
         </div>
         <button
-          onClick={(e) => handleBookLogisticsPartner()}
+          onClick={handleBookLogisticsPartner}
           type="submit"
           className="flex gap-2 font-bold text-xl px-1 mt-2 p-1.5 text-(--primary)  bg-(--secondary) rounded h-[5dvh] "
         >

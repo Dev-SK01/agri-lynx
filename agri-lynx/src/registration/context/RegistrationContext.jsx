@@ -15,6 +15,7 @@ export const RegistrationContextProvider = ({ children }) => {
   const [userType, setUserType] = useState("");
   // personal details states
   const [name, setName] = useState("");
+  const [shopName,setShopName] = useState(""); 
   const [phoneNumber, setPhoneNumber] = useState("pn");
   const [alternatePhoneNumber, setAlternatePhoneNumber] = useState("an");
   const [personalDetailsError, setPersonalDetailsError] = useState({
@@ -276,6 +277,8 @@ export const RegistrationContextProvider = ({ children }) => {
         setUserType,
         name,
         setName,
+        shopName,
+        setShopName,
         phoneNumber,
         setPhoneNumber,
         alternatePhoneNumber,

@@ -19,6 +19,7 @@ const Registration = () => {
     name,
     phoneNumber,
     alternatePhoneNumber,
+    shopName,
     address,
     taluk,
     district,
@@ -68,7 +69,7 @@ const Registration = () => {
         email,
         name,
         phoneNumber,
-        alternateNumber:alternatePhoneNumber,
+        alternateNumber: alternatePhoneNumber,
         address,
         taluk,
         district,
@@ -80,25 +81,28 @@ const Registration = () => {
         bankName,
         bankBranch,
         upiId,
-        produceList:[],
+        produceList: [],
       };
       console.log(farmerData);
       // set timout for btn disabled
       setTimeout(() => setIsClicked(false), 3000);
       try {
         //backend api
-        const req = await fetch(import.meta.env.VITE_API_BASE_URL + "/farmer/register", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(farmerData),
-        });
+        const req = await fetch(
+          import.meta.env.VITE_API_BASE_URL + "/farmer/register",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(farmerData),
+          }
+        );
         const response = await req.json();
-        if(response?.error){
+        if (response?.error) {
           Toast(toast.error, "Server Error");
           setIsClicked(false);
-        }else{
+        } else {
           Toast(toast.success, "registered Successfully");
           setUserData(response);
           // localstorage for user data
@@ -108,14 +112,13 @@ const Registration = () => {
           navigate("farmerdashboard");
           setOtpVerified(false);
         }
-        
       } catch (err) {
         console.log(err.message);
       }
     }
   };
   // local market owners registration
-  const handleLocalMarketRegistration = () => {
+  const handleLocalMarketRegistration = async () => {
     // disable btn
     setIsClicked(true);
     if (
@@ -134,36 +137,52 @@ const Registration = () => {
         email,
         name,
         phoneNumber,
-        alternatePhoneNumber,
+        alternateNumber: alternatePhoneNumber,
+        shopName,
         address,
         taluk,
         district,
         state,
         pincode,
-        userType // send res for login data
       };
       console.log(marketData);
-      setTimeout(() => setIsClicked(false), 3000);
       try {
         //backend api
-        const response = { userId: "123456789", userType };
-        // checking registered user or not from server response
-        Toast(toast.success, "registered Successfully");
-        setUserData(response);
-        // localstorage for user data
-        localStorage.setItem("userData", JSON.stringify(response));
-        // clearing form function;
-        clearForm();
-        Toast(toast.update, "Redirecting....");
-        navigate("localmarketdashboard");
-        setOtpVerified(false);
+        const req = await fetch(
+          import.meta.env.VITE_API_BASE_URL + "/owner/register",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(marketData),
+          }
+        );
+        const response = await req.json();
+        if (response?.error) {
+          Toast(toast.error, "Server Error");
+          setIsClicked(false);
+        } else {
+          // checking registered user or not from server response
+          Toast(toast.success, "registered Successfully");
+          setUserData(response);
+          // localstorage for user data
+          localStorage.setItem("userData", JSON.stringify(response));
+          // clearing form function;
+          clearForm();
+          Toast(toast.update, "Redirecting....");
+          navigate("localmarketdashboard");
+          setOtpVerified(false);
+        }
+        // btn disable state
+        setIsClicked(false);
       } catch (err) {
         console.log(err.message);
       }
     }
   };
   // logistics registration
-  const handleLogisticsRegistration = () => {
+  const handleLogisticsRegistration = async () => {
     // disable btn
     setIsClicked(true);
     if (
@@ -189,7 +208,7 @@ const Registration = () => {
         email,
         name,
         phoneNumber,
-        alternatePhoneNumber,
+        alternateNumber: alternatePhoneNumber,
         address,
         taluk,
         district,
@@ -198,28 +217,43 @@ const Registration = () => {
         vehicleType,
         vehicleNumber,
         licenseNumber,
-        userType // send res for login data
       };
       console.log(logisticsData);
-      setTimeout(() => setIsClicked(false), 3000);
       try {
         //backend api
-        const response = { userId: "123456789", userType };
-        // checking registered user or not from server response
-        Toast(toast.success, "registered Successfully");
-        setUserData(response);
-        // localstorage for user data
-        localStorage.setItem("userData", JSON.stringify(response));
-        // clearing form function;
-        clearForm();
-        Toast(toast.update, "Redirecting....");
-        navigate("logisticdashboard");
-        setOtpVerified(false);
+        const req = await fetch(import.meta.env.VITE_API_BASE_URL + "/logistic/register",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(logisticsData),
+          }
+        );
+        const response = req.json();
+        if (response?.error) {
+          Toast(toast.error, "Server Error");
+          setIsClicked(false);
+        } else {
+          // checking registered user or not from server response
+          Toast(toast.success, "registered Successfully");
+          setUserData(response);
+          // localstorage for user data
+          localStorage.setItem("userData", JSON.stringify(response));
+          // clearing form function;
+          clearForm();
+          Toast(toast.update, "Redirecting....");
+          navigate("logisticdashboard");
+          setOtpVerified(false);
+        }
+        // btn disable state
+        setIsClicked(false);
       } catch (err) {
         console.log(err.message);
       }
     }
   };
+  
   return (
     !userData && (
       <>
@@ -253,7 +287,7 @@ const Registration = () => {
               </>
             ) : userType == "market" ? (
               <>
-                <PersonalDetails />
+                <PersonalDetails type="market" />
                 <AddressDetails />
                 <Button
                   type="submit"

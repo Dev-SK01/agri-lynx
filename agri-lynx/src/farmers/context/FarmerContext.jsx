@@ -11,7 +11,7 @@ export const FarmerContextProvider = ({ children }) => {
   // console.log("FarmerProduces :",farmerProduces);
   const [produceList, setProduceList] = useState([]);
   const [produceDetails ,setProduceDetails] = useState();
-  console.log("ProduceList :" , produceList);
+  // console.log("ProduceList :" , produceList);
 
   // farmer orders states
   const [farmerOrders, setFarmerOrders] = useState([

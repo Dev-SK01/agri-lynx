@@ -3,10 +3,12 @@ import { Input } from "@/components/ui/input";
 import phoneSvg from "../../assets/phone.svg";
 import RegistrationContext from "../context/RegistrationContext";
 
-const PersonalDetails = () => {
+const PersonalDetails = ({ type }) => {
   const {
     name,
     setName,
+    shopName,
+    setShopName,
     phoneNumber,
     setPhoneNumber,
     alternatePhoneNumber,
@@ -93,6 +95,21 @@ const PersonalDetails = () => {
           <p className="text-red-600 font-semibold">enter proper name</p>
         )}
       </div>
+      {/* shop name */}
+      {type == "market" && (
+        <div className="w-full max-w-sm">
+          <label htmlFor="name" className="font-bold font-inter mb-2">
+            Shop Name
+          </label>
+          <Input
+            type="text"
+            placeholder="Enter Your Shop Name"
+            className="font-inter bg-(--teritary) pt-5 pb-5"
+            id="name"
+            onChange={(e) => handleUserInput(e, setShopName, "name")}
+          />
+        </div>
+      )}
       <div className="w-full max-w-sm mt-5">
         <label htmlFor="number" className="font-bold font-inter flex mb-2">
           Phone Number <img src={phoneSvg} className="ml-2 h-[20px] w-[20px]" />
@@ -102,9 +119,7 @@ const PersonalDetails = () => {
           placeholder="Enter Your Phone Number"
           className="font-inter  bg-(--teritary) pt-5 pb-5"
           id="number"
-          onChange={(e) =>
-            handleUserInput(e, setPhoneNumber, "phone")
-          }
+          onChange={(e) => handleUserInput(e, setPhoneNumber, "phone")}
         />
         {personalDetailsError.numberError && (
           <p className="text-red-600 font-semibold">
@@ -125,7 +140,9 @@ const PersonalDetails = () => {
           placeholder="Enter Your Alternate Number"
           className="font-inter  bg-(--teritary) pt-5 pb-5"
           id="alter-number"
-          onChange={(e) =>handleUserInput(e,setAlternatePhoneNumber,"alternate")}
+          onChange={(e) =>
+            handleUserInput(e, setAlternatePhoneNumber, "alternate")
+          }
         />
         {alternatePhoneNumber == phoneNumber && (
           <p className="text-red-600 font-semibold">

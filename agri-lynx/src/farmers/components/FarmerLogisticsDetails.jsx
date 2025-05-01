@@ -11,29 +11,28 @@ import location from "../../assets/location.svg";
 import logistics from "../../assets/logistic.svg";
 import { SearchIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import FarmerContext from "../context/FarmerContext";
 
 const FarmerLogisticsDetails = () => {
-  const { LogisticsDetails, setLogisticsDetails } = useContext(
-    FarmerLogisticsContext
-  );
-
+  const { LogisticsDetails, setLogisticsDetails} = useContext(FarmerLogisticsContext);
+  const {farmerData} = useContext(FarmerContext);
   const [searchItem, setSearchItem] = useState("");
   LogisticsDetails.filter((logis) =>
     logis.name.toLowerCase().includes(searchItem)
   );
 
   // console.log(searchItem);
-
-  useEffect(() => {
-    setSearchItem;
-  }, [searchItem]);
-
   // console.log(LogisticsDetails);
 
   async function handleLogisticDetails() {
     try {
-      const req = "";
-      const res = LogisticsDetails;
+      const req = await fetch(import.meta.env.VITE_API_BASE_URL + `/farmer/getlogistics?location=${farmerData.district}`,{
+        method:"GET",
+        headers:{
+          "Content-Type": "application/json",
+        }
+      });
+      const res = await req.json();
       if (res) {
         Toast(toast.success, "Partner's Fetched Successfully");
         setLogisticsDetails(res);
@@ -119,7 +118,7 @@ const FarmerLogisticsDetails = () => {
               </p>
               <div className="flex-col justify-items-center w-[95%] ">
                 <Link
-                  to={`/farmerlogisticsbooking/${Logistics.logisticsPartnerId}`}
+                  to={`/farmerlogisticsbooking/${Logistics?._id}`}
                   className="flex gap-2   p-1 text-(--primary)  bg-(--secondary) rounded  "
                 >
                   Book Now <img src={delivery} alt="delivery" />

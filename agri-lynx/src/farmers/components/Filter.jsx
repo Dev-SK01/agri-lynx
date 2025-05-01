@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import FarmerContext from "../context/FarmerContext";
 import Toast from "@/utils/toast";
 import { toast } from "react-toastify";
@@ -22,72 +22,101 @@ const Filter = () => {
   } = useContext(FarmerContext);
 
   // here added orders data for set state function
-  const handleOrderedOrders = () => {
+  const handleOrderedOrders = async () => {
     setIsContentLoading(true);
     setSelectedStatus("ordered");
     try {
       // backend api
-      const req = "";
-      const res = farmerOrders;
-      setFarmerOrders(res);
-      setTimeout(() => setIsContentLoading(false), 2000);
+      const req = await fetch(import.meta.env.VITE_API_BASE_URL + `/farmer/getfarmerorders?farmerId=${farmerData._id}&status=ordered`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const res = await req.json();
+      setFarmerOrders(res.reverse());
+      setTimeout(() => setIsContentLoading(false), 1500);
     } catch (err) {
       Toast(toast.error, err.message);
     }
   };
-  const handlePackedOrders = () => {
+  const handlePackedOrders = async () => {
     setIsContentLoading(true);
     setSelectedStatus("packed");
     try {
-      // backend api
-      const req = "";
-      const res = packedOrders;
-      setPackedOrders(res);
+       // backend api
+       const req = await fetch(import.meta.env.VITE_API_BASE_URL + `/farmer/getfarmerorders?farmerId=${farmerData._id}&status=packed`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const res = await req.json();
+      setPackedOrders(res.reverse());
       setTimeout(() => setIsContentLoading(false), 2000);
     } catch (err) {
       Toast(toast.error,err.message);
     }
   };
-  const handleShippedOrders = () => {
+  const handleShippedOrders = async () => {
     setIsContentLoading(true);
     setSelectedStatus("shipped");
     try {
       // backend api
-      const req = "";
-      const res = shippedOrders;
-      setShippedOrders(res);
+      const req = await fetch(import.meta.env.VITE_API_BASE_URL + `/farmer/getfarmerorders?farmerId=${farmerData._id}&status=shipped`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const res = await req.json();
+      setShippedOrders(res.reverse());
       setTimeout(() => setIsContentLoading(false), 2000);
     } catch (err) {
       Toast(toast.error, err.message);
     }
   };
-  const handleDeliveredOrders = () => {
+  const handleDeliveredOrders = async () => {
     setIsContentLoading(true);
     setSelectedStatus("delivered")
     try{
-      // backend api
-      const req = "";
-      const res = deliveredorders;
-      setDeliveredOrders(res);
+       // backend api
+       const req = await fetch(import.meta.env.VITE_API_BASE_URL + `/farmer/getfarmerorders?farmerId=${farmerData._id}&status=delivered`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const res = await req.json();
+      setDeliveredOrders(res.reverse());
       setTimeout(()=> setIsContentLoading(false),2000);
     }catch(err){
       Toast(toast.error,err.message)
     }
   }
-  const handleCancelledOrders = () => {
+  const handleCancelledOrders = async() => {
     setIsContentLoading(true);
     setSelectedStatus("cancelled")
     try{
-      // backend api
-      const req = "";
-      const res = cancelledOrders;
-      setCancelledOrders(res);
+       // backend api
+       const req = await fetch(import.meta.env.VITE_API_BASE_URL + `/farmer/getfarmerorders?farmerId=${farmerData._id}&status=cancelled`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const res = await req.json();
+      setCancelledOrders(res.reverse());
       setTimeout(()=> setIsContentLoading(false),2000);
     }catch(err){
       Toast(toast.error,err.message)
     }
   }
 
+  // farmer order status fetch
+  useEffect(()=>{
+   handleOrderedOrders();
+  },[])
 
   return (
     <div className="flex rounded-sm  p-2 bg-(--green) mt-5 w-full text-xl justify-between items-center overflow-x-scroll scrollbar">
