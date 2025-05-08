@@ -16,7 +16,7 @@ import { toast } from "react-toastify";
 
 const AnalyticsHistory = () => {
   
-  const { farmerProduces,farmerData , produceList} = useContext(FarmerContext);
+  const {farmerData , produceList} = useContext(FarmerContext);
   const [analyticsData,setAnalyticsData] = useState([]);
   
   const dummyData = [

@@ -1,9 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
-import {BrowserRouter,Routes,Route, data} from "react-router-dom"
-
-import Footer from "./components/Footer";
-import Header from "./components/Header";
-import FarmerLogisticsContext from "./context/FarmerLogisticsContext";
+import React from "react";
 import FarmerLogisticsDetails from "./components/FarmerLogisticsDetails";
 import Navigation from "./components/Navigation";
 import BottomNavigation from "./components/BottomNavigation";

@@ -26,7 +26,7 @@ const LogisticsBooking = () => {
   const [selectedName, setSelectedName] = useState("");
   const navigate = useNavigate();
 
-  const { LogisticsDetails, setLogisticsDetails } = useContext(
+  const { LogisticsDetails,} = useContext(
     FarmerLogisticsContext
   );
   const { farmerOrders, setFarmerOrders } = useContext(FarmerContext);

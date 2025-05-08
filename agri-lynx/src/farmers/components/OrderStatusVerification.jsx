@@ -11,18 +11,29 @@ import Toast from "@/utils/toast";
 import { toast } from "react-toastify";
 import FarmerContext from "../context/FarmerContext";
 
-const OrderStatusVerification = ({ orderData, setOtpView, orderId,orderStatus }) => {
+const OrderStatusVerification = ({
+  orderData,
+  setOtpView,
+  orderId,
+  orderStatus,
+}) => {
   const { packedOrders, setPackedOrders, shippedOrders, setShippedOrders } =
     useContext(FarmerContext);
   const [otp, setOtp] = useState("");
   //   console.log("OTP :", otp);
 
-  const sendOtp = () => {
+  const sendOtp = async () => {
     try {
       // email otp send api
-      const req = "";
-      const res = true;
-      if (res) {
+      const req = await fetch(import.meta.env.VITE_API_BASE_URL + "/sendOtp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: orderData[0]?.logistics?.email }),
+      });
+      const res = await req.json();
+      if (res.isCodeSent) {
         Toast(toast.success, "OTP send Successfully");
       } else {
         Toast(toast.error, "Failed to send OTP!");
@@ -32,29 +43,53 @@ const OrderStatusVerification = ({ orderData, setOtpView, orderId,orderStatus })
     }
   };
 
-  const verifyOtp = () => {
+  const verifyOtp = async () => {
     if (otp.length == 6) {
       try {
         // otp verify backend api
-        const req = "";
-        const res = true;
-        if (res) {
-          // packed and shipped state changes
-          const shippedOrder = orderData;
-          const packedOrder = packedOrders.filter((order) => {
-            if (orderId.toLowerCase() !== order.orderId.toLowerCase()) {
-              return order;
+        const req = await fetch(
+          import.meta.env.VITE_API_BASE_URL + `/verifyotp?otp=${otp}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const res = await req.json();
+        if (res.verified) {
+          // update order status
+          const req = await fetch(import.meta.env.VITE_API_BASE_URL + "/farmer/updateorderstatus",{
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ orderId, status:orderStatus }),
             }
-          });
-          shippedOrder[0].orderStatus = orderStatus;
-          console.log(shippedOrder);
-          setShippedOrders([...shippedOrders, shippedOrder[0]]);
-          setPackedOrders(packedOrder);
+          );
+          const res = await req.json();
+          if (res.isUpdated) {
+            const shippedOrder = orderData;
+            const packedOrder = packedOrders.filter((order) => {
+              if (orderId.toLowerCase() !== order.orderId.toLowerCase()) {
+                return order;
+              }
+            });
+            shippedOrder[0].orderStatus = orderStatus;
+            console.log(shippedOrder);
+            setShippedOrders([...shippedOrders, shippedOrder[0]]);
+            setPackedOrders(packedOrder);
+            Toast(toast.success, "Order Status Updated Successfully");
+            setOtpView(false);
+          } else {
+            Toast(toast.error, "Failed to update order status!");
+          }
+          // packed and shipped state changes
+
           Toast(toast.success, "Order Status Updated Successfully");
-          setTimeout(() => setOtpView(false), 2000);
         } else {
           Toast(toast.error, "Failed To Verify OTP!");
-          setTimeout(() => setOtpView(false), 2000);
+          setOtpView(false);
         }
       } catch (err) {
         Toast(toast.error, err.message);

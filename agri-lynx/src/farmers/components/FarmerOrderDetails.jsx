@@ -30,14 +30,12 @@ const FarmerOrderDetails = () => {
     setFarmerOrders,
     packedOrders,
     setPackedOrders,
-    shippedOrders,
-    setShippedOrders,
     setIsContentLoading,
     isContentLoading,
   } = useContext(FarmerContext);
   const [isOtpView, setOtpView] = useState(false);
   // state of shipped order status
-  const [orderStatus,setOrderStatus] = useState("");
+  const [orderStatus, setOrderStatus] = useState("");
   // console.log("All Orders :", allOrders);
 
   const orderData = allOrders?.filter((order) => {
@@ -60,14 +58,24 @@ const FarmerOrderDetails = () => {
     }
   };
 
-  const handlePackedOrder = (value) => {
+  const handlePackedOrder = async (value) => {
     if (confirm("Are sure to Update Order Status")) {
       setIsContentLoading(true);
       try {
         // back end api for updating order status
-        const req = "";
-        const res = true;
-        if (res) {
+        const req = await fetch(import.meta.env.VITE_API_BASE_URL + "/farmer/updateorderstatus",{
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              orderId,
+              status: value,
+            }),
+          }
+        );
+        const res = await req.json();
+        if (res.isUpdated) {
           // state logic
           const packedOrder = orderData;
           const orderedOrder = farmerOrders.filter((order) => {
@@ -82,7 +90,7 @@ const FarmerOrderDetails = () => {
         } else {
           Toast(toast.error, "Failed To Update Status!");
         }
-        setTimeout(() => setIsContentLoading(false), 2000);
+        setIsContentLoading(false);
       } catch (err) {
         Toast(toast.error, err.message);
       }
@@ -91,7 +99,7 @@ const FarmerOrderDetails = () => {
 
   const handleShippedOrder = () => {
     if (confirm("Are sure to Update Order Status")) {
-      // for otp verification
+      // for otp verification view
       setOtpView(true);
     }
   };
