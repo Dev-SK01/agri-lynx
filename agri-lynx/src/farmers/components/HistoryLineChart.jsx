@@ -19,7 +19,7 @@ const HistoryLineChart = ({analyticsData}) => {
         <Legend verticalAlign="top" height={36} />
         <Line
           type="monotone"
-          dataKey="orders"
+          dataKey="ordered"
           stroke="#82ca9d"
           activeDot={{ r: 7 }}
         />

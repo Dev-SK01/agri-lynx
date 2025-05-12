@@ -82,7 +82,6 @@ const FarmerLogisticsDetails = () => {
                     .toString()
                     .toLowerCase()
                     .includes(searchItem.toLowerCase()) ||
-                  Logistics.village.toLowerCase().includes(searchItem.toLowerCase()) ||
                   Logistics.district.toLowerCase().includes(searchItem.toLowerCase());
           }).map((Logistics) => (
             <div
@@ -110,7 +109,6 @@ const FarmerLogisticsDetails = () => {
                   className="h-[25px] w-[25px]"
                 />
                 {Logistics.address +
-                  Logistics.village +
                   "\n" +
                   Logistics.district +
                   "-" +

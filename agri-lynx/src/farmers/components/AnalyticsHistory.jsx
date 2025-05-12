@@ -19,88 +19,97 @@ const AnalyticsHistory = () => {
   const {farmerData , produceList} = useContext(FarmerContext);
   const [analyticsData,setAnalyticsData] = useState([]);
   
-  const dummyData = [
-    {
-      month: "Jan",
-      orders: 30,
-      cancelled: 7,
-      delivered: 20,
-    },
-    {
-      month: "Feb",
-      orders: 13,
-      cancelled: 24,
-      delivered: 34,
-    },
-    {
-      month: "Mar",
-      orders: 98,
-      cancelled: 24,
-      delivered: 34,
-    },
-    {
-      month: "Apr",
-      orders: 39,
-      cancelled: 24,
-      delivered: 34,
-    },
-    {
-      month: "May",
-      orders: 32,
-      cancelled:12,
-      delivered: 20,
-    },
-    {
-      month: "June",
-      orders: 26,
-      cancelled: 6,
-      delivered: 20,
-    },
-    {
-      month: "July",
-      orders: 98,
-      cancelled: 8,
-      delivered: 90,
-    },
-    {
-      month: "Aug",
-      orders: 64,
-      cancelled: 10,
-      delivered: 54,
-    },
-    {
-      month: "Sep",
-      orders: 65,
-      cancelled: 5,
-      delivered: 60,
-    },
-    {
-      month: "Oct",
-      orders: 70,
-      cancelled: 0,
-      delivered: 34,
-    },
-    {
-      month: "Nov",
-      orders: 22,
-      cancelled: 12,
-      delivered: 20,
-    },
-    {
-      month: "Dec",
-      orders: 34,
-      cancelled: 0,
-      delivered: 10,
-    },
-  ];
+  // const dummyData = [
+  //   {
+  //     month: "Jan",
+  //     orders: 30,
+  //     cancelled: 7,
+  //     delivered: 20,
+  //   },
+  //   {
+  //     month: "Feb",
+  //     orders: 13,
+  //     cancelled: 24,
+  //     delivered: 34,
+  //   },
+  //   {
+  //     month: "Mar",
+  //     orders: 98,
+  //     cancelled: 24,
+  //     delivered: 34,
+  //   },
+  //   {
+  //     month: "Apr",
+  //     orders: 39,
+  //     cancelled: 24,
+  //     delivered: 34,
+  //   },
+  //   {
+  //     month: "May",
+  //     orders: 32,
+  //     cancelled:12,
+  //     delivered: 20,
+  //   },
+  //   {
+  //     month: "June",
+  //     orders: 26,
+  //     cancelled: 6,
+  //     delivered: 20,
+  //   },
+  //   {
+  //     month: "July",
+  //     orders: 98,
+  //     cancelled: 8,
+  //     delivered: 90,
+  //   },
+  //   {
+  //     month: "Aug",
+  //     orders: 64,
+  //     cancelled: 10,
+  //     delivered: 54,
+  //   },
+  //   {
+  //     month: "Sep",
+  //     orders: 65,
+  //     cancelled: 5,
+  //     delivered: 60,
+  //   },
+  //   {
+  //     month: "Oct",
+  //     orders: 70,
+  //     cancelled: 0,
+  //     delivered: 34,
+  //   },
+  //   {
+  //     month: "Nov",
+  //     orders: 22,
+  //     cancelled: 12,
+  //     delivered: 20,
+  //   },
+  //   {
+  //     month: "Dec",
+  //     orders: 34,
+  //     cancelled: 0,
+  //     delivered: 10,
+  //   },
+  // ];
 
-  const handleOrderHistory = (commodity) => {
+  const handleOrderHistory = async (commodity) => {
     const commodityName = commodity.toLowerCase().replace(/\s/g, "");
-    const farmerId = farmerData?.farmerId;
+    const farmerId = farmerData?._id;
     try{
-    const req = `${farmerId}/${commodityName}`;
-    const res = dummyData;
-    if(res){
+    const req = await fetch(import.meta.env.VITE_API_BASE_URL + "/farmer/analytics",{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        farmerId,
+        commodity:commodityName,
+      }),
+    });
+    const res = await req.json();
+    if(!res?.error){
       setAnalyticsData(res);
       Toast(toast.success,"fetched Successfully");
     }else{

@@ -2,7 +2,6 @@ import { createContext, useState } from "react";
 import { toast } from "react-toastify";
 import Toast from "../../utils/toast";
 import { useNavigate } from "react-router-dom";
-import Loader from "@/utils/Loader";
 
 const RegistrationContext = createContext({});
 
@@ -228,23 +227,27 @@ export const RegistrationContextProvider = ({ children }) => {
       Toast(toast.error, err.message);
     }
   };
-  const loginOtpVerify = () => {
+  const loginOtpVerify = async () => {
     if (!otp || otp.length !== 6) {
       Toast(toast.error, "Enter OTP!");
     } else {
       try {
         // otp verification api for login
         setOtpVerified(true);
-        // setIsLoading(true);
-        // loading for user experience
-        // setTimeout(() => setIsLoading(false), 2500);
-        Toast(toast.success, "Logging In....");
         // get userType and userId from api
-        const response = { userId: "s63hdb38dyb9ae4", userType };
+        const req = await fetch(import.meta.env.VITE_API_BASE_URL + "/login",{
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, otp,type: userType }),
+          })
+        const response = await req.json();
         setUserData(response);
         // localstorage for user data
         localStorage.setItem("userData", JSON.stringify(response));
-        // navigatin user based on their type
+        Toast(toast.success, "Logging In....");
+        // navigating user based on their type
         if (userType === "farmer") {
           navigate("farmerdashboard");
           setOtpVerified(false);
