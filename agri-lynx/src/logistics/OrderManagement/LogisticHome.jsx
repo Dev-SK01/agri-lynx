@@ -8,6 +8,8 @@ import LogisticContext from '../context/LogisticContext';
 import { Button } from '@/components/ui/button';
 import { Link, useNavigate } from "react-router-dom";
 import welcome from "../../assets/welcome.svg";
+import Toast from '@/utils/toast';
+import { toast } from 'react-toastify';
 
 const LogisticHome = () => {
   const { LogisticOrders, LogisticData, acceptOrder, deleteOrder,setLogisticOrders } = useContext(LogisticContext);
@@ -17,24 +19,25 @@ const LogisticHome = () => {
     navigate("/dashboard");
   };
 
-  const handleAccept = (orderId) => {
-    const order = LogisticOrders.find(o => o.orderId === orderId);
-    acceptOrder(orderId);
-    navigate(`/checkoutPage/${orderId}`, { state: { order } });
-  };
-
-  async function handleUpdateBookingStatus() {
+  async function handleUpdateBookingStatus(orderId,action) {
     try {
       const req = await fetch(import.meta.env.VITE_API_BASE_URL + `/logistic/updatebookingstatus`,{
-        method:"GET",
+        method:"POST",
         headers:{
           "Content-Type": "application/json",
-        }
+        },
+        body:JSON.stringify({orderId,action})
       });
       const res = await req.json();
-      if (res) {
-        Toast(toast.success, "Accepted");
-        setLogisticOrders(res);
+      console.log(res);
+      
+      if (!res?.error) {
+        Toast(toast.success, "accepted");
+        const order = LogisticOrders.find(o => o.orderId === orderId);
+        action === "accept" ? acceptOrder(orderId) : deleteOrder(orderId);
+        navigate(`/checkoutPage/${orderId}`, { state: { order } });
+      }else{
+
       }
     } catch (err) {
       Toast(toast.error, err.message);
@@ -94,14 +97,14 @@ const LogisticHome = () => {
 
             <Button
               className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--secondary)] mt-2 ms-2 w-28 items-center font-bold font-inter text-black'
-              onClick={() => handleAccept(order.orderId)}
+              onClick={() => handleUpdateBookingStatus(order.orderId,"accept")}
             >
               Accept
             </Button>
 
             <Button
               className='flex justify-center rounded-xl h-9 pt-2 bg-red-500 mt-2 ms-2 w-28 items-center font-bold font-inter text-black'
-              onClick={() => deleteOrder(order.orderId)}
+              onClick={() => handleUpdateBookingStatus(order.orderId,"cancel")}
             >
               Decline
             </Button>
