@@ -12,15 +12,10 @@ const FarmerOrders = () => {
     isContentLoading,
     setIsContentLoading,
     farmerOrders,
-    setFarmerOrders,
     packedOrders,
-    setPackedOrders,
     shippedOrders,
-    setShippedOrders,
     cancelledOrders,
-    setcancelledOrders,
     deliveredorders,
-    setDeliveredOrders,
     selectedStatus
   } = useContext(FarmerContext);
 

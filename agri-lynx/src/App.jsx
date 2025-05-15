@@ -49,7 +49,7 @@ function App() {
   const fetchFarmerDataById = async (farmerId) => {
     try {
       setIsContentLoading(true);
-      console.log("FarmerID:", farmerId);
+      // console.log("FarmerID:", farmerId);
       const req = await fetch(import.meta.env.VITE_API_BASE_URL + `/farmer/getfarmerdata`,{
         method:"POST",
         headers:{
@@ -89,7 +89,7 @@ const fetchLogisticDatById = async (logisticId) =>{
       Toast(toast.success, "Data Fetched Successfully");
       setLogisticData(response);
       // setUpdateBookingStatus(response.updatebookingstatus);
-      const req = await fetch(import.meta.env.VITE_API_BASE_URL + `/logistic/getownerdata`,{
+      const req = await fetch(import.meta.env.VITE_API_BASE_URL + `/logistic/`,{
         method:"POST",
         headers:{
           "Content-Type":"application/json",

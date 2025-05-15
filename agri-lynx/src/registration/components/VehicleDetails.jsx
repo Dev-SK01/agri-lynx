@@ -16,15 +16,10 @@ const VehicleDetails = () => {
     validateLicenseNumber,
   } = useContext(RegistrationContext);
 
-  console.log({
-    vehicleType,
-    vehicleNumber,
-    licenseNumber
-  });
   const handleVehicleNumber = (e) => {
     const Vnumber = e.target.value.toUpperCase();
     setVehicleNumber(Vnumber);
-    console.log("inner",Vnumber.length);
+    // console.log("inner",Vnumber.length);
     
     if(Vnumber.length == 12 || Vnumber.length == 13){
       if(!validateVehicleNumber(Vnumber)){
@@ -38,7 +33,7 @@ const VehicleDetails = () => {
   const handleLicenseNumber = (e)=>{
     const Lnumber = e.target.value.toUpperCase()
     setLicenseNumber(Lnumber);
-    console.log("inner",Lnumber.length);
+    // console.log("inner",Lnumber.length);
     if(Lnumber.length == 15 || Lnumber.length == 17){
       if(!validateLicenseNumber(Lnumber)){
         Toast(toast.error,"Enter Correct License Number");

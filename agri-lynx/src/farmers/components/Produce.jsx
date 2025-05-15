@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, } from "react";
 import editBtn from "../../assets/editBtn.svg";
 import FarmerContext from "../context/FarmerContext";
 import { Link } from "react-router-dom";

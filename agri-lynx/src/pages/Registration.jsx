@@ -170,7 +170,7 @@ const Registration = () => {
           localStorage.setItem("userData", JSON.stringify(response));
           // clearing form function;
           clearForm();
-          Toast(toast.update, "Redirecting....");
+          // Toast(toast.update, "Redirecting....");
           navigate("localmarketdashboard");
           setOtpVerified(false);
         }
@@ -193,10 +193,6 @@ const Registration = () => {
       district === "dt" ||
       state === "st" ||
       pincode === "630555" ||
-      ifscCode === "IOBA0001872" ||
-      accountNumber === "1234567" ||
-      accountHolderName === "ahn" ||
-      upiId === "@" ||
       vehicleType === "vt" ||
       vehicleNumber == "" ||
       licenseNumber == "" ||
@@ -242,12 +238,12 @@ const Registration = () => {
           localStorage.setItem("userData", JSON.stringify(response));
           // clearing form function;
           clearForm();
-          Toast(toast.update, "Redirecting....");
+          // Toast(toast.update, "Redirecting....");
           navigate("logisticdashboard");
           setOtpVerified(false);
         }
         // btn disable state
-        setIsClicked(false);
+        setIsClicked(true);
       } catch (err) {
         console.log(err.message);
       }

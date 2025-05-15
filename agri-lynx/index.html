@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/webp" href="/icon/logo.webp" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0 ,user-scalable=no" />
+    <meta http-equiv="ScreenOrientation" content="autoRotate:disabled" />
     <link rel="manifest" href="/manifest.json">
     <title>AGRI LYNX </title>
   </head>
@@ -11,4 +12,22 @@
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
+<!-- firabase analytics -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.7.3/firebase-analytics.js";
+    const firebaseConfig = {
+      apiKey: "AIzaSyCxhIgYAiiRknaXJwUqqY-9_853MnTSUzs",
+      authDomain: "agri-lynx.firebaseapp.com",
+      projectId: "agri-lynx",
+      storageBucket: "agri-lynx.firebasestorage.app",
+      messagingSenderId: "846060330493",
+      appId: "1:846060330493:web:b398d544a99427b1828d94",
+      measurementId: "G-58KKZG36HQ"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+  </script>
 </html>

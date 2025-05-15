@@ -11,18 +11,13 @@ import welcomeImg from "../assets/welcome.svg";
 import RegistrationContext from "@/registration/context/RegistrationContext";
 
 const FarmerDashboard = () => {
-  const { userData, setUserData, setOtp, setEmail, setCodeSent } =
+  const { setOtp, setEmail, setCodeSent } =
     useContext(RegistrationContext);
   const {
-    farmerData,
-    setFarmerData,
     isContentLoading,
     produceList,
     setProduceList,
     farmerProduces,
-    produceDetails,
-    setProduceDetails,
-    setIsContentLoading,
   } = useContext(FarmerContext);
 
   const searchProduce = (e) => {

@@ -1,7 +1,5 @@
 import React from "react";
 import notFoundImg from "../assets/404.svg";
-import logo from "/icon/logo.webp";
-import Container from "@/registration/components/Container";
 import Logo from "@/registration/components/Logo";
 import { Link } from "react-router-dom";
 

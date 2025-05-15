@@ -11,7 +11,7 @@ import { Select, SelectTrigger, SelectValue } from "@/components/ui/select";
 import FarmerContext from "../context/FarmerContext";
 
 const UpdateProduce = () => {
-  const { farmerData, produceList, setProduceList } = useContext(FarmerContext);
+  const {produceList, setProduceList } = useContext(FarmerContext);
   const { listingId } = useParams();
   const navigate = useNavigate();
   

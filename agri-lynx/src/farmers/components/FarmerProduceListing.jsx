@@ -17,7 +17,6 @@ const FarmerProduceListing = () => {
     farmerData,
     produceList,
     setProduceList,
-    produceDetails,
     setProduceDetails,
     setFarmerData,
   } = useContext(FarmerContext);

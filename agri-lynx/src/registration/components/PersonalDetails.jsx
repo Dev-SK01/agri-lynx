@@ -5,9 +5,7 @@ import RegistrationContext from "../context/RegistrationContext";
 
 const PersonalDetails = ({ type }) => {
   const {
-    name,
     setName,
-    shopName,
     setShopName,
     phoneNumber,
     setPhoneNumber,

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import avatar from "../../assets/avatar.svg";
 import FarmerContext from "../context/FarmerContext";
-import { Link, Outlet } from "react-router-dom";
+import { Link, } from "react-router-dom";
 const Navigation = () => {
   const { farmerData } = useContext(FarmerContext);
   // console.log("Navigation :",farmerData);
