@@ -10,7 +10,7 @@ import { Link, useNavigate } from "react-router-dom";
 import welcome from "../../assets/welcome.svg";
 
 const LogisticHome = () => {
-  const { LogisticOrders, LogisticData, acceptOrder, deleteOrder } = useContext(LogisticContext);
+  const { LogisticOrders, LogisticData, acceptOrder, deleteOrder,setLogisticOrders } = useContext(LogisticContext);
   const navigate = useNavigate();
 
   const handleAvatarClick = () => {
@@ -23,8 +23,26 @@ const LogisticHome = () => {
     navigate(`/checkoutPage/${orderId}`, { state: { order } });
   };
 
-  const pendingOrders = LogisticOrders.filter(order => order.status !== 'accepted');
+  async function handleUpdateBookingStatus() {
+    try {
+      const req = await fetch(import.meta.env.VITE_API_BASE_URL + `/logistic/updatebookingstatus`,{
+        method:"GET",
+        headers:{
+          "Content-Type": "application/json",
+        }
+      });
+      const res = await req.json();
+      if (res) {
+        Toast(toast.success, "Accepted");
+        setLogisticOrders(res);
+      }
+    } catch (err) {
+      Toast(toast.error, err.message);
+    }
+  }
+  // const pendingOrders = (LogisticOrders || []).filter(order => order.status !== 'ordered');
 
+  console.log(LogisticOrders)
   return (
     <div className="flex items-center justify-center flex-col">
       {/* Header */}
@@ -40,14 +58,14 @@ const LogisticHome = () => {
       </header>
 
       {/* Welcome Image if no orders */}
-      {pendingOrders.length === 0 && (
+      {LogisticOrders.length === 0 && (
         <div className="flex flex-col items-center mt-10 justify-center h-[80dvh]">
           <img src={welcome} alt="Welcome" className="w-[450px] h-auto" />
         </div>
       )}
 
       {/* Order Cards */}
-      {pendingOrders.map(order => (
+      {LogisticOrders.map(order => (
         <div
           key={order.orderId}
           className='bg-[var(--green)] flex mt-4 h-48 rounded-2xl w-100 py-1 relative border-l-8 border-l-green-600'

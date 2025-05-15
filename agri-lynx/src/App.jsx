@@ -42,7 +42,7 @@ function App() {
   const { userData, isOtpVerified, isLoading, setUserData } =
     useContext(RegistrationContext);
   const { setFarmerData, setIsContentLoading,setProduceList } = useContext(FarmerContext);
-  const {setLogisticData,LogisticData} = useContext(LogisticContext);
+  const {setLogisticData,LogisticData,LogisticOrders, setLogisticOrders} = useContext(LogisticContext);
   const {OwnerData, setOwnerData,filteredCommodities, setFilteredCommodities} = useContext(OwnerContext);
   const localUserData = JSON.parse(localStorage.getItem("userData"));
 
@@ -89,13 +89,15 @@ const fetchLogisticDatById = async (logisticId) =>{
       Toast(toast.success, "Data Fetched Successfully");
       setLogisticData(response);
       // setUpdateBookingStatus(response.updatebookingstatus);
-      const req = await fetch(import.meta.env.VITE_API_BASE_URL + `/logistic/`,{
+      const req = await fetch(import.meta.env.VITE_API_BASE_URL + `/logistic/ordered`,{
         method:"POST",
         headers:{
           "Content-Type":"application/json",
         },
-        body:JSON.stringify({}),
+        body:JSON.stringify({logisticId}),
       });
+      const response3 = await req.json();
+      setLogisticOrders(response3)
     } else {
       Toast(toast.error, "Failed to Fetch Data");
     }
