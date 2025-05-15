@@ -18,10 +18,9 @@ import RegistrationContext from '@/registration/context/RegistrationContext';
 
 const DashBoard = () => {
   const { LogisticData } = useContext(LogisticContext);
+
   const [showDetails, setShowDetails] = useState(false);
-  const handleAvatarClick = () => {
-    setShowDetails(true);
-  };
+  const handleAvatarClick = () => setShowDetails(true);
   const { setUserData } = useContext(RegistrationContext);
   const logOut = () => {
     if (confirm("Are you Sure !")) {

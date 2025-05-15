@@ -1,33 +1,13 @@
 import VehicleDetails from "@/registration/components/VehicleDetails";
-import { createContext, useState } from "react";
+import React,{ createContext, useState,useEffect,useContext } from "react";
+import axios from 'axios';
 
 const LogisticContext = createContext({});
 
 export const LogisticContextProvider = ({ children }) => {
-  const [LogisticData, setLogisticData] = useState({
-    logisticId: "mkt123abc987xyz",
-    name: "Rajesh Kumar",
-    email: "rajeshmarket@gmail.com",
-    phoneNumber: "9876543210",
-    alternateNumber: "9012345678",
-    shopName: "Rajesh Fresh Market",
-    address: "45, Anna Market, Gandhi Road",
-    taluk: "Thirumangalam",
-    district: "Madurai",
-    state: "TAMIL NADU",
-    pincode: "625001",
-    ifscCode: "SBI0000123",
-    accountNumber: "123456789012",
-    accountHolderName: "Rajesh Kumar",
-    bankName: "State Bank of India",
-    bankBranch: "Madurai",
-    upiId: "rajesh@upi",
-    vehicleNumber: "TN-09-AQ-2004",
-    vehicleType: "Van",
-    licenseNumber: "DL-1420110012345"
-
-  });
-
+  const [LogisticData, setLogisticData] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [LogisticOrders, setLogisticOrders] = useState([
     {
       orderId: "1234567890",
@@ -62,7 +42,7 @@ export const LogisticContextProvider = ({ children }) => {
       customer: {
         name: "Elumalai Velu",
         phoneNumber: "7654324578",
-        email: "eleumalaivelu@gmail.com",
+        email: "elumalaivelu@gmail.com",
         address: "1271, maran poratta kadai",
         taluk: "kalaiyarkovil",
         district: "Ramanathapuram",
@@ -102,7 +82,7 @@ export const LogisticContextProvider = ({ children }) => {
       customer: {
         name: "Elumalai Velu",
         phoneNumber: "7654324578",
-        email: "eleumalaivelu@gmail.com",
+        email: "elumalaivelu@gmail.com",
         address: "1271, maran poratta kadai",
         taluk: "kalaiyarkovil",
         district: "Ramanathapuram",
@@ -158,8 +138,10 @@ export const LogisticContextProvider = ({ children }) => {
     setLogisticOrders(prevOrders => prevOrders.filter(order => order.orderId !== orderId));
   };
   const [isContentLoading, setIsContentLoading] = useState(true);
+  
 
-
+  
+ 
   return (
     <LogisticContext.Provider
       value={{

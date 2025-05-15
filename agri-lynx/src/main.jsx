@@ -7,15 +7,19 @@ import { RegistrationContextProvider } from "./registration/context/Registration
 import { FarmerContextProvider } from "./farmers/context/FarmerContext";
 import { FarmerLogisticsContextProvider } from "./farmers/context/FarmerLogisticsContext";
 import { LogisticContextProvider } from "./logistics/context/LogisticContext";
-
+import { OwnerContextProvider } from "./owners/context/OwnerContext";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       <RegistrationContextProvider>
         <FarmerContextProvider>
-          <FarmerLogisticsContextProvider>
-            <App className="scroll-smooth" />
-          </FarmerLogisticsContextProvider>
+          <LogisticContextProvider>
+            <OwnerContextProvider>
+              <FarmerLogisticsContextProvider>
+                <App className="scroll-smooth" />
+              </FarmerLogisticsContextProvider>
+            </OwnerContextProvider>
+          </LogisticContextProvider>
         </FarmerContextProvider>
       </RegistrationContextProvider>
     </BrowserRouter>

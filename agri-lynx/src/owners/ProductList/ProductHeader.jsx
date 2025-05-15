@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Checkbox } from "@/components/ui/checkbox";
 import avatar from '../../Assest/avatar.svg';
 
@@ -9,32 +9,42 @@ import OwnerContext from '../context/OwnerContext';
 import { Link, useNavigate } from "react-router-dom";
 import Footer from './Footer';
 const ProductHeader = () => {
-  const { OwnerData, purchasedList } = useContext(OwnerContext);
+  const { OwnerData, purchasedList,setFilteredCommodities,filteredCommodities } = useContext(OwnerContext);
   const [searchTerm, setSearchTerm] = useState("");
+  
   const [checked, setChecked] = useState(false);
+  const [hasFetched, setHasFetched] = useState(false);
+  
 
-  const localDistrict = OwnerData?.district?.toLowerCase() || "";
+  
+  
 
-  const filteredCommodities = (purchasedList || []).filter((item) => {
-    const matchesSearch = item.commodity?.toLowerCase().includes(searchTerm.toLowerCase());
-    const isLocal = item.district?.toLowerCase() === localDistrict;
-    const hasQuantity = parseInt(item.quantity) > 0;
+  // const filteredCommodities = (purchasedList || []).filter((item) => {
+  //   const matchesSearch = item.commodity?.toLowerCase().includes(searchTerm.toLowerCase());
+  //   const isLocal = item.district?.toLowerCase() === localDistrict;
+  //   const hasQuantity = parseInt(item.quantity) > 0;
 
    
 
-    // Show all matching items if checkbox is checked
-    // Show only local matching items if checkbox is unchecked
-    return hasQuantity && matchesSearch && (checked || isLocal);
-  });
+  //   // Show all matching items if checkbox is checked
+  //   // Show only local matching items if checkbox is unchecked
+  //   return hasQuantity && matchesSearch && (checked || isLocal);
+  // });
   const navigate = useNavigate();
 
   const handleAvatarClick = () => {
     navigate("/OwnerDashBoard");
   };
   
-  const handleClick = (listingId) =>{
+  const handleClick = (listingId) => {
     navigate(`/order/${listingId}`);
   };
+  
+
+
+
+ console.log(filteredCommodities)
+
 
   return (
     <div className="flex items-center justify-center flex-col">
@@ -81,13 +91,13 @@ const ProductHeader = () => {
                   {item.commodity}
                 </h1>
                 <h1 className='flex justify-center rounded-xl h-9 pt-0 bg-[var(--primary)] mt-2 ms-2 w-60 items-center font-bold font-inter'>
-                  {OwnerData.name}
+                  {item.farmer?.name}
 
                 </h1>
                 <h1 className='flex justify-center rounded-xl h-9 pt-0 bg-[var(--primary)] mt-2 ms-2 w-60 items-center font-bold font-inter'>
                   
-                  <a href={`tel:+91${OwnerData.phoneNumber}`}>
-                    +91 <span>{OwnerData.phoneNumber}</span>
+                  <a href={`tel:+91${item.farmer?.phoneNumber}`}>
+                    +91 <span>{item.farmer?.phoneNumber}</span>
                   </a>
                 </h1>
               </div>

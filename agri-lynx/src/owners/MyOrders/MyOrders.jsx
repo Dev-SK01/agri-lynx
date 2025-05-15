@@ -8,11 +8,13 @@ import product from '../../Assest/product.svg';
 import { Button } from '@/components/ui/button';
 import { Link, useNavigate } from "react-router-dom";
 import Footer from '../ProductList/Footer';
+import Toast from "@/utils/toast";
+import { toast } from "react-toastify";
 
 const accessKey = "ngZx_O2HxOkiG9ML_VctB1Z2ImTU5OsYXNK_Jivcq2E";
 
 const MyOrders = () => {
-    const { OwnerData, allOrders, selectedStatus, setSelectedStatus, cancelOrder } = useContext(OwnerContext);
+    const { OwnerData, setIsContentLoading, allOrders, selectedStatus, setSelectedStatus, cancelOrder, setDeliveredOrders ,setCancelOrders,setMarketOrders} = useContext(OwnerContext);
 
     // const [images, setImages] = useState({});
 
@@ -33,6 +35,64 @@ const MyOrders = () => {
     //     };
     //     fetchImages();
     // }, [allOrders]);
+
+    const handleOrderedOrders = async () => {
+        setIsContentLoading(true);
+        setSelectedStatus("delivered")
+        
+        try {
+            // backend api
+            const req = await fetch(import.meta.env.VITE_API_BASE_URL + `/owner/ordered`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            const res = await req.json();
+            setMarketOrders(res.reverse());
+            setTimeout(() => setIsContentLoading(false), 2000);
+        } catch (err) {
+            Toast(toast.error, err.message)
+        }
+    }
+
+    const handleDeliveredOrders = async () => {
+        setIsContentLoading(true);
+        setSelectedStatus("delivered")
+        
+        try {
+            // backend api
+            const req = await fetch(import.meta.env.VITE_API_BASE_URL + `/owner/delivered`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            const res = await req.json();
+            setDeliveredOrders(res.reverse());
+            setTimeout(() => setIsContentLoading(false), 2000);
+        } catch (err) {
+            Toast(toast.error, err.message)
+        }
+    }
+    const handleCancelOrders = async () => {
+        setIsContentLoading(true);
+        setSelectedStatus("cancelled")
+        try {
+            // backend api
+            const req = await fetch(import.meta.env.VITE_API_BASE_URL + `/owner/cancelled`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            const res = await req.json();
+            setCancelOrders(res.reverse());
+            setTimeout(() => setIsContentLoading(false), 2000);
+        } catch (err) {
+            Toast(toast.error, err.message)
+        }
+    }
 
 
     const navigate = useNavigate();
@@ -57,13 +117,36 @@ const MyOrders = () => {
                     </div>
                 </header>
                 <div className='flex rounded-sm  py-2 bg-(--green) mt-5 w-98 text-xl px-0 items-center justify-evenly'>
-                        {["ordered", "delivered", "canceled"].map((status) => (
+                    {/* {["ordered", "delivered", "canceled"].map((status) => (
                             <button key={status} onClick={() => setSelectedStatus(status)}
                                 className={`rounded-sm font-bold font-inter ml-2 px-4 py-1${selectedStatus === status ? " bg-(--primary) border-1 border-green-600" : ""}`}>
                                 {status.charAt(0).toUpperCase() + status.slice(1)}
                             </button>
-                        ))}
-                    
+                        ))} */}
+                    <button
+                        onClick={handleOrderedOrders}
+                        className={`rounded-sm font-bold font-inter ml-2 px-2 py-1 ${selectedStatus == "ordered" &&
+                            "bg-(--primary) border-1 border-green-600"
+                            }`}
+                    >
+                        Ordered
+                    </button>
+                    <button
+                        onClick={handleDeliveredOrders}
+                        className={`rounded-sm font-bold font-inter ml-2 px-2 py-1 ${selectedStatus == "delivered" &&
+                            "bg-(--primary) border-1 border-green-600"
+                            }`}
+                    >
+                        Delivered
+                    </button>
+                    <button
+                        onClick={handleCancelOrders}
+                        className={`rounded-sm font-bold font-inter ml-2 px-2 py-1 ${selectedStatus == "cancelled" &&
+                            "bg-(--primary) border-1 border-green-600"
+                            }`}
+                    >
+                        Cancelled
+                    </button>
                 </div>
 
                 <div className=' mt-3 w-dvh  h-[69vh]  overflow-y-auto px-4 flex items-center  flex-col overflow-x-hidden'>
@@ -94,9 +177,9 @@ const MyOrders = () => {
                                     className='h-20 w-20 mt-2 ms-6 pt-1 rounded-2xl'
                                 /> */}
                                 <p className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-28 items-center font-bold font-inter'>
-                                &#8377; {item.price}
+                                    &#8377; {item.price}
                                 </p>
-                                {item.orderStatus !== "delivered" && item.orderStatus !== "canceled" && (
+                                {item.orderStatus !== "delivered" && item.orderStatus !== "cancelled" && (
                                     <Button
                                         onClick={() => {
                                             const confirmCancel = window.confirm("Are you sure you want to cancel this order?");

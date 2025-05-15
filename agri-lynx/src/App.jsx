@@ -27,7 +27,7 @@ import LogisticsBooking from "./farmers/components/LogisticsBooking";
 import DashBoard from "./logistics/DashBoard/DashBoard";
 import LocalMarketOwnerProductList from "./owners/LocalMarketOwnerProductList";
 import LocalMarketOwnerMyOrder from "./owners/LocalMarketOwnerMyOrder";
-import { LogisticContextProvider } from "./logistics/context/LogisticContext";
+import LogisticContext from "./logistics/context/LogisticContext";
 import ProductHeader from "./owners/ProductList/ProductHeader";
 import OrderCheckOutPage from "./logistics/OrderManagement/OrderCheckOutPage";
 import LogisticHome from "./logistics/OrderManagement/LogisticHome";
@@ -35,14 +35,15 @@ import OrderDetails from "./logistics/OrderManagement/OrderDetails";
 import OwnerDashBoard from "./owners/OwnerDashBoard";
 import Analytics from "./owners/Analytics";
 import OrderCheckOut from "./owners/OrderCheckOut";
-import { OwnerContextProvider } from "./owners/context/OwnerContext";
+import OwnerContext, { OwnerContextProvider } from "./owners/context/OwnerContext";
 
 function App() {
   // context
   const { userData, isOtpVerified, isLoading, setUserData } =
     useContext(RegistrationContext);
   const { setFarmerData, setIsContentLoading,setProduceList } = useContext(FarmerContext);
-
+  const {setLogisticData,LogisticData} = useContext(LogisticContext);
+  const {OwnerData, setOwnerData,filteredCommodities, setFilteredCommodities} = useContext(OwnerContext);
   const localUserData = JSON.parse(localStorage.getItem("userData"));
 
   const fetchFarmerDataById = async (farmerId) => {
@@ -71,6 +72,80 @@ function App() {
       setTimeout(() => setIsContentLoading(false), 2000);
     }
   };
+  
+const fetchLogisticDatById = async (logisticId) =>{
+  try {
+    setIsContentLoading(true);
+    console.log("logisticId:", logisticId);
+    const req = await fetch(import.meta.env.VITE_API_BASE_URL + `/logistic/getlogisticsdata`,{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json",
+      },
+      body:JSON.stringify({logisticId}),
+    });
+    const response = await req.json();
+    if (!response?.error) {
+      Toast(toast.success, "Data Fetched Successfully");
+      setLogisticData(response);
+      // setUpdateBookingStatus(response.updatebookingstatus);
+      const req = await fetch(import.meta.env.VITE_API_BASE_URL + `/logistic/getownerdata`,{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json",
+        },
+        body:JSON.stringify({}),
+      });
+    } else {
+      Toast(toast.error, "Failed to Fetch Data");
+    }
+  } catch (err) {
+    Toast(toast.error, err.message);
+    console.error(err.message);
+  } finally {
+    setTimeout(() => setIsContentLoading(false), 2000);
+  }
+ 
+};
+const fetchOwnerDatById = async (ownerId) =>{
+  try {
+    setIsContentLoading(true);
+    console.log("ownerId:", ownerId);
+    const req = await fetch(import.meta.env.VITE_API_BASE_URL + `/owner/getownerdata`,{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json",
+      },
+      body:JSON.stringify({ownerId}),
+    });
+    const response = await req.json();
+    // console.log(response);
+    
+    if (!response?.error) {
+      Toast(toast.success, "Data Fetched Successfully");
+      setOwnerData(response);
+      const req = await fetch(import.meta.env.VITE_API_BASE_URL + `/owner/produce`,{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json",
+        },
+        body:JSON.stringify({district : response.district}),
+      });
+      const response2 = await req.json();
+      setFilteredCommodities(response2.purchasedList)
+    }
+
+     else {
+      Toast(toast.error, "Failed to Fetch Data");
+    }
+  } catch (err) {
+    Toast(toast.error, err.message);
+    console.error(err.message);
+  } finally {
+    setTimeout(() => setIsContentLoading(false), 2000);
+  }
+ 
+};
 
   useEffect(() => {
     setUserData(localUserData);
@@ -78,12 +153,17 @@ function App() {
     if (localUserData?.userType === "farmer") {
       fetchFarmerDataById(localUserData?.userId);
     }
+    if (localUserData?.userType === "logistic") {
+      fetchLogisticDatById(localUserData?.userId);
+    }
+    if (localUserData?.userType === "market") {
+      fetchOwnerDatById(localUserData?.userId);
+    }
   }, []);
 
   return (
     <>
-      <LogisticContextProvider>
-        <OwnerContextProvider>
+        
           <Routes>
             <Route
               index
@@ -137,8 +217,7 @@ function App() {
               </Route>
             </Route>
           </Routes>
-        </OwnerContextProvider>
-      </LogisticContextProvider>
+        
 
       {isLoading && <Loader />}
 

@@ -24,8 +24,8 @@ const VerificationOTP = ({ orderId }) => {
     const [email, setEmail] = useState("");
 
     useEffect(() => {
-        if (currentOrder?.logistics?.email) {
-            setEmail(currentOrder.logistics.email);
+        if (currentOrder?.customer?.email) {
+            setEmail(currentOrder.customer?.email);
         }
     }, [currentOrder]);
 
