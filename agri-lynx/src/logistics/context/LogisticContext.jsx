@@ -1,6 +1,7 @@
 import VehicleDetails from "@/registration/components/VehicleDetails";
 import React,{ createContext, useState,useEffect,useContext } from "react";
 import axios from 'axios';
+import { json } from "stream/consumers";
 
 const LogisticContext = createContext({});
 
@@ -26,15 +27,27 @@ export const LogisticContextProvider = ({ children }) => {
   const [statusLocked, setStatusLocked] = useState(false);
 
   // Call this function after OTP is verified
-  const verifyOtpAndChangeStatus = (newStatus) => {
-    if (newStatus === "In-Transit") {
-      setOtpVerified((prev) => ({ ...prev, "In-Transit": true }));
-      setOrderStatus("In-Transit");
-    } else if (newStatus === "Delivered") {
-      setOtpVerified((prev) => ({ ...prev, "Delivered": true }));
-      setOrderStatus("Delivered");
-      setStatusLocked(true); // Lock further changes
-    }
+  const verifyOtpAndChangeStatus = async () => {
+    const req = await fetch(
+      import.meta.env.VITE_API_BASE_URL + '/verifycustomer',
+      {
+        method : "POST",
+        headres : {
+          "Content-Type" : "application/json",
+        },
+        body : JSON.stringify({ email , otp , orderId})
+      }
+    )
+    const res  = await res.json(req);
+    setOrderStatus(res);
+    // if (newStatus === "In-Transit") {
+    //   setOtpVerified((prev) => ({ ...prev, "In-Transit": true }));
+    //   setOrderStatus("In-Transit");
+    // } else if (newStatus === "Delivered") {
+    //   setOtpVerified((prev) => ({ ...prev, "Delivered": true }));
+    //   setOrderStatus("Delivered");
+    //   setStatusLocked(true); // Lock further changes
+    // }
     setShowOtpPopup(true);
   };
   const acceptOrder = (orderId) => {
