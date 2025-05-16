@@ -36,27 +36,34 @@ import OwnerDashBoard from "./owners/OwnerDashBoard";
 import Analytics from "./owners/Analytics";
 import OrderCheckOut from "./owners/OrderCheckOut";
 import OwnerContext from "./owners/context/OwnerContext";
+import { usePWAInstall } from "react-use-pwa-install";
+import Install from "./pages/Install";
 
 function App() {
+  // PWA install
+  const install = usePWAInstall();
   // context
   const { userData, isOtpVerified, isLoading, setUserData } =
     useContext(RegistrationContext);
-  const { setFarmerData, setIsContentLoading,setProduceList } = useContext(FarmerContext);
-  const {setLogisticData, setLogisticOrders} = useContext(LogisticContext);
-  const { setOwnerData, setFilteredCommodities} = useContext(OwnerContext);
+  const { setFarmerData, setIsContentLoading, setProduceList } =
+    useContext(FarmerContext);
+  const { setLogisticData, setLogisticOrders } = useContext(LogisticContext);
+  const { setOwnerData, setFilteredCommodities } = useContext(OwnerContext);
   const localUserData = JSON.parse(localStorage.getItem("userData"));
 
-const fetchFarmerDataById = async (farmerId) => {
+  const fetchFarmerDataById = async (farmerId) => {
     try {
       setIsContentLoading(true);
-      // console.log("FarmerID:", farmerId);
-      const req = await fetch(import.meta.env.VITE_API_BASE_URL + `/farmer/getfarmerdata`,{
-        method:"POST",
-        headers:{
-          "Content-Type":"application/json",
-        },
-        body:JSON.stringify({farmerId}),
-      });
+      const req = await fetch(
+        import.meta.env.VITE_API_BASE_URL + `/farmer/getfarmerdata`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ farmerId }),
+        }
+      );
       const response = await req.json();
       if (!response?.error) {
         Toast(toast.success, "Data Fetched Successfully");
@@ -71,81 +78,87 @@ const fetchFarmerDataById = async (farmerId) => {
     } finally {
       setTimeout(() => setIsContentLoading(false), 2000);
     }
-};
-const fetchLogisticDatById = async (logisticId) =>{
-  try {
-    setIsContentLoading(true);
-    console.log("logisticId:", logisticId);
-    const req = await fetch(import.meta.env.VITE_API_BASE_URL + `/logistic/getlogisticsdata`,{
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json",
-      },
-      body:JSON.stringify({logisticId}),
-    });
-    const response = await req.json();
-    if (!response?.error) {
-      Toast(toast.success, "Data Fetched Successfully");
-      setLogisticData(response);
-      // setUpdateBookingStatus(response.updatebookingstatus);
-      const req = await fetch(import.meta.env.VITE_API_BASE_URL + `/logistic/orders`,{
-        method:"POST",
-        headers:{
-          "Content-Type":"application/json",
-        },
-        body:JSON.stringify({logisticsId:logisticId,status:"booked"}),
-      });
-      const response3 = await req.json();
-      setLogisticOrders(response3)
-    } else {
-      Toast(toast.error, "Failed to Fetch Data");
+  };
+  const fetchLogisticDatById = async (logisticId) => {
+    try {
+      setIsContentLoading(true);
+      const req = await fetch(
+        import.meta.env.VITE_API_BASE_URL + `/logistic/getlogisticsdata`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ logisticId }),
+        }
+      );
+      const response = await req.json();
+      if (!response?.error) {
+        Toast(toast.success, "Data Fetched Successfully");
+        setLogisticData(response);
+        // setUpdateBookingStatus(response.updatebookingstatus);
+        const req = await fetch(
+          import.meta.env.VITE_API_BASE_URL + `/logistic/orders`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ logisticsId: logisticId, status: "booked" }),
+          }
+        );
+        const response3 = await req.json();
+        setLogisticOrders(response3);
+      } else {
+        Toast(toast.error, "Failed to Fetch Data");
+      }
+    } catch (err) {
+      Toast(toast.error, err.message);
+      console.error(err.message);
+    } finally {
+      setTimeout(() => setIsContentLoading(false), 2000);
     }
-  } catch (err) {
-    Toast(toast.error, err.message);
-    console.error(err.message);
-  } finally {
-    setTimeout(() => setIsContentLoading(false), 2000);
-  }
- 
-};
-const fetchOwnerDatById = async (ownerId) =>{
-  try {
-    setIsContentLoading(true);
-    const req = await fetch(import.meta.env.VITE_API_BASE_URL + `/owner/getownerdata`,{
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json",
-      },
-      body:JSON.stringify({ownerId}),
-    });
-    const response = await req.json();
-    
-    if (!response?.error) {
-      Toast(toast.success, "Data Fetched Successfully");
-      setOwnerData(response);
-      const req = await fetch(import.meta.env.VITE_API_BASE_URL + `/owner/produce`,{
-        method:"POST",
-        headers:{
-          "Content-Type":"application/json",
-        },
-        body:JSON.stringify({district : response.district}),
-      });
-      const response2 = await req.json();
-      setFilteredCommodities(response2.purchasedList)
-    }
+  };
+  const fetchOwnerDatById = async (ownerId) => {
+    try {
+      setIsContentLoading(true);
+      const req = await fetch(
+        import.meta.env.VITE_API_BASE_URL + `/owner/getownerdata`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ownerId }),
+        }
+      );
+      const response = await req.json();
 
-     else {
-      Toast(toast.error, "Failed to Fetch Data");
+      if (!response?.error) {
+        Toast(toast.success, "Data Fetched Successfully");
+        setOwnerData(response);
+        const req = await fetch(
+          import.meta.env.VITE_API_BASE_URL + `/owner/produce`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ district: response.district }),
+          }
+        );
+        const response2 = await req.json();
+        setFilteredCommodities(response2.purchasedList);
+      } else {
+        Toast(toast.error, "Failed to Fetch Data");
+      }
+    } catch (err) {
+      Toast(toast.error, err.message);
+      console.error(err.message);
+    } finally {
+      setTimeout(() => setIsContentLoading(false), 2000);
     }
-  } catch (err) {
-    Toast(toast.error, err.message);
-    console.error(err.message);
-  } finally {
-    setTimeout(() => setIsContentLoading(false), 2000);
-  }
- 
-};
-console.log(filteredCommodities);
+  };
 
   useEffect(() => {
     setUserData(localUserData);
@@ -163,61 +176,62 @@ console.log(filteredCommodities);
 
   return (
     <>
-        
-          <Routes>
-            <Route
-              index
-              element={userData ? <Dashboard /> : <Registration />}
-            />
-            <Route path="login" element={<Login />} />
-            <Route path="*" element={<NotFound />} />
+      {install && <Install install={install} />}
 
-            <Route element={<ProctedRoute />}>
-              {/* farmer routes */}
-              <Route path="farmerdashboard" element={<FarmerDashboard />} />
-              <Route path="farmerprofile" element={<FarmerProfile />} />
-              <Route path="updateproduce">
-                <Route path=":listingId" element={<UpdateProduce />} />
-              </Route>
-              <Route path="addproduce" element={<FarmerProduceListing />} />
-              <Route path="farmerorders" element={<FarmerOrders />} />
-              <Route path="farmerorderdetails">
-                <Route path=":orderId" element={<FarmerOrderDetails />} />
-              </Route>
-              <Route
-                path="farmerlogistics"
-                element={<FarmerLogisticInformation />}
-              />
-              <Route path="farmerlogisticsbooking">
-                <Route path=":partnerId" element={<LogisticsBooking />} />
-              </Route>
-              <Route path="farmeranalytics" element={<FarmerAnalytics />} />
+      {/* pwa install */}
+      
+      {!install && (
+        <Routes>
+          <Route index element={userData ? <Dashboard /> : <Registration />} />
+          <Route path="login" element={<Login />} />
+          <Route path="*" element={<NotFound />} />
 
-              {/* local market routes */}
-              <Route
-                path="localmarketdashboard"
-                element={<LocalMarketOwnerProductList />}
-              />
-              <Route path="myorder" element={<LocalMarketOwnerMyOrder />} />
-              <Route path="OwnerDashBoard" element={<OwnerDashBoard />}></Route>
-              <Route path="OwnerAnalytics" element={<Analytics />}></Route>
-              <Route path="/" element={<ProductHeader />} />
-              <Route path="/order/:listingId" element={<OrderCheckOut />} />
-
-              {/* logistics routes */}
-              <Route path="logisticdashboard" element={<LogisticHome />} />
-              <Route path="DashBoard" element={<DashBoard />} />
-              <Route path="checkoutPage" element={<OrderCheckOutPage />} />
-              <Route
-                path="/checkoutPage/:orderId"
-                element={<OrderCheckOutPage />}
-              />
-              <Route path="orderdetails">
-                <Route path=":orderId" element={<OrderDetails />} />
-              </Route>
+          <Route element={<ProctedRoute />}>
+            {/* farmer routes */}
+            <Route path="farmerdashboard" element={<FarmerDashboard />} />
+            <Route path="farmerprofile" element={<FarmerProfile />} />
+            <Route path="updateproduce">
+              <Route path=":listingId" element={<UpdateProduce />} />
             </Route>
-          </Routes>
-        
+            <Route path="addproduce" element={<FarmerProduceListing />} />
+            <Route path="farmerorders" element={<FarmerOrders />} />
+            <Route path="farmerorderdetails">
+              <Route path=":orderId" element={<FarmerOrderDetails />} />
+            </Route>
+            <Route
+              path="farmerlogistics"
+              element={<FarmerLogisticInformation />}
+            />
+            <Route path="farmerlogisticsbooking">
+              <Route path=":partnerId" element={<LogisticsBooking />} />
+            </Route>
+            <Route path="farmeranalytics" element={<FarmerAnalytics />} />
+
+            {/* local market routes */}
+            <Route
+              path="localmarketdashboard"
+              element={<LocalMarketOwnerProductList />}
+            />
+            <Route path="myorder" element={<LocalMarketOwnerMyOrder />} />
+            <Route path="OwnerDashBoard" element={<OwnerDashBoard />}></Route>
+            <Route path="OwnerAnalytics" element={<Analytics />}></Route>
+            <Route path="/" element={<ProductHeader />} />
+            <Route path="/order/:listingId" element={<OrderCheckOut />} />
+
+            {/* logistics routes */}
+            <Route path="logisticdashboard" element={<LogisticHome />} />
+            <Route path="DashBoard" element={<DashBoard />} />
+            <Route path="checkoutPage" element={<OrderCheckOutPage />} />
+            <Route
+              path="/checkoutPage/:orderId"
+              element={<OrderCheckOutPage />}
+            />
+            <Route path="orderdetails">
+              <Route path=":orderId" element={<OrderDetails />} />
+            </Route>
+          </Route>
+        </Routes>
+      )}
 
       {isLoading && <Loader />}
 
