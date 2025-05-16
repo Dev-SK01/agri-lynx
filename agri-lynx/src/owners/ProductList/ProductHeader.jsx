@@ -10,13 +10,11 @@ import { Link, useNavigate } from "react-router-dom";
 import Footer from './Footer';
 const ProductHeader = () => {
   const { OwnerData, purchasedList,setFilteredCommodities,filteredCommodities } = useContext(OwnerContext);
+  const localDistrict = OwnerData?.district?.toLowerCase();
   const [searchTerm, setSearchTerm] = useState("");
   
   const [checked, setChecked] = useState(false);
   const [hasFetched, setHasFetched] = useState(false);
-  
-
-  
   
 
   // const filteredCommodities = (purchasedList || []).filter((item) => {
@@ -41,10 +39,63 @@ const ProductHeader = () => {
   };
   
 
+ console.log(filteredCommodities);
+ const fetchAllProduce = async () => {
+  setChecked(!checked);
+  setFilteredCommodities([])
+  try {
+    if(checked) {
+      const req = await fetch(import.meta.env.VITE_API_BASE_URL + `/owner/produce`,{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json",
+        },
+        body:JSON.stringify({district : OwnerData.district}),
+      });
+      const response2 = await req.json();
+      setFilteredCommodities(response2.purchasedList);
+    }else{
+      const response = await fetch(import.meta.env.VITE_API_BASE_URL + "/owner/allproduce");
+      const data = await response.json();
+    if (data?.purchasedList) {
+      setFilteredCommodities(data.purchasedList);
+    }
+    }
+    
+  } catch (err) {
+    console.error("Fetch error:", err.message);
+  }
+};
 
 
- console.log(filteredCommodities)
+useEffect(() => {
+  if (!OwnerData?.district) return;
 
+  const localDistrict = OwnerData.district.toLowerCase();
+
+  const fetchSearchResults = async () => {
+    setChecked(true);
+    try {
+      const response = await fetch(import.meta.env.VITE_API_BASE_URL + "/owner/search", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ searchTerm }),
+      });
+
+      const data = await response.json();
+      const filtered = checked
+        ? data.purchasedList
+        : data.purchasedList.filter(item => item.district?.toLowerCase() === localDistrict);
+      setFilteredCommodities(filtered);
+    } catch (err) {
+      console.error("Search API Error:", err.message);
+    }
+  };
+
+  if (searchTerm.length > 1) {
+    fetchSearchResults();
+  }
+}, [searchTerm, checked, OwnerData]);
 
   return (
     <div className="flex items-center justify-center flex-col">
@@ -76,15 +127,15 @@ const ProductHeader = () => {
         <div className='mt-5 flex items-center'>
           <Checkbox
             checked={checked}
-            onCheckedChange={setChecked}
+            onCheckedChange={fetchAllProduce}
             className="w-6 h-6 rounded border-2 border-black text-white data-[state=checked]:bg-black data-[state=checked]:text-white"
           />
           <label className="ml-2 font-inknut text-lg">Show from other districts</label>
         </div>
 
         {/* Filtered results */}
-        {filteredCommodities.length > 0 ? (
-          filteredCommodities.map((item, index) => (            
+        {filteredCommodities?.length > 0 ? (
+          filteredCommodities?.map((item, index) => (            
             <div className='flex border-2 rounded-2xl mb-5 mt-5 bg-(--green)' key={item.listingId} onClick={() => handleClick(item.listingId)}>
               <div className='mb-5' key={index} >
                 <h1 className='flex justify-center rounded-xl h-9 pt-0 bg-[var(--primary)] mt-2 ms-2 w-60 items-center text-center font-bold font-inter'>

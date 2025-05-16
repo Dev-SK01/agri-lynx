@@ -75,7 +75,6 @@ export const LogisticContextProvider = ({ children }) => {
         statusLocked,
         setStatusLocked,
 
-        verifyOtpAndChangeStatus,
         updateOrderStatus,
         acceptOrder
 

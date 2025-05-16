@@ -57,7 +57,7 @@ const OrderMange = () => {
       imageUrl: selectedItem.imageUrl,
 
       customer: {
-        customerId: OwnerData?.customerId || "N/A",
+        customerId: OwnerData?._id || "N/A",
         name: OwnerData?.name || "",
         email: OwnerData?.email || "",
         phoneNumber: OwnerData?.phoneNumber || "",

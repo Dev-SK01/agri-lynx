@@ -35,10 +35,11 @@ const MyOrders = () => {
     //     };
     //     fetchImages();
     // }, [allOrders]);
+console.log(OwnerData);
 
-    const handleOrderedOrders = async () => {
+    const handleOrderedOrders = async (ownerId ) => {
         setIsContentLoading(true);
-        setSelectedStatus("delivered")
+        setSelectedStatus("ordered")
         
         try {
             // backend api
@@ -47,6 +48,7 @@ const MyOrders = () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
+                body: JSON.stringify({ ownerId }),
             });
             const res = await req.json();
             setMarketOrders(res.reverse());
@@ -54,9 +56,10 @@ const MyOrders = () => {
         } catch (err) {
             Toast(toast.error, err.message)
         }
+        
     }
 
-    const handleDeliveredOrders = async () => {
+    const handleDeliveredOrders = async (ownerId) => {
         setIsContentLoading(true);
         setSelectedStatus("delivered")
         
@@ -67,6 +70,7 @@ const MyOrders = () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
+                body: JSON.stringify({ ownerId }),
             });
             const res = await req.json();
             setDeliveredOrders(res.reverse());
@@ -75,7 +79,30 @@ const MyOrders = () => {
             Toast(toast.error, err.message)
         }
     }
-    const handleCancelOrders = async () => {
+
+    const cancelOrderAPI = async (orderId) => {
+        try {
+          const res = await fetch(import.meta.env.VITE_API_BASE_URL + `/owner/cancelorder`,  {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ orderId }),
+          });
+      
+          const data = await res.json();handleCancelOrders
+          if (res.ok) {
+            alert("Order cancelled successfully");
+           // window.location.reload(); // OR re-fetch allOrders from backend
+          } else {
+            alert(data.message || "Failed to cancel order.");
+          }
+        } catch (error) {
+          alert("Error cancelling order: " + error.message);
+        }
+      };
+
+    const handleCancelOrders = async (ownerId) => {
         setIsContentLoading(true);
         setSelectedStatus("cancelled")
         try {
@@ -85,6 +112,7 @@ const MyOrders = () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
+                body: JSON.stringify({ ownerId }),
             });
             const res = await req.json();
             setCancelOrders(res.reverse());
@@ -93,7 +121,7 @@ const MyOrders = () => {
             Toast(toast.error, err.message)
         }
     }
-
+    
 
     const navigate = useNavigate();
 
@@ -101,7 +129,9 @@ const MyOrders = () => {
         navigate("/OwnerDashBoard");
     };
 
-
+useEffect(() => {
+    handleOrderedOrders(OwnerData._id);
+},[]);
     return (
         <>
             <div className="flex items-center justify-center flex-col overflow-hidden">
@@ -124,7 +154,7 @@ const MyOrders = () => {
                             </button>
                         ))} */}
                     <button
-                        onClick={handleOrderedOrders}
+                        onClick={()=> handleOrderedOrders(OwnerData._id)}
                         className={`rounded-sm font-bold font-inter ml-2 px-2 py-1 ${selectedStatus == "ordered" &&
                             "bg-(--primary) border-1 border-green-600"
                             }`}
@@ -132,7 +162,7 @@ const MyOrders = () => {
                         Ordered
                     </button>
                     <button
-                        onClick={handleDeliveredOrders}
+                        onClick={() => handleDeliveredOrders(OwnerData._id)}
                         className={`rounded-sm font-bold font-inter ml-2 px-2 py-1 ${selectedStatus == "delivered" &&
                             "bg-(--primary) border-1 border-green-600"
                             }`}
@@ -140,7 +170,7 @@ const MyOrders = () => {
                         Delivered
                     </button>
                     <button
-                        onClick={handleCancelOrders}
+                        onClick={() => handleCancelOrders(OwnerData._id)}
                         className={`rounded-sm font-bold font-inter ml-2 px-2 py-1 ${selectedStatus == "cancelled" &&
                             "bg-(--primary) border-1 border-green-600"
                             }`}
@@ -184,7 +214,7 @@ const MyOrders = () => {
                                         onClick={() => {
                                             const confirmCancel = window.confirm("Are you sure you want to cancel this order?");
                                             if (confirmCancel) {
-                                                cancelOrder(item.orderId);
+                                                cancelOrderAPI(item.orderId);
                                                 alert("Your order has been cancelled successfully.");
                                             }
                                         }}

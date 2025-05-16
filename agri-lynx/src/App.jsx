@@ -111,7 +111,6 @@ const fetchLogisticDatById = async (logisticId) =>{
 const fetchOwnerDatById = async (ownerId) =>{
   try {
     setIsContentLoading(true);
-    console.log("ownerId:", ownerId);
     const req = await fetch(import.meta.env.VITE_API_BASE_URL + `/owner/getownerdata`,{
       method:"POST",
       headers:{
@@ -120,7 +119,6 @@ const fetchOwnerDatById = async (ownerId) =>{
       body:JSON.stringify({ownerId}),
     });
     const response = await req.json();
-    // console.log(response);
     
     if (!response?.error) {
       Toast(toast.success, "Data Fetched Successfully");
@@ -147,6 +145,7 @@ const fetchOwnerDatById = async (ownerId) =>{
   }
  
 };
+console.log(filteredCommodities);
 
   useEffect(() => {
     setUserData(localUserData);

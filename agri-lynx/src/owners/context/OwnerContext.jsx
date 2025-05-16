@@ -26,7 +26,7 @@ export const OwnerContextProvider = ({ children }) => {
       setMarketOrders((prev) =>
         prev.filter((order) => order.orderId !== orderId)
       );
-      setcancelOrders((prev) => [
+      setCancelOrders((prev) => [
         ...prev,
         { ...orderToCancel, orderStatus: "cancelled" },
       ]);
