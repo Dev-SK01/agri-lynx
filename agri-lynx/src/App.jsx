@@ -46,7 +46,7 @@ function App() {
   const {OwnerData, setOwnerData,filteredCommodities, setFilteredCommodities} = useContext(OwnerContext);
   const localUserData = JSON.parse(localStorage.getItem("userData"));
 
-  const fetchFarmerDataById = async (farmerId) => {
+const fetchFarmerDataById = async (farmerId) => {
     try {
       setIsContentLoading(true);
       // console.log("FarmerID:", farmerId);
@@ -71,8 +71,7 @@ function App() {
     } finally {
       setTimeout(() => setIsContentLoading(false), 2000);
     }
-  };
-  
+};
 const fetchLogisticDatById = async (logisticId) =>{
   try {
     setIsContentLoading(true);
@@ -89,12 +88,12 @@ const fetchLogisticDatById = async (logisticId) =>{
       Toast(toast.success, "Data Fetched Successfully");
       setLogisticData(response);
       // setUpdateBookingStatus(response.updatebookingstatus);
-      const req = await fetch(import.meta.env.VITE_API_BASE_URL + `/logistic/ordered`,{
+      const req = await fetch(import.meta.env.VITE_API_BASE_URL + `/logistic/orders`,{
         method:"POST",
         headers:{
           "Content-Type":"application/json",
         },
-        body:JSON.stringify({logisticId}),
+        body:JSON.stringify({logisticId,status:"booked"}),
       });
       const response3 = await req.json();
       setLogisticOrders(response3)

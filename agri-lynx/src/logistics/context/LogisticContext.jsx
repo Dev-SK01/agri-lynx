@@ -1,7 +1,9 @@
 import VehicleDetails from "@/registration/components/VehicleDetails";
 import React,{ createContext, useState,useEffect,useContext } from "react";
 import axios from 'axios';
-import { json } from "stream/consumers";
+import { toast } from "react-toastify";
+import Toast from "@/utils/toast";
+
 
 const LogisticContext = createContext({});
 
@@ -26,30 +28,6 @@ export const LogisticContextProvider = ({ children }) => {
   // Lock delivered status to prevent changes
   const [statusLocked, setStatusLocked] = useState(false);
 
-  // Call this function after OTP is verified
-  const verifyOtpAndChangeStatus = async () => {
-    const req = await fetch(
-      import.meta.env.VITE_API_BASE_URL + '/verifycustomer',
-      {
-        method : "POST",
-        headres : {
-          "Content-Type" : "application/json",
-        },
-        body : JSON.stringify({ email , otp , orderId})
-      }
-    )
-    const res  = await res.json(req);
-    setOrderStatus(res);
-    // if (newStatus === "In-Transit") {
-    //   setOtpVerified((prev) => ({ ...prev, "In-Transit": true }));
-    //   setOrderStatus("In-Transit");
-    // } else if (newStatus === "Delivered") {
-    //   setOtpVerified((prev) => ({ ...prev, "Delivered": true }));
-    //   setOrderStatus("Delivered");
-    //   setStatusLocked(true); // Lock further changes
-    // }
-    setShowOtpPopup(true);
-  };
   const acceptOrder = (orderId) => {
     setLogisticOrders(prevOrders =>
       prevOrders.map(order =>
@@ -72,10 +50,6 @@ export const LogisticContextProvider = ({ children }) => {
     setLogisticOrders(prevOrders => prevOrders.filter(order => order.orderId !== orderId));
   };
   const [isContentLoading, setIsContentLoading] = useState(true);
-  
-
-  
- 
   return (
     <LogisticContext.Provider
       value={{

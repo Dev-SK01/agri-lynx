@@ -243,7 +243,11 @@ export const RegistrationContextProvider = ({ children }) => {
             body: JSON.stringify({ email, otp,type: userType }),
           })
         const response = await req.json();
-        setUserData(response);
+        if(response.error){
+          Toast(toast.error, response.error);
+          setOtpVerified(false);
+        }else{
+          setUserData(response);
         // localstorage for user data
         localStorage.setItem("userData", JSON.stringify(response));
         Toast(toast.success, "Logging In....");
@@ -257,6 +261,7 @@ export const RegistrationContextProvider = ({ children }) => {
         } else {
           navigate("logisticdashboard");
           setOtpVerified(false);
+        }
         }
       } catch (err) {
         Toast(toast.error, err.message);
