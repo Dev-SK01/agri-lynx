@@ -12,7 +12,7 @@ import Toast from '@/utils/toast';
 import { toast } from 'react-toastify';
 
 const LogisticHome = () => {
-  const { LogisticOrders, LogisticData, acceptOrder, deleteOrder,setLogisticOrders } = useContext(LogisticContext);
+  const { LogisticOrders, LogisticData, acceptOrder, deleteOrder, } = useContext(LogisticContext);
   const navigate = useNavigate();
 
   const handleAvatarClick = () => {
@@ -29,15 +29,12 @@ const LogisticHome = () => {
         body:JSON.stringify({orderId,action})
       });
       const res = await req.json();
-      console.log(res);
-      
       if (!res?.error) {
-        Toast(toast.success, "accepted");
-        const order = LogisticOrders.find(o => o.orderId === orderId);
+        Toast(toast.success, "Status Updated");
         action === "accept" ? acceptOrder(orderId) : deleteOrder(orderId);
-        navigate(`/checkoutPage/${orderId}`, { state: { order } });
+        navigate(`/checkoutPage/${orderId}`);
       }else{
-
+        toast.error("Cannot Updated Status");
       }
     } catch (err) {
       Toast(toast.error, err.message);
@@ -45,7 +42,7 @@ const LogisticHome = () => {
   }
   // const pendingOrders = (LogisticOrders || []).filter(order => order.status !== 'ordered');
 
-  console.log(LogisticOrders)
+  // console.log(LogisticOrders);
   return (
     <div className="flex items-center justify-center flex-col">
       {/* Header */}
@@ -61,7 +58,7 @@ const LogisticHome = () => {
       </header>
 
       {/* Welcome Image if no orders */}
-      {LogisticOrders.length === 0 && (
+      {LogisticOrders?.length === 0 && (
         <div className="flex flex-col items-center mt-10 justify-center h-[80dvh]">
           <img src={welcome} alt="Welcome" className="w-[450px] h-auto" />
         </div>

@@ -1,99 +1,144 @@
 // Your exact code already works well.
 // Just ensure <Link> elements have `key={order.orderId}` added.
 
-import React, { useContext, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import avatar from "../../Assest/avatar.svg";
-import analytics from '../../Assest/analytics.svg';
-import logistic from '../../Assest/logistic.svg';
-import ordericon from '../../Assest/ordericon.svg';
-import product from '../../Assest/product.svg';
-import LogisticContext from '../context/LogisticContext';
+import analytics from "../../Assest/analytics.svg";
+import logistic from "../../Assest/logistic.svg";
+import ordericon from "../../Assest/ordericon.svg";
+import product from "../../Assest/product.svg";
+import LogisticContext from "../context/LogisticContext";
+import { toast } from "react-toastify";
 
 const OrderCheckOutPage = () => {
   const {
     LogisticOrders,
+    setLogisticData,
     LogisticData,
     orderStatus,
     setOrderStatus,
+    intransitOrders,
+    setIntransitOrders,
+    deliveredOrders,
+    setDeliveredOrders,
+    orderedOrders,
+    setOrderedOrders,
   } = useContext(LogisticContext);
   const navigate = useNavigate();
 
-  const filteredOrders = LogisticOrders.filter(
+  const allOrders = orderedOrders.concat(intransitOrders,deliveredOrders);
+  const filteredOrders = allOrders.filter(
     (order) =>
-      order.status === "accepted" &&
+      order.bookingStatus === "accepted" &&
       order.orderStatus.toLowerCase() === orderStatus.toLowerCase()
   );
 
+  useEffect(() => {
+    // fething logistics orders
+    const fetchLogisticsOrders = async () => {
+      try{
+        const req = await fetch(
+          import.meta.env.VITE_API_BASE_URL + "/logistic/orders",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              logisticsId: LogisticData._id,
+              status: orderStatus,
+            }),
+          }
+        );
+        const res = await req.json();
+        toast.success("Orders Fetched");
+        if (orderStatus === "ordered") {
+          setOrderedOrders(res);
+        } else if (orderStatus === "intransit") {
+          setIntransitOrders(res);
+        } else {
+          setDeliveredOrders(res);
+        }
+      }catch(err){
+        toast.error(err.message)
+      }
+    }
+    fetchLogisticsOrders()
+  }, [orderStatus]);
+  
   return (
     <div className="flex items-center justify-center flex-col overflow-x-hidden">
       {/* Header */}
-      <header className='flex rounded-xl h-16 pt-2 bg-(--green) mt-5 w-100 text-xl'>
+      <header className="flex rounded-xl h-16 pt-2 bg-(--green) mt-5 w-100 text-xl">
         <Link to="/">
-          <h1 className='font-bold font-inknut pt-1 ms-10 items-center'>
+          <h1 className="font-bold font-inknut pt-1 ms-10 items-center">
             {LogisticData?.name}
           </h1>
         </Link>
-        <div className='ms-83 pb-1 fixed'>
-          <img src={avatar} onClick={() => navigate('/DashBoard')} alt="avatar" />
+        <div className="ms-83 pb-1 fixed">
+          <img
+            src={avatar}
+            onClick={() => navigate("/DashBoard")}
+            alt="avatar"
+          />
         </div>
       </header>
 
       {/* Status Selector */}
-      <div className='flex rounded-sm  p-2 bg-(--green) mt-5 w-[95%] text-xl justify-around items-center overflow-x-scroll scrollbar'>
-      
-
-          {['ordered', 'In-Transit', 'delivered'].map((status) => (
-            <button
-              key={status}
-              onClick={() => setOrderStatus(status)}
-              className={`rounded-sm font-bold font-inter px-2 py-1 ml-2   ${status.toLowerCase() === orderStatus.toLowerCase()
+      <div className="flex rounded-sm  p-2 bg-(--green) mt-5 w-[95%] text-xl justify-around items-center overflow-x-scroll scrollbar">
+        {["ordered", "intransit", "delivered"].map((status) => (
+          <button
+            key={status}
+            onClick={() => setOrderStatus(status)}
+            className={`rounded-sm font-bold font-inter px-2 py-1 ml-2   ${
+              status.toLowerCase() === orderStatus.toLowerCase()
                 ? "bg-(--primary) border-1 border-green-600"
-                : ''
-                }`}
-            >
-              {status.charAt(0).toUpperCase() + status.slice(1)}
-            </button>
-          ))}
-
+                : ""
+            }`}
+          >
+            {status.charAt(0).toUpperCase() + status.slice(1)}
+          </button>
+        ))}
       </div>
-
 
       {/* Filtered Orders */}
       <div className="mt-4 h-[75vh] overflow-y-auto px-4 flex items-center flex-col">
         {filteredOrders.length > 0 ? (
           filteredOrders.map((order) => (
             <Link to={`/orderdetails/${order.orderId}`} key={order.orderId}>
-              <div className='cursor-pointer bg-[var(--green)] flex mt-4 h-35 rounded-2xl w-100 py-1 relative border-l-8 border-l-green-600 '>
+              <div className="cursor-pointer bg-[var(--green)] flex mt-4 h-35 rounded-2xl w-100 py-1 relative border-l-8 border-l-green-600 ">
                 <div>
-                  <h1 className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-60 font-bold font-inter'>
+                  <h1 className="flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-60 font-bold font-inter">
                     {order.commodity}
                   </h1>
-                  <h1 className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-60 font-bold font-inter'>
+                  <h1 className="flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-60 font-bold font-inter">
                     {order.customer.name}
                   </h1>
-                  <h1 className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-60 font-bold font-inter'>
-                  <a href={`tel:+91${order?.customer?.phoneNumber}`}>
-                    +91<span>{order?.customer?.phoneNumber}</span>
-                  </a>
+                  <h1 className="flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-60 font-bold font-inter">
+                    <a href={`tel:+91${order?.customer?.phoneNumber}`}>
+                      +91<span>{order?.customer?.phoneNumber}</span>
+                    </a>
                   </h1>
                 </div>
                 <div>
-                  <p className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-28 font-bold font-inter'>
+                  <p className="flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-28 font-bold font-inter">
                     {order.quantity}.KG
                   </p>
-                  <p className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-28 font-bold font-inter'>
-                  ₹ {order.commodityPrice}
+                  <p className="flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-28 font-bold font-inter">
+                    ₹ {order.commodityPrice}
                   </p>
-                  <p className='flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-28 font-bold font-inter'>
-                  ₹{order.price}
+                  <p className="flex justify-center rounded-xl h-9 pt-2 bg-[var(--primary)] mt-2 ms-2 w-28 font-bold font-inter">
+                    ₹{order.price}
                   </p>
                 </div>
               </div>
             </Link>
           ))
         ) : (
-          <p className="text-center mt-4">No orders found for "{orderStatus}"</p>
+          <p className="text-center mt-4">
+            No orders found for "{orderStatus}"
+          </p>
         )}
       </div>
 
@@ -101,7 +146,7 @@ const OrderCheckOutPage = () => {
       {/* footer */}
       <footer className="bg-(--green) h-[8vh] rounded-[30px] mt-4 flex items-center justify-evenly py-4 fixed bottom-3 w-[95%]">
         <Link to="/">
-          <div className='ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1'>
+          <div className="ms-7 me-7 h-12 w-12 bg-white rounded-sm p-1">
             <img src={product} alt="product" />
           </div>
         </Link>
@@ -110,10 +155,10 @@ const OrderCheckOutPage = () => {
             <img src={ordericon} alt="orderIcon" />
           </div>
         </Link>
-        <div className='ms-4 me-7 h-12 w-12 bg-white rounded-sm flex items-center justify-center px-1'>
+        <div className="ms-4 me-7 h-12 w-12 bg-white rounded-sm flex items-center justify-center px-1">
           <img src={logistic} alt="logistic" />
         </div>
-        <div className='ms-4 me-7 h-12 w-12 bg-white rounded-sm flex items-center justify-center px-1'>
+        <div className="ms-4 me-7 h-12 w-12 bg-white rounded-sm flex items-center justify-center px-1">
           <img src={analytics} alt="analytics" />
         </div>
       </footer>

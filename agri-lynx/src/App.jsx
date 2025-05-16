@@ -35,15 +35,15 @@ import OrderDetails from "./logistics/OrderManagement/OrderDetails";
 import OwnerDashBoard from "./owners/OwnerDashBoard";
 import Analytics from "./owners/Analytics";
 import OrderCheckOut from "./owners/OrderCheckOut";
-import OwnerContext, { OwnerContextProvider } from "./owners/context/OwnerContext";
+import OwnerContext from "./owners/context/OwnerContext";
 
 function App() {
   // context
   const { userData, isOtpVerified, isLoading, setUserData } =
     useContext(RegistrationContext);
   const { setFarmerData, setIsContentLoading,setProduceList } = useContext(FarmerContext);
-  const {setLogisticData,LogisticData,LogisticOrders, setLogisticOrders} = useContext(LogisticContext);
-  const {OwnerData, setOwnerData,filteredCommodities, setFilteredCommodities} = useContext(OwnerContext);
+  const {setLogisticData, setLogisticOrders} = useContext(LogisticContext);
+  const { setOwnerData, setFilteredCommodities} = useContext(OwnerContext);
   const localUserData = JSON.parse(localStorage.getItem("userData"));
 
 const fetchFarmerDataById = async (farmerId) => {
@@ -93,7 +93,7 @@ const fetchLogisticDatById = async (logisticId) =>{
         headers:{
           "Content-Type":"application/json",
         },
-        body:JSON.stringify({logisticId,status:"booked"}),
+        body:JSON.stringify({logisticsId:logisticId,status:"booked"}),
       });
       const response3 = await req.json();
       setLogisticOrders(response3)

@@ -6,7 +6,7 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { ToastContainer, toast } from "react-toastify";
+import {  toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import LogisticContext from "../context/LogisticContext";
 import calandar from "../../Assest/calendar.svg";
@@ -16,13 +16,16 @@ const VerificationOTP = ({ orderId }) => {
     LogisticOrders,
     LogisticData,
     setShowOtpPopup,
+    showOtpPopup,
     setOrderStatus,
+    intransitOrders,
+    deliveredOrders,
+    orderedOrders,
     updateOrderStatus,
   } = useContext(LogisticContext);
 
-  const currentOrder = LogisticOrders.find(
-    (order) => order.orderId === orderId
-  );
+  const allOrders = orderedOrders.concat(intransitOrders,deliveredOrders);
+  const currentOrder = allOrders.find((order) => order.orderId === orderId);
   const [otp, setOtp] = useState("");
   const [email, setEmail] = useState("");
 
@@ -32,10 +35,17 @@ const VerificationOTP = ({ orderId }) => {
     }
   }, [currentOrder]);
 
-  const sendOtp = () => {
+  const sendOtp = async () => {
     try {
-      const res = true;
-      if (res) {
+      const req = await fetch(import.meta.env.VITE_API_BASE_URL + "/sendotp",{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body:JSON.stringify({email})
+      })
+      const res = await req.json();
+      if (res?.isCodeSent) {
         toast.success("OTP sent to " + email);
       } else {
         toast.error("Failed to send OTP!");
@@ -62,7 +72,7 @@ const VerificationOTP = ({ orderId }) => {
       toast.error("Enter OTP!");
     } else {
       const req = await fetch(
-        import.meta.env.VITE_API_BASE_URL + "/verifycustomer",
+        import.meta.env.VITE_API_BASE_URL + "/logistic/verifycustomer",
         {
           method: "POST",
           headres: {
@@ -71,11 +81,10 @@ const VerificationOTP = ({ orderId }) => {
           body: JSON.stringify({ email, otp, orderId }),
         }
       );
-      const res = await res.json(req);
+      const res = await req.json();
       if (res?.isVerified) {
-        setOrderStatus("Delivered");
-        setTimeout(() => setShowOtpPopup(false), 2000);
-        updateOrderStatus(orderId, "Delivered");
+        setOrderStatus("delivered");
+        updateOrderStatus(orderId, "delivered");
         toast.success("Status updated !");
         setShowOtpPopup(false);
       } else {
@@ -88,7 +97,6 @@ const VerificationOTP = ({ orderId }) => {
 
   return (
     <>
-      <ToastContainer />
       <div className="absolute flex ps-5 justify-items-center items-center h-[100vh] backdrop-blur-[5px] top-0.5">
         <div className="flex-col items-center justify-center bg-(--green) rounded-md w-[90dvw]">
           {/* Order ID and Date */}
@@ -148,7 +156,7 @@ const VerificationOTP = ({ orderId }) => {
             <Button
               type="button"
               className="text-white bg-(--secondary) font-bold text-base mt-4 px-6 py-2 sm:w-auto"
-              onClick={()=> verifyOtpAndChangeStatus(email, otp, currentOrder.orderId)}
+              onClick={()=> verifyOtpAndChangeStatus(email, otp, orderId)}
             >
               Verify
             </Button>

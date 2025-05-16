@@ -20,6 +20,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import VerificationOTP from './VerificationOTP'; // Import the OTP verification component
+import { toast } from 'react-toastify';
 
 const OrderDetails = () => {
     const {
@@ -29,34 +30,46 @@ const OrderDetails = () => {
         setOrderStatus,
         setShowOtpPopup,
         showOtpPopup,
-        updateOrderStatus
+        updateOrderStatus,
+        intransitOrders,
+        deliveredOrders,
+        orderedOrders,
     } = useContext(LogisticContext);
+
     const [isStatusUpdated, setIsStatusUpdated] = useState(false);
     const { orderId } = useParams();
-    const currentOrder = LogisticOrders.find(order => order.orderId === orderId);
-    console.log(orderId);
-    console.log(currentOrder)
+    const allOrders = orderedOrders.concat(intransitOrders,deliveredOrders);
+    const currentOrder = allOrders.find(order => order.orderId === orderId);
+    // console.log(orderId);
+    // console.log(currentOrder)
 
-    const handleStatusChange = (value) => {
-
-        if (value === 'Delivered') {
+    const handleStatusChange = async (value) => {
+        if (value === "delivered") {
             setShowOtpPopup(true);
         } else {
-            updateOrderStatus(orderId, value);
-            setOrderStatus(value);
+            // updating intransit order status
+            const req = await fetch(import.meta.env.VITE_API_BASE_URL + "/farmer/updateorderstatus",{
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify({orderId,status:"intransit"})
+            });
+            const res = await req.json();
+            if(res.isUpdated){
+                updateOrderStatus(orderId, value);
+                setOrderStatus(value);
+                toast.success("Status Updated")
+            }else{
+                toast.success("Cannot Update Status");
+            }
+            
         }
     };
-
-
-
-
-
     const navigate = useNavigate();
     const handleAvatarClick = () => {
         navigate('/DashBoard');
     };
-
-
     return (
         <>
             <div className="flex justify-center items-center flex-col ">
@@ -92,12 +105,12 @@ const OrderDetails = () => {
                             disabled={isStatusUpdated}
                         >
                             <SelectTrigger className="w-[200px] font-inter">
-                                <SelectValue placeholder={currentOrder.orderStatus} />
+                                <SelectValue placeholder={currentOrder?.orderStatus} />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="Ordered">Ordered</SelectItem>
-                                <SelectItem value="In-Transit">In-Transit</SelectItem>
-                                <SelectItem value="Delivered">Delivered</SelectItem>
+                                <SelectItem value="ordered">Ordered</SelectItem>
+                                <SelectItem value="intransit">In-Transit</SelectItem>
+                                <SelectItem value="delivered">Delivered</SelectItem>
                             </SelectContent>
                         </Select>
                     </div>
