@@ -20,7 +20,7 @@ const ApiCommodityList = ({ handleChange }) => {
   async function getCommodityList() {
     try {
       const response = await fetch(
-        "https://cors-proxy-vauu.onrender.com/https://enam.gov.in/web/Ajax_ctrl/commodity_list",
+        import.meta.env.VITE_CORS_LOCAL_URL + "https://enam.gov.in/web/Ajax_ctrl/commodity_list",
         {
           method: "POST",
           headers: {
@@ -31,7 +31,8 @@ const ApiCommodityList = ({ handleChange }) => {
             stateName: "-- All --",
             apmcName: "-- Select APMCs --",
             fromDate,
-            toDate
+            toDate,
+            redirect:"follow"
           }),
         }
       );

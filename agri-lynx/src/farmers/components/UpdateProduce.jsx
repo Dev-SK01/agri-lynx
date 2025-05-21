@@ -34,7 +34,7 @@ const UpdateProduce = () => {
   async function minMaxPriceCalculation(value) {
     try {
       const PriceDataUrl = await fetch(
-        "https://cors-proxy-vauu.onrender.com/https://enam.gov.in/web/Ajax_ctrl/trade_data_list",
+        import.meta.env.VITE_CORS_LOCAL_URL + "https://enam.gov.in/web/Ajax_ctrl/trade_data_list",
         {
           method: "POST",
           headers: {
