@@ -244,7 +244,7 @@ export const RegistrationContextProvider = ({ children }) => {
           })
         const response = await req.json();
         if(response.error){
-          Toast(toast.error, response.error);
+          Toast(toast.error, response?.message);
           setOtpVerified(false);
         }else{
           setUserData(response);

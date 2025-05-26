@@ -33,6 +33,8 @@ const OrderMange = () => {
     "July", "August", "September", "October", "November", "December"
   ];
   const navigate = useNavigate();
+  const updatedQuantity = String(Number(availableQuantity) - Number(userQuantity));
+  // console.log("updatedQ :", updatedQuantity);
 
   const handleClick = () => {
     if (!userQuantity || Number(userQuantity) <= 0) {
@@ -42,7 +44,6 @@ const OrderMange = () => {
 
     const newOrderId = useUid();
     const totalPrice = price * userQuantity;
-
     const OrderData = {
       orderId: newOrderId,
       listingId: selectedItem.listingId,
@@ -92,19 +93,38 @@ const OrderMange = () => {
   const placeOrder = async (order) => {
     setIsContentLoading(true);
     try {
-      const req = await fetch(`${import.meta.env.VITE_API_BASE_URL}/owner/placeorder`, {
+      const req1 = await fetch(import.meta.env.VITE_API_BASE_URL + "/farmer/updatequantity", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(order),
+        body: JSON.stringify({ farmerId: selectedItem?.farmer?.farmerId, listingId, updatedQuantity })
       });
-
-      const res = await req.json();
-      setTimeout(() => setIsContentLoading(false), 2000);
+      const res = await req1.json();
+      if (res?.isUpdated) {
+        toast.success("Quantity Updated");
+        // order place api
+        try {
+          const req = await fetch(`${import.meta.env.VITE_API_BASE_URL}/owner/placeorder`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(order),
+          });
+          const res = await req.json();
+          
+          setIsContentLoading(false);
+        } catch (err) {
+          Toast(toast.error, err.message);
+        }
+      } else {
+        toast.error("Server Error!")
+      }
     } catch (err) {
-      Toast(toast.error, err.message);
+      toast.error(err.messsage);
     }
+
   };
 
   const handleChange = (e) => {
@@ -144,7 +164,7 @@ const OrderMange = () => {
         </header>
 
         <div className="overflow-scroll scrollbar h-[75vh] mt-8 w-[90dvw]">
-        <div className="flex items-center justify-center flex-col ">
+          <div className="flex items-center justify-center flex-col ">
             <div>
               <h1 className="text-2xl font-serif font-bold font-stretch-150% inline-block space-x-5">
                 Checkout Order
